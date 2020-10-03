@@ -1,0 +1,73 @@
+.sidenav-container {
+  height: 100%;
+  width: 100%;
+}
+
+.vl {
+  border-left: 1px solid;
+  height: 30px;
+}
+
+.under-bar {
+  background: #E0EAFC; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.sidenav {
+  width: 290px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+
+
+
+.test {
+  background: #bdc3c7; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.nav-item {
+  font-family: 'Anton', sans-serif;
+}
+
+a {
+  font-family: 'Anton', sans-serif;
+  color: white;
+}
+
+.example-container {
+  position: absolute;
+  top: 200px;
+  bottom: 0;
+  left: 0;
+}
+
+.example-sidenav {
+  width: 250px;
+}
+
+.example-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #434343, #000000); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}

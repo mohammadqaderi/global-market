@@ -1,0 +1,112 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-xl-6">
+      <mdb-card>
+        <mat-toolbar color="warn">
+          <mat-toolbar-row>
+            <p class="h4 p-1">Sign in</p>
+          </mat-toolbar-row>
+        </mat-toolbar>
+        <mdb-card-body>
+          <!-- Default form login -->
+          <form class=" border border-light p-5" role="form" (ngSubmit)="submitLogin()"
+                novalidate [formGroup]="emailLoginDto">
+            <!-- Email -->
+            <div class="form-group mb-4">
+              <div class="input-group input-group-alternative mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-at"></i></span>
+                </div>
+                <input type="email"
+                       id="defaultLoginFormEmail"
+                       formControlName="email" name="email"
+                       class="form-control " placeholder="E-mail"
+                       [class.is-invalid]="Email.invalid && Email.touched">
+              </div>
+              <div *ngIf="(Email.invalid && Email.touched) || Email.dirty">
+                <small *ngIf="Email.errors?.required" class="text-danger">Email is required</small>
+                <small *ngIf="Email.errors?.pattern" class="text-danger">Please provide a valid email address</small>
+              </div>
+            </div>
+            <div class="for-group">
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                </div>
+                <input formControlName="password" type="password" id="defaultLoginFormPassword" class="form-control"
+                       placeholder="Password">
+              </div>
+            </div>
+            <button class="btn btn-info btn-block my-4" [disabled]="emailLoginDto.invalid" type="submit">Sign in
+            </button>
+          </form>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#9344d4d"
+  type="ball-spin-clockwise">
+  <p style="font-size: 20px; color: white">
+    Please Wait...
+  </p>
+</ngx-spinner>
+<ng-template #errorTemplate>
+  <app-show-error-dialog
+    [error]="helperService.error"></app-show-error-dialog>
+</ng-template>
+<ng-template #forgotPass>
+  <h5 *ngIf="!isSent" class="text-center" mat-dialog-title>
+    Enter Your Email to Send Forgot Password Request
+  </h5>
+  <mat-dialog-content class="mat-typography" style="width: 500px; height: auto">
+    <div *ngIf="!isSent" class="row mb-1 mt-1 justify-content-center">
+      <form [formGroup]="emailRequestForm" novalidate>
+        <div class="form-group mb-3">
+          <div class="input-group input-group-alternative">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+            </div>
+            <input formControlName="email" name="email"
+                   class="form-control" placeholder="Email" type="email"
+                   [class.is-invalid]="ForgotRequestEmail.invalid && ForgotRequestEmail.touched">
+          </div>
+          <div *ngIf="(ForgotRequestEmail.invalid && ForgotRequestEmail.touched) || ForgotRequestEmail.dirty">
+            <small *ngIf="ForgotRequestEmail.errors?.required" class="text-danger">Email is required</small>
+            <small *ngIf="ForgotRequestEmail.errors?.pattern" class="text-danger">Please provide a valid email
+              address</small>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="message && isSent" class="row mb-1 mt-1 justify-content-center">
+      <p class="lead text-warning">
+        {{message}}
+      </p>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button *ngIf="!isSent" (click)="sendEmailForgotPassword()" [disabled]="emailRequestForm.invalid" mat-raised-button
+            color="primary"
+            style="width: 150px">
+      Send Request
+    </button>
+    <button style="width: 120px" (click)="helperService.hideDialog()"
+            class="btn btn-outline-warning pull-right ml-1">
+      Close
+    </button>
+  </mat-dialog-actions>
+  <ngx-spinner
+    bdColor="rgba(51,51,51,0.8)"
+    size="medium"
+    color="#9344d4d"
+    type="ball-spin-clockwise">
+    <p style="font-size: 20px; color: white">
+      Sending Request...
+    </p>
+  </ngx-spinner>
+</ng-template>

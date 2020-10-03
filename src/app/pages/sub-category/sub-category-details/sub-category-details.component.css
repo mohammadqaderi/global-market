@@ -1,0 +1,16 @@
+.vl {
+  border-left: 1px solid;
+  height: 100%;
+}
+
+.hr {
+  border-top: 1px solid;
+  margin-top: 4px;
+  width: 100%;
+}
+.center-cropped {
+  object-fit: cover;
+  max-height: 320px;
+  object-position: inherit;
+  width: 100%;
+}

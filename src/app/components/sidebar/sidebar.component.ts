@@ -1,0 +1,46 @@
+import {Component, Input, OnInit} from '@angular/core';
+import {GlobalDataService} from '../../shared/services/global-data.service';
+import {Store} from '@ngxs/store';
+import {CategoryActions} from '../../state-management/category/category.actions';
+import FetchAllCategories = CategoryActions.FetchAllCategories;
+import {MatSidenav} from '@angular/material/sidenav';
+import {CategoryModel} from '../../models/Categories/category.model';
+import {SubCategoryModel} from '../../models/Categories/sub-category.model';
+import {Router} from '@angular/router';
+import {TagActions} from '../../state-management/tag/tag.actions';
+import FetchAllTags = TagActions.FetchAllTags;
+import {Observable} from 'rxjs';
+
+@Component({
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.css']
+})
+export class SidebarComponent implements OnInit {
+  constructor(public gdService: GlobalDataService, public store: Store,
+              private router: Router) {
+  }
+
+  @Input() sidenav: MatSidenav;
+  @Input() isHandset$: Observable<boolean>;
+
+  ngOnInit(): void {
+    if (!this.gdService.Categories) {
+      this.store.dispatch(new FetchAllCategories()).subscribe(() => {
+      });
+    }
+    if (!this.gdService.Tags) {
+      this.store.dispatch(new FetchAllTags()).subscribe(() => {
+      });
+    }
+  }
+
+  navigateToSubCategory(category: CategoryModel, subCategory: SubCategoryModel) {
+    this.router.navigate([`/sub-categories/${category.id}`, subCategory.id], {
+      queryParams: {
+        Department: category.name,
+        subCategory: subCategory.name
+      }
+    });
+  }
+}

@@ -1,0 +1,72 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#9344d4d"
+  type="ball-spin-clockwise">
+  <p style="font-size: 20px; color: white">
+    Please Wait...
+  </p>
+</ngx-spinner>
+<div class="container-fluid" *ngIf="product">
+  <mdb-card class="m-4">
+    <mdb-card-body>
+      <section class="mb-5">
+        <div class="row">
+          <div class="col-md-6 mb-4 mb-md-0 ">
+            <div class="view zoom overlay z-depth-2 rounded">
+              <img class="img-fluid w-100"
+                   style="max-height: 600px; height: 600px"
+                   [src]="selectedImage" alt="Sample">
+              <a>
+                <div class="mask">
+                  <img class="img-fluid w-100"
+                       style="max-height: 600px; height: 600px"
+                       [src]="selectedImage">
+                  <div class="mask rgba-black-slight"></div>
+                </div>
+              </a>
+            </div>
+            <div class="row mt-2">
+              <div class="col-3" *ngFor="let image of product.images">
+                <div style="cursor: pointer" (click)="setSelectedImage(image)"
+                     class="view overlay rounded z-depth-1 gallery-item">
+                  <img [src]="image" class="img-fluid">
+                  <div class="mask rgba-white-slight"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h2 class="h2">{{product.name}}</h2>
+            <p class="lead"><span class="mr-1"><strong>{{product.currentPrice}}$</strong></span>
+              <span *ngIf="product.previousPrice" class="ml-4"><strong>{{product.previousPrice}}$</strong></span></p>
+            <p class="pt-1 lead">{{product.description}}.</p>
+            <div class="table-responsive">
+              <table class="table table-sm table-borderless mb-0">
+                <tbody>
+                <tr>
+                  <th class="pl-0 w-25" scope="row"><strong>Model</strong></th>
+                  <td>{{subCategory.name}}</td>
+                </tr>
+                <tr>
+                  <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
+                  <td><p class="lead">Black</p></td>
+                </tr>
+                <tr>
+                  <th class="pl-0 w-25" scope="row"><strong>Delivery</strong></th>
+                  <td><p class="lead">Jordan, All Provinces</p></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <hr>
+            <button type="button" class="btn btn-light btn-md mr-1 mb-2"><i
+              class="fas fa-shopping-cart pr-2"></i>Add to cart
+            </button>
+          </div>
+        </div>
+
+      </section>
+    </mdb-card-body>
+  </mdb-card>
+</div>

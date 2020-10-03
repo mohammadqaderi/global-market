@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <div class="card m-4">
+    <section>
+      <!-- Grid row -->
+      <div class="row m-4">
+        <div *ngIf="subCategory && subCategory.products.length === 0" class="col-xl-12">
+          <h2 class="text-center text-uppercase"> No Products Available in this sub category yet!
+          </h2>
+        </div>
+        <!-- Grid column -->
+        <div class="col-md-3 mb-4" *ngFor="let product of subCategory.products; let i = index">
+          <!-- Card -->
+          <div class="">
+            <div class="view zoom overlay z-depth-2 rounded">
+              <img class="img-fluid w-100"
+                   style="max-height: 250px; height: 250px"
+                   [src]="product.images[0]" alt="Sample">
+              <a>
+                <div class="mask">
+                  <img class="img-fluid w-100"
+                       style="max-height: 250px; height: 250px"
+                       [src]="product.images[0]">
+                  <div class="mask rgba-black-slight"></div>
+                </div>
+              </a>
+            </div>
+            <div class="text-center pt-4">
+              <h4>{{product.name}}</h4>
+              <p class="mb-2 text-muted text-uppercase small">{{subCategory.name}}</p>
+              <h3 class="mb-3">{{product.currentPrice}} $</h3>
+              <button type="button" class="btn btn-primary btn-sm mr-1 mb-2"><i
+                class="fas fa-shopping-cart pr-2"></i>Add to cart
+              </button>
+              <button (click)="helperService.productDetails(product)" type="button"
+                      class="btn btn-light btn-sm mr-1 mb-2"><i
+                class="fas fa-info-circle pr-2"></i>Details
+              </button>
+
+            </div>
+            <hr class="my-2">
+          </div>
+          <!-- Card -->
+        </div>
+        <!-- Grid column -->
+
+
+        <!-- Card -->
+
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+    </section>
+    <!--Section: Block Content-->
+
+  </div>
+</div>

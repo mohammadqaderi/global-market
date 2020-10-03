@@ -1,0 +1,136 @@
+<mat-sidenav-container class="sidenav-container">
+
+
+  <mat-sidenav #drawer id="drawer" class="sidenav" fixedInViewport
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               position="end"
+               [mode]="(isHandset$ | async) ? 'over' : 'push'"
+  >
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <mat-icon (click)="drawer.close()">close</mat-icon>
+        <a mat-button color="primary" class="ml-2 nav-link h5" style="font-family: 'Anton', sans-serif"
+           routerLink="/">
+          Global Market
+        </a>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-toolbar color="accent">
+
+
+      <mat-toolbar-row>
+        <button (click)="drawer.close()" *ngIf="!gdService.IsAuthenticated()"
+                mat-button routerLink="/auth/login">
+          Login <i class="fas fa-sign-in-alt"></i>
+        </button>
+        <div *ngIf="!gdService.IsAuthenticated()" class="vl ml-2"></div>
+        <button (click)="drawer.close()" class="ml-2" *ngIf="!gdService.IsAuthenticated()"
+                mat-button routerLink="/auth/register">
+          Register <i class="far fa-user-circle"></i>
+        </button>
+        <button *ngIf="gdService.IsAuthenticated()" mat-button>
+          Cart <i class="fas fa-cart-arrow-down"></i>
+        </button>
+        <div *ngIf="gdService.IsAuthenticated()" class="vl ml-2"></div>
+        <button *ngIf="gdService.IsAuthenticated()" mat-button>
+          Profile <i class="fas fa-user-circle"></i>
+        </button>
+        <div *ngIf="gdService.IsAuthenticated()" class="vl ml-2"></div>
+        <button (click)="drawer.close(); gdService.userLogout()" *ngIf="gdService.IsAuthenticated()" mat-button>
+          Logout <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <app-sidebar [sidenav]="drawer" [isHandset$]="isHandset$"></app-sidebar>
+  </mat-sidenav>
+  <mat-sidenav id="sidenav" mode="push" position="start" #sidenav *ngIf="!(isHandset$ | async)"
+               class="sidenav"
+  >
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <span class="example-spacer"></span>
+        <button mat-icon-button (click)="sidenav.close()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <app-sidebar [isHandset$]="isHandset$" [sidenav]="sidenav"></app-sidebar>
+  </mat-sidenav>
+  <mat-sidenav-content style="width: 100%; height: 100%">
+    <mat-toolbar style="height: auto" class="bg-dark">
+      <mat-toolbar-row style="width: 100%">
+        <a mat-button class="nav-link h2 text-white" style="font-family: 'Anton', sans-serif"
+           routerLink="/">
+          Global Market
+        </a>
+        <span (click)="drawer.toggle()" class="example-spacer"></span>
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          class="text-white"
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <div class="offset-8" *ngIf="!(isHandset$ | async)">
+          <a *ngIf="gdService.IsAuthenticated()" mat-button class="nav-link h5 text-white"
+             routerLink="/">
+            Cart &nbsp; <i class="fas fa-cart-arrow-down"></i>
+          </a>
+          <a *ngIf="gdService.IsAuthenticated()" mat-button class="nav-link h5 text-white"
+             routerLink="/">
+            {{gdService.Username}}
+          </a>
+          <a (click)="gdService.userLogout()" *ngIf="gdService.IsAuthenticated()" class="nav-link h5 text-white"
+             mat-button
+             routerLinkActive="active"
+          >
+            Logout <i class="fas fa-sign-out-alt"></i>
+          </a>
+          <a *ngIf="!gdService.IsAuthenticated()" class="nav-link h5 text-white" mat-button
+             routerLink="/auth/login" routerLinkActive="active"
+          >
+            Login <i class="fas fa-sign-in-alt"></i>
+          </a>
+          <a *ngIf="!gdService.IsAuthenticated()" class="nav-link h5 text-white" mat-button routerLink="/auth/register"
+             routerLinkActive="active"
+          >
+            Register <i class="far fa-user-circle"></i>
+          </a>
+        </div>
+      </mat-toolbar-row>
+
+    </mat-toolbar>
+    <mat-toolbar class="under-bar" *ngIf="!(isHandset$ | async)">
+      <mat-toolbar-row style="width: 100%">
+        <div class="offset-0">
+          <a mat-button class="nav-link text-dark  h5 "
+             (click)="sidenav.toggle()" routerLinkActive="active">
+            Categories &nbsp; <i class="fas fa-th-list"></i>
+          </a>
+        </div>
+        <div class="offset-0">
+          <a mat-button class="nav-link text-dark h5 "
+             routerLink="/tags">
+            Tags &nbsp; <i class="fas fa-tags"></i>
+          </a>
+        </div>
+        <div class="offset-0">
+          <a mat-button class="nav-link text-dark h5 "
+             routerLink="/">
+            Home&nbsp; <i class="fas fa-store"></i>
+          </a>
+        </div>
+        <mat-form-field class="w-75">
+          <input type="text" matInput placeholder="What's in your mind?">
+        </mat-form-field>
+
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <router-outlet>
+    </router-outlet>
+    <app-footer></app-footer>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
