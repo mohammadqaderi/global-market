@@ -9,6 +9,7 @@ import {patch} from '@ngxs/store/operators';
 import FetchMostSalesProducts = ProductActions.FetchMostSalesProducts;
 import FetchMonthProducts = ProductActions.FetchMonthProducts;
 import FetchShopProducts = ProductActions.FetchShopProducts;
+import FetchFilteredProductsByRange = ProductActions.FetchFilteredProductsByRange;
 
 @State<ProductStateModel>({
   name: 'products',
@@ -57,6 +58,17 @@ export class ProductState {
       tap((data: ProductModel[]) => {
         ctx.setState(patch({
           mostSalesProducts: data
+        }));
+      })
+    );
+  }
+
+  @Action(FetchFilteredProductsByRange)
+  fetchFilteredProductsByRange(ctx: StateContext<ProductStateModel>, action: FetchFilteredProductsByRange) {
+    return this.productService.getFilteredProductsByRange(action.payload).pipe(
+      tap((data: ProductModel[]) => {
+        ctx.setState(patch({
+          shopProducts: data
         }));
       })
     );

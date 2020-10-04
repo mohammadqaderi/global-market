@@ -9,7 +9,7 @@
         </mat-toolbar>
         <mdb-card-body>
           <!-- Default form login -->
-          <form role="form" novalidate>
+          <form role="form" (ngSubmit)="submitRegister()" [formGroup]="registrationForm" novalidate>
             <div class="form-group">
               <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
@@ -17,7 +17,13 @@
                 </div>
                 <input
                   name="username"
+                  formControlName="username"
+                  [class.is-invalid]="Username.invalid && Username.touched"
                   class="form-control" placeholder="Username" type="text">
+              </div>
+              <div *ngIf="(Username.invalid && Username.touched) || Username.dirty">
+                <small *ngIf="Username.errors?.required"
+                       class="text-danger">{{errorMessages.requiredField('Username')}}</small>
               </div>
             </div>
             <div class="form-group">
@@ -25,9 +31,15 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-at"></i></span>
                 </div>
-                <input class="form-control" placeholder="Email" type="email"
+                <input formControlName="email" class="form-control" placeholder="Email" type="email"
                        name="email"
-                >
+                       [class.is-invalid]="Email.invalid && Email.touched">
+              </div>
+              <div *ngIf="(Email.invalid && Email.touched) || Email.dirty">
+                <small *ngIf="Email.errors?.required"
+                       class="text-danger">{{errorMessages.requiredField('Email')}}</small>
+                <small *ngIf="Email.errors?.pattern"
+                       class="text-danger">{{errorMessages.notValidField("Email")}}</small>
               </div>
             </div>
             <div class="form-group">
@@ -35,17 +47,15 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-lock"></i></span>
                 </div>
-                <input
-                  class="form-control"
-                  placeholder="Password" type="password"
-                  name="password">
+                <input formControlName="password"
+                       [class.is-invalid]="Password.invalid && Password.touched" class="form-control"
+                       placeholder="Password" type="password"
+                       name="password">
               </div>
-            </div>
-            <!-- Newsletter -->
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="defaultRegisterFormNewsletter">
-              <label class="custom-control-label" for="defaultRegisterFormNewsletter">Subscribe to our
-                newsletter</label>
+              <div *ngIf="(Password.invalid && Password.touched) || Password.dirty">
+                <small *ngIf="Password.errors?.required"
+                       class="text-danger">{{errorMessages.requiredField('Password')}}</small>
+              </div>
             </div>
             <div class="text-center">
               <span>Already have an account</span>
@@ -66,3 +76,16 @@
   </div>
 
 </div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#9344d4d"
+  type="ball-spin-clockwise">
+  <p style="font-size: 20px; color: white">
+    Please Wait...
+  </p>
+</ngx-spinner>
+<ng-template #errorTemplate>
+  <app-show-error-dialog
+    [error]="helperService.error"></app-show-error-dialog>
+</ng-template>

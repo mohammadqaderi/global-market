@@ -1,4 +1,4 @@
-import {Injectable, TemplateRef} from '@angular/core';
+import {Injectable, Injector, TemplateRef} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {NgxSpinnerService} from 'ngx-spinner';
@@ -9,17 +9,10 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {extname} from 'path';
 import {TagModel} from '../../models/Tag/tag.model';
 import {MatChipInputEvent} from '@angular/material/chips';
-import {MatTableDataSource} from '@angular/material/table';
 import {ProductModel} from '../../models/Products/product.model';
-import {CategoryModel} from '../../models/Categories/category.model';
-import {SubCategoryModel} from '../../models/Categories/sub-category.model';
-import {OrderModel} from '../../models/Orders/order.model';
-import {PaymentModel} from '../../models/Payments/payment.model';
-import {InvoiceModel} from '../../models/Invoice/invoice.model';
-import {UserModel} from '../../models/Auth/user.model';
-import {NotificationEntity} from '../../models/Notifications/models/notification-entity';
 import {Observable, Subscription} from 'rxjs';
 import {Router} from '@angular/router';
+import {LoginFirstComponent} from '../components/login-first/login-first.component';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +64,14 @@ export class HelperService {
       });
       this.referenceItems = this.referenceItems.filter(ref => ref.id !== this.selectedReferences[i].id);
     }
+  }
+
+  openLoginForm() {
+    const initialState = {
+      helperService: this.injector.get(HelperService)
+    };
+    this.modalRef = this.modalService.show(LoginFirstComponent, {initialState});
+    this.modalRef.content.closeBtnName = 'Close';
   }
 
   removeReference(reference: string) {
@@ -157,18 +158,6 @@ export class HelperService {
     this.files.splice(this.files.indexOf(event), 1);
   }
 
-  //
-
-
-  // Tables Data Sources
-  productDataSource: MatTableDataSource<ProductModel> = new MatTableDataSource<ProductModel>([]);
-  categoryDataSource: MatTableDataSource<CategoryModel> = new MatTableDataSource<CategoryModel>([]);
-  subCategoryDataSource: MatTableDataSource<SubCategoryModel> = new MatTableDataSource<SubCategoryModel>([]);
-  orderDataSource: MatTableDataSource<OrderModel> = new MatTableDataSource<OrderModel>([]);
-  paymentDataSource: MatTableDataSource<PaymentModel> = new MatTableDataSource<PaymentModel>([]);
-  invoiceDataSource: MatTableDataSource<InvoiceModel> = new MatTableDataSource<InvoiceModel>([]);
-  userDataSource: MatTableDataSource<UserModel> = new MatTableDataSource<UserModel>([]);
-  notificationsDataSource: MatTableDataSource<NotificationEntity> = new MatTableDataSource<NotificationEntity>([]);
 
   //
   showErrorDialog(error: any, template: any) {
@@ -181,6 +170,7 @@ export class HelperService {
   constructor(private dialog: MatDialog, private modalService: BsModalService,
               private spinner: NgxSpinnerService,
               private router: Router,
+              private injector: Injector,
               private snackBar: MatSnackBar) {
   }
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {map, shareReplay} from 'rxjs/operators';
@@ -15,6 +15,7 @@ import {Store} from '@ngxs/store';
 export class NavbarComponent implements OnInit {
 
   @ViewChild('sidenav', {static: false}) sidenav: MatSidenav;
+  @ViewChild('enableCookies', {static: false}) enableCookies: TemplateRef<any>;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),

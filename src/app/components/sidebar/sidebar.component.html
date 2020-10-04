@@ -9,9 +9,12 @@
       <span><i class="fas fa-chevron-right"></i></span>
     </a>
     <mat-menu #menu xPosition="after">
-      <button mat-menu-item *ngFor="let subC of category.subCategories;">
-        <span (click)="sidenav.close(); navigateToSubCategory(category, subC)">{{subC.name}}</span>
-      </button>
+      <div *ngFor="let subC of category.subCategories;">
+        <button mat-menu-item (click)="sidenav.close(); navigateToSubCategory(category, subC)">
+          {{subC.name}}
+        </button>
+      </div>
+
     </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>

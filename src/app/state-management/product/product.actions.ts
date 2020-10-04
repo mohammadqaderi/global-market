@@ -1,4 +1,5 @@
 import {ProductModel} from '../../models/Products/product.model';
+import {GetProductsByRangeDto} from '../../commons/public-dto/get-products-by-range.dto';
 
 export interface ProductStateModel {
   shopProducts: ProductModel[];
@@ -45,7 +46,7 @@ export namespace ProductActions {
   export class FetchFilteredProductsByRange {
     static readonly type = '[Product] Fetch Filtered Products By Range';
 
-    constructor(public range1: number, public range2: number) {
+    constructor(public payload: GetProductsByRangeDto) {
     }
   }
 

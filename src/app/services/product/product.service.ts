@@ -6,6 +6,7 @@ import {ApiEndpoints} from '../../commons/api-endpoints';
 import {CartProductModel} from '../../models/Cart/cart-product.model';
 import {UpdateProductDto} from '../../commons/public-dto/update-product.dto';
 import {ProductTagModel} from '../../models/Products/product-tag.model';
+import {GetProductsByRangeDto} from '../../commons/public-dto/get-products-by-range.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -40,13 +41,8 @@ export class ProductService {
     return this._http.get<ProductModel>(`${ApiEndpoints.ProductEndpoints.rootProducts}/${id}`);
   }
 
-  getFilteredProductsByRange(range1: number, range2: number): Observable<ProductModel[]> {
-    let params = new HttpParams();
-    params = params.append('range1', range1.toString());
-    params = params.append('range2', range2.toString());
-    return this._http.get<ProductModel[]>(`${ApiEndpoints.ProductEndpoints.rootProducts}/filtered-by-range`, {
-      params
-    });
+  getFilteredProductsByRange(getProductsByRangeDto: GetProductsByRangeDto): Observable<ProductModel[]> {
+    return this._http.post<ProductModel[]>(`${ApiEndpoints.ProductEndpoints.rootProducts}/filtered-by-range`, getProductsByRangeDto);
   }
 
   getProductsByStockExistence(stock: boolean): Observable<ProductModel[]> {

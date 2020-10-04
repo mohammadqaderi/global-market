@@ -4,7 +4,7 @@
   color="#9344d4d"
   type="ball-spin-clockwise">
   <p style="font-size: 20px; color: white">
-    Please Wait...
+    Loading Product... Hang On
   </p>
 </ngx-spinner>
 <div class="container-fluid" *ngIf="product">
@@ -60,11 +60,71 @@
               </table>
             </div>
             <hr>
-            <button type="button" class="btn btn-light btn-md mr-1 mb-2"><i
+            <button (click)="helperService.openLoginForm()" type="button" class="btn btn-light btn-md mr-1 mb-2"><i
               class="fas fa-shopping-cart pr-2"></i>Add to cart
             </button>
           </div>
         </div>
+
+      </section>
+    </mdb-card-body>
+  </mdb-card>
+  <mdb-card class="m-4" *ngIf="relatedProducts.length >= 1">
+    <mdb-card-header>
+      <h1 class="h1 text-center">Related Products</h1>
+    </mdb-card-header>
+    <mdb-card-body>
+      <section>
+        <!-- Grid row -->
+        <div class="row m-4">
+          <!-- Grid column -->
+          <div class="col-xl-4 mb-4" *ngFor="let product of relatedProducts; let i = index">
+            <!-- Card -->
+            <div class="">
+              <div class="view zoom overlay z-depth-2 rounded">
+                <img class="img-fluid fadeInUp  w-100"
+                     style="max-height: 250px; height: 250px"
+                     [src]="product.images[0]" alt="Sample">
+                <a>
+                  <div class="mask">
+                    <img class="img-fluid w-100"
+                         style="max-height: 250px; height: 250px"
+                         [src]="product.images[0]">
+                    <div class="mask rgba-black-slight"></div>
+                  </div>
+                </a>
+              </div>
+              <div class=" pt-4 text-center">
+                <h4>{{product.name}}</h4>
+                <p *ngIf="product.previousPrice">
+                  <span>{{product.currentPrice}} $</span>
+                  <span class="ml-5">
+                    <del>20 $</del>
+                  </span>
+                </p>
+                <p><strong [innerText]="product.inStock? 'In Stock': 'Out of Stock'"></strong></p>
+
+                <button type="button" class="btn btn-primary  btn-sm mr-1 mb-2"><i
+                  class="fas fa-shopping-cart pr-2"></i>Add to cart
+                </button>
+                <button (click)="helperService.productDetails(product)" type="button"
+                        class="btn  btn-light btn-sm mr-1 mb-2"><i
+                  class="fas fa-info-circle pr-2"></i>Details
+                </button>
+              </div>
+              <hr class="my-2">
+            </div>
+            <!-- Card -->
+          </div>
+          <!-- Grid column -->
+
+
+          <!-- Card -->
+
+          <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
 
       </section>
     </mdb-card-body>

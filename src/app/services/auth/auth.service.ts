@@ -19,8 +19,8 @@ export class AuthService {
     return this._http.post<LoginResponse>(ApiEndpoints.AuthEndpoints.loginUser, authCredentialsDto);
   }
 
-  public registerAdmin(authCredentialsDto: AuthCredentialsDto): Observable<LoginResponse> {
-    return this._http.post<LoginResponse>(ApiEndpoints.AuthEndpoints.registerAdmin, authCredentialsDto);
+  public register(authCredentialsDto: AuthCredentialsDto): Observable<LoginResponse> {
+    return this._http.post<LoginResponse>(ApiEndpoints.AuthEndpoints.registerUser, authCredentialsDto);
   }
 
   public getGlobalData(): Observable<GlobalDataDto> {

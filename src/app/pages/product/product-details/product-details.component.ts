@@ -14,6 +14,7 @@ import FetchAllSubCategories = SubCategoryActions.FetchAllSubCategories;
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit {
+  relatedProducts: ProductModel[] = [];
 
   constructor(public helperService: HelperService,
               public router: Router,
@@ -24,19 +25,33 @@ export class ProductDetailsComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       const productId = +params.get('productId');
       const subCategoryId = +params.get('subCategoryId');
-      if (this.gdService.SubCategories) {
-        const subCategory = this.gdService.SubCategories.find(sc => sc.id === subCategoryId);
-        if (subCategory) {
-          this.subCategory = subCategory;
-          const product = subCategory.products.find(p => p.id === productId);
-          if (product) {
-            this.product = product;
-            this.selectedImage = product.images[0];
+      if (!this.gdService.SubCategories) {
+        this.store.dispatch(new FetchAllSubCategories()).subscribe(() => {
+          this.setData(productId, subCategoryId);
+        });
+      } else {
+        this.setData(productId, subCategoryId);
+      }
+    });
+  }
+
+  setData(productId: number, subCategoryId: number) {
+    const subCategory = this.gdService.SubCategories.find(sc => sc.id === subCategoryId);
+    if (subCategory) {
+      this.subCategory = subCategory;
+      const product = subCategory.products.find(p => p.id === productId);
+      if (product) {
+        this.product = product;
+        this.selectedImage = product.images[0];
+        for (let i = 0; i < product.references.length; i++) {
+          const productModel = subCategory.products.find(p => p.id === product.references[i]);
+          if (productModel) {
+            this.relatedProducts = [...this.relatedProducts, productModel];
           }
         }
       }
-      this.helperService.hideSpinner();
-    });
+    }
+    this.helperService.hideSpinner();
   }
 
   selectedImage: string;
@@ -49,12 +64,7 @@ export class ProductDetailsComponent implements OnInit {
   product: ProductModel;
 
   ngOnInit(): void {
-    if (!this.gdService.SubCategories) {
-      this.helperService.showSpinner();
-      this.store.dispatch(new FetchAllSubCategories()).subscribe(() => {
-        this.helperService.hideSpinner();
-      });
-    }
+
   }
 
 }

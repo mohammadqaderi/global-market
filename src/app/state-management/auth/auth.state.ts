@@ -61,7 +61,7 @@ export class AuthState {
 
   @Action(Register)
   registerAdmin(ctx: StateContext<AuthStateModel>, action: Register) {
-    return this.authService.registerAdmin(action.payload).pipe(
+    return this.authService.register(action.payload).pipe(
       tap((result: LoginResponse) => {
         if (result) {
           ctx.setState({
