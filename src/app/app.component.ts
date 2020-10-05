@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {GlobalDataService} from './shared/services/global-data.service';
 import {Actions, ofActionDispatched} from '@ngxs/store';
 import {HelperService} from './shared/services/helper.service';
@@ -41,5 +41,6 @@ export class AppComponent implements OnInit {
       this.router.navigate(['/no-internet']);
     }));
   };
+
 
 }

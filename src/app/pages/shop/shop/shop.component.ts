@@ -81,6 +81,10 @@ export class ShopComponent implements OnInit {
     this.products = this.gdService.ShopProducts;
   }
 
+  backToTop(){
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+  }
+
   fetchByTagName() {
 
   }

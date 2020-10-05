@@ -11,7 +11,6 @@ import {FileModule} from './modules/file.module';
 import {AddContactsComponent} from './components/add-contacts/add-contacts.component';
 import {MdbModule} from './modules/mdb.module';
 import {LoginFirstComponent} from './components/login-first/login-first.component';
-
 @NgModule({
   declarations: [InvalidCredentialsComponent, ShowErrorDialogComponent, AddContactsComponent, LoginFirstComponent,
   ],

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {HelperService} from '../../../shared/services/helper.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-no-internet',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NoInternetComponent implements OnInit {
 
-  constructor() { }
+  constructor(private helperService: HelperService, private router: Router) {
 
-  ngOnInit(): void {
   }
 
+  ngOnInit(): void {
+    const isOnline = sessionStorage.getItem('isOnline');
+    if (isOnline === 'true') {
+      this.router.navigate(['/home']);
+    }
+  }
+
+  reload() {
+    location.reload();
+  }
 }

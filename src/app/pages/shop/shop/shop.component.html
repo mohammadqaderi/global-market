@@ -136,6 +136,9 @@
             <span *ngIf="showSpinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             <span *ngIf="!showSpinner">Load More</span>
           </button>
+          <button (click)="backToTop()" mdbBtn color="deep-purple" type="button">
+            Back to Top &nbsp; <i class="fas fa-arrow-up"></i>
+          </button>
         </div>
       </mdb-card-footer>
     </mdb-card>

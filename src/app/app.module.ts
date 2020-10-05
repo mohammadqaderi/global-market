@@ -1,4 +1,3 @@
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -25,6 +24,7 @@ import {TokenInterceptor} from './services/auth/token.interceptor';
 import {ErrorInterceptor} from './services/auth/error.interceptor';
 import {TagLayoutComponent} from './layouts/tag-layout/tag-layout.component';
 import {CookieService} from 'ngx-cookie-service';
+import {BrowserModule} from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -44,6 +44,7 @@ import {CookieService} from 'ngx-cookie-service';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     AppRoutingModule,
