@@ -35,13 +35,6 @@ export class CategoryState {
   }
 
 
-  private getCloneCategory(id: number) {
-    return Object.assign({}, this.store.selectSnapshot(CategoryState.Categories)
-      .find(category => category.id === id));
-  }
-
-
-
   @Action(ClearCategory)
   clearCategories(ctx: StateContext<CategoryStateModel>, action: ClearCategory) {
     ctx.setState({

@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HelperService} from '../../../shared/services/helper.service';
-import {Select, Store} from '@ngxs/store';
+import {Store} from '@ngxs/store';
 import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {ProductActions} from '../../../state-management/product/product.actions';
 import {SubCategoryActions} from '../../../state-management/sub-category/sub-category.actions';
@@ -9,14 +9,14 @@ import FetchShopProducts = ProductActions.FetchShopProducts;
 import {MatPaginator} from '@angular/material/paginator';
 import {SubCategoryModel} from '../../../models/Categories/sub-category.model';
 import {ProductModel} from '../../../models/Products/product.model';
-import {GetProductsByRangeDto} from '../../../commons/public-dto/get-products-by-range.dto';
-import FetchFilteredProductsByRange = ProductActions.FetchFilteredProductsByRange;
+import FetchCustomProducts = ProductActions.FetchCustomProducts;
+import {ProductsCustomFilterDto} from '../../../commons/public-dto/products-custom-filter.dto';
 
 export enum LoadType {
-  RANGE = 'RANGE',
+  TAG = 'TAG',
   SHOP_PRODUCTS = 'SHOP_PRODUCTS',
   SUB_CATEGORY = 'SUBCATEGORY',
-
+  CUSTOM = 'CUSTOM'
 }
 
 @Component({
@@ -26,20 +26,19 @@ export enum LoadType {
 })
 export class ShopComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  getProductsByRangeDto: GetProductsByRangeDto = {
-    range1: null,
-    range2: null,
-    take: null,
-    skip: null
-  };
-  type: any;
-  dateForm = {
-    date: null
-  };
+  subCategory: SubCategoryModel;
   showSpinner = false;
   products: ProductModel[] = [];
   startDate = new Date(2016, 11, 1);
   scId: number;
+
+  productsCustomFilterDto: ProductsCustomFilterDto = {
+    range1: null,
+    range2: null,
+    take: null,
+    skip: null,
+    stock: null
+  };
 
   constructor(public helperService: HelperService,
               public store: Store,
@@ -49,16 +48,15 @@ export class ShopComponent implements OnInit {
 
   onSubCategorySelect(subCategory: SubCategoryModel) {
     this.scId = subCategory.id;
+    localStorage.setItem('loadType', LoadType.SUB_CATEGORY);
   }
 
   setRange1(value: number) {
-    this.getProductsByRangeDto.range1 = value;
-    this.fetchByRanges();
+    this.productsCustomFilterDto.range1 = value;
   }
 
   setRange2(value: number) {
-    this.getProductsByRangeDto.range2 = value;
-    this.fetchByRanges();
+    this.productsCustomFilterDto.range2 = value;
   }
 
   ngOnInit(): void {
@@ -75,7 +73,7 @@ export class ShopComponent implements OnInit {
         this.helperService.hideSpinner();
       });
     }
-    this.type = LoadType.SHOP_PRODUCTS;
+    localStorage.setItem('loadType', LoadType.SHOP_PRODUCTS);
     this.refreshProducts();
   }
 
@@ -87,30 +85,28 @@ export class ShopComponent implements OnInit {
 
   }
 
-  fetchBySubCategoryName(subCategory: SubCategoryModel) {
-    this.products = [];
-    this.products = [].concat(subCategory.products.slice(0, 10));
-  }
-
-  fetchByRanges() {
-    if (!this.getProductsByRangeDto.range1) {
-      return;
-    }
-    if (!this.getProductsByRangeDto.range2) {
-      return;
-    }
-    this.type = LoadType.RANGE;
-    this.getProductsByRangeDto.take = 15;
+  loadCustomProducts() {
+    this.setTakeLength(10);
+    localStorage.setItem('loadType', LoadType.CUSTOM);
     this.helperService.showSpinner();
-    this.store.dispatch(new FetchFilteredProductsByRange(this.getProductsByRangeDto)).subscribe(() => {
+    this.store.dispatch(new FetchCustomProducts(this.productsCustomFilterDto)).subscribe(() => {
       this.refreshProducts();
       this.helperService.hideSpinner();
     });
   }
 
+
+  fetchBySubCategoryName(subCategory: SubCategoryModel, slice: number) {
+    this.subCategory = Object.assign({}, subCategory);
+    this.products = [];
+    this.products = [].concat(subCategory.products.slice(0, slice));
+    this.showSpinner = false;
+  }
+
   loadMore() {
+    const type = localStorage.getItem('loadType');
     this.showSpinner = true;
-    switch (this.type) {
+    switch (type) {
       case LoadType.SHOP_PRODUCTS: {
         this.store.dispatch(new FetchShopProducts(this.products.length + 10)).subscribe(() => {
           this.refreshProducts();
@@ -118,18 +114,31 @@ export class ShopComponent implements OnInit {
         });
         break;
       }
-      case LoadType.RANGE: {
-        this.getProductsByRangeDto.take = this.products.length + 10;
-        this.store.dispatch(new FetchFilteredProductsByRange(this.getProductsByRangeDto)).subscribe(() => {
+      case LoadType.CUSTOM: {
+        this.productsCustomFilterDto.take = this.products.length + 10;
+        this.setSkipLength(this.products.length);
+        this.store.dispatch(new FetchCustomProducts(this.productsCustomFilterDto)).subscribe(() => {
           this.refreshProducts();
           this.showSpinner = false;
         });
         break;
       }
       case LoadType.SUB_CATEGORY: {
+        setTimeout(() => {
+          this.fetchBySubCategoryName(this.subCategory, this.products.length + 5);
+        }, 1000);
         break;
       }
     }
   }
+
+  setSkipLength(length: number) {
+    this.productsCustomFilterDto.skip = length;
+  }
+
+  setTakeLength(length: number) {
+    this.productsCustomFilterDto.take = length;
+  }
+
 
 }

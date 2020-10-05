@@ -2,7 +2,7 @@
   <div class="col-xl-4">
     <mdb-card>
       <mdb-card-header>
-        Filter
+        <h2 class="h2">General Filter</h2>
       </mdb-card-header>
       <mdb-card-body>
         <div class="row">
@@ -13,7 +13,7 @@
         <div class="row">
           <div class="col-xl-6 " *ngFor="let sc of gdService.SubCategories">
             <a [ngClass]="{'bg-primary': scId === sc.id}"
-               (click)="onSubCategorySelect(sc); fetchBySubCategoryName(sc)"
+               (click)="onSubCategorySelect(sc); fetchBySubCategoryName(sc, 10)"
                mat-button class="nav-link">
               {{sc.name}}
             </a>
@@ -31,7 +31,9 @@
           </a>
         </div>
 
-        <hr class="my-2">
+        <mat-divider class="my-2 w-100" style="width: 100%"></mat-divider>
+        <h2>Custom Filter</h2>
+        <mat-divider class="my-1 w-100" style="width: 100%"></mat-divider>
         <div class="row">
           <div class="col-xl-12">
             <h3>Price</h3>
@@ -39,19 +41,19 @@
         </div>
         <div class="row">
           <div class="col-xl-12">
-            <span>Min Range: {{getProductsByRangeDto.range1 ? getProductsByRangeDto.range1 : 0}}</span>
-            <mat-slider class="example-full-width" #range1 min="10" (valueChange)="setRange1(range1.value)" value="40"
-                        [max]="getProductsByRangeDto.range2? getProductsByRangeDto.range2: 500"
+            <span>Min Range: {{productsCustomFilterDto.range1 ? productsCustomFilterDto.range1 : 0}}</span>
+            <mat-slider class="example-full-width" #range1 min="10" (valueChange)="setRange1(range1.value)"
+                        [max]="productsCustomFilterDto.range2? productsCustomFilterDto.range2: 500"
                         tickInterval="auto"
                         step="3" color="warn" thumbLabel></mat-slider>
           </div>
         </div>
         <div class="row">
           <div class="col-xl-12">
-            <span>Max Range: {{getProductsByRangeDto.range2 ? getProductsByRangeDto.range2 : 0}}</span>
+            <span>Max Range: {{productsCustomFilterDto.range2 ? productsCustomFilterDto.range2 : 0}}</span>
             <mat-slider class="example-full-width" #range2
-                        [min]="getProductsByRangeDto.range1? getProductsByRangeDto.range1 : 10"
-                        (valueChange)="setRange2(range2.value)" value="40"
+                        [min]="productsCustomFilterDto.range1? productsCustomFilterDto.range1 : 10"
+                        (valueChange)="setRange2(range2.value)"
                         max="7000"
                         tickInterval="auto"
                         step="3" color="warn" thumbLabel></mat-slider>
@@ -60,36 +62,21 @@
         <hr class="my-2">
         <div class="row">
           <div class="col-xl-12">
-            <div class="custom-control custom-radio custom-control-inline">
-              <input checked type="radio" class="custom-control-input" id="defaultInline1"
-                     name="inlineDefaultRadiosExample"
-                     mdbInput>
-              <label class="custom-control-label" for="defaultInline1">None</label>
-            </div>
-            <!-- Default inline 1-->
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample"
-                     mdbInput>
-              <label class="custom-control-label" for="defaultInline2">In Stock</label>
-            </div>
-            <!-- Default inline 2-->
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="defaultInline3" name="inlineDefaultRadiosExample"
-                     mdbInput>
-              <label class="custom-control-label" for="defaultInline3">Out of Stock</label>
-            </div>
-          </div>
-        </div>
-        <hr class="my-2">
-        <div class="row">
-          <div class="col-xl-12">
-            <mat-form-field class="example-full-width">
-              <mat-label>Choose a date</mat-label>
-              <input matInput name="date" [(ngModel)]="dateForm.date" [matDatepicker]="picker">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+            <mat-form-field style="width: 100%">
+              <mat-label>Availability</mat-label>
+              <mat-select name="stock" placeholder="Availability"
+                          [(ngModel)]="productsCustomFilterDto.stock">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let state of ['In Stock', 'Out of Stock']"
+                            [value]="state">{{state}}</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
+        </div>
+        <div class="row justify-content-center my-2">
+          <button (click)="loadCustomProducts()" mdbBtn type="button" color="elegant" mdbWavesEffect>Filter <i
+            class="fas fa-filter"></i>
+          </button>
         </div>
       </mdb-card-body>
     </mdb-card>

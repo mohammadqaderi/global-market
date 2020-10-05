@@ -21,6 +21,14 @@ import ClearInvoicesFromStorage = InvoiceActions.ClearInvoicesFromStorage;
 import ClearOrdersFromStorage = OrderActions.ClearOrdersFromStorage;
 import ClearPaymentsFromStorage = PaymentActions.ClearPaymentsFromStorage;
 import {Router} from '@angular/router';
+import {CategoryActions} from '../../state-management/category/category.actions';
+import ClearCategory = CategoryActions.ClearCategory;
+import {ProductActions} from '../../state-management/product/product.actions';
+import ClearProducts = ProductActions.ClearProducts;
+import {SubCategoryActions} from '../../state-management/sub-category/sub-category.actions';
+import ClearSubCategory = SubCategoryActions.ClearSubCategory;
+import {TagActions} from '../../state-management/tag/tag.actions';
+import ClearTags = TagActions.ClearTags;
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +37,7 @@ export class GlobalDataService {
 
   constructor(private store: Store, private router: Router) {
   }
+
 
   get User() {
     return this.store.selectSnapshot(AuthState.User);
@@ -49,6 +58,7 @@ export class GlobalDataService {
   get ShopProducts() {
     return this.store.selectSnapshot(ProductState.ShopProducts);
   }
+
 
   get MonthProducts() {
     return this.store.selectSnapshot(ProductState.MonthProducts);
@@ -104,6 +114,19 @@ export class GlobalDataService {
   }
 
 
+  clearAllData() {
+    return this.store.dispatch([
+      new Logout(),
+      new ClearProfileData(),
+      new ClearInvoicesFromStorage(),
+      new ClearOrdersFromStorage(),
+      new ClearPaymentsFromStorage(),
+      new ClearCategory(),
+      new ClearProducts(),
+      new ClearSubCategory(),
+      new ClearTags()]);
+  }
+
   userLogout() {
     return this.store.dispatch([
       new Logout(),
@@ -111,7 +134,7 @@ export class GlobalDataService {
       new ClearInvoicesFromStorage(),
       new ClearOrdersFromStorage(),
       new ClearPaymentsFromStorage()]).subscribe(() => {
-        this.router.navigate(['/auth/login'])
+      this.router.navigate(['/auth/login']);
     });
   }
 }

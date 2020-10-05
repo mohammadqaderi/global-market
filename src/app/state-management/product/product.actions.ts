@@ -1,5 +1,5 @@
 import {ProductModel} from '../../models/Products/product.model';
-import {GetProductsByRangeDto} from '../../commons/public-dto/get-products-by-range.dto';
+import {ProductsCustomFilterDto} from '../../commons/public-dto/products-custom-filter.dto';
 
 export interface ProductStateModel {
   shopProducts: ProductModel[];
@@ -43,20 +43,13 @@ export namespace ProductActions {
     }
   }
 
-  export class FetchFilteredProductsByRange {
-    static readonly type = '[Product] Fetch Filtered Products By Range';
 
-    constructor(public payload: GetProductsByRangeDto) {
+  export class FetchCustomProducts {
+    static readonly type = '[Product] Fetch Custom Products';
+
+    constructor(public productsCustomFilterDto: ProductsCustomFilterDto) {
     }
   }
-
-  export class FetchProductsByStockExistence {
-    static readonly type = '[Product] Fetch Products By Stock Existence';
-
-    constructor(public stock: boolean) {
-    }
-  }
-
 
   export class AddToCart {
     static readonly type = '[Product] Add To Cart';

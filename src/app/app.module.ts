@@ -24,6 +24,7 @@ import {ProductLayoutComponent} from './layouts/product-layout/product-layout.co
 import {TokenInterceptor} from './services/auth/token.interceptor';
 import {ErrorInterceptor} from './services/auth/error.interceptor';
 import {TagLayoutComponent} from './layouts/tag-layout/tag-layout.component';
+import {CookieService} from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import {TagLayoutComponent} from './layouts/tag-layout/tag-layout.component';
       useClass: ErrorInterceptor,
       multi: true
     },
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

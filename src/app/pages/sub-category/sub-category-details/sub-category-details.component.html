@@ -1,15 +1,12 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="subCategory">
   <div class="card m-4">
     <section>
-      <!-- Grid row -->
       <div class="row m-4">
         <div *ngIf="subCategory && subCategory.products.length === 0" class="col-xl-12">
-          <h2 class="text-center text-uppercase"> No Products Available in this sub category yet!
+          <h2 class="text-center "> No Products Available in this sub category yet!
           </h2>
         </div>
-        <!-- Grid column -->
-        <div class="col-md-3 mb-4" *ngFor="let product of subCategory.products; let i = index">
-          <!-- Card -->
+        <div class="col-md-3 mb-4" *ngFor="let product of products; let i = index">
           <div class="">
             <div class="view zoom overlay z-depth-2 rounded">
               <img class="img-fluid w-100"
@@ -37,22 +34,32 @@
               </button>
 
             </div>
-            <hr class="my-2">
           </div>
-          <!-- Card -->
         </div>
-        <!-- Grid column -->
-
-
-        <!-- Card -->
-
-        <!-- Grid column -->
-
       </div>
-      <!-- Grid row -->
-
     </section>
-    <!--Section: Block Content-->
-
+  </div>
+  <div class="card m-4">
+    <div class="card-body">
+      <div class="row justify-content-center">
+        <button
+          (click)="loadMoreProducts()"
+          mdbBtn
+          color="primary" type="button">
+        <span *ngIf="showSpinner" class="spinner-border spinner-border-sm" role="status"
+              aria-hidden="true"></span>
+          <span *ngIf="!showSpinner">Load More</span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="large"
+  color="#9344d4d"
+  type="ball-spin-clockwise">
+  <p style="font-size: 20px; color: white">
+    Loading...
+  </p>
+</ngx-spinner>
