@@ -43,6 +43,12 @@ export namespace ProductActions {
     }
   }
 
+  export class FetchMixLatestProducts {
+    static readonly type = '[Product] Fetch Mix Latest Products';
+
+    constructor() {
+    }
+  }
 
   export class FetchCustomProducts {
     static readonly type = '[Product] Fetch Custom Products';

@@ -28,16 +28,21 @@
                 mat-button routerLink="/auth/register">
           Register <i class="far fa-user-circle"></i>
         </button>
-        <button *ngIf="gdService.IsAuthenticated()" mat-button>
+        <button *ngIf="gdService.IsAuthenticated()" (click)="drawer.close()" routerLink="/cart" mat-button>
           Cart <i class="fas fa-cart-arrow-down"></i>
         </button>
         <div *ngIf="gdService.IsAuthenticated()" class="vl ml-2"></div>
-        <button *ngIf="gdService.IsAuthenticated()" mat-button>
+        <button (click)="drawer.close()" *ngIf="gdService.IsAuthenticated()" routerLink="/user-profile" mat-button>
           Profile <i class="fas fa-user-circle"></i>
         </button>
         <div *ngIf="gdService.IsAuthenticated()" class="vl ml-2"></div>
         <button (click)="drawer.close(); gdService.userLogout()" *ngIf="gdService.IsAuthenticated()" mat-button>
           Logout <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </mat-toolbar-row>
+      <mat-toolbar-row class="bg-primary">
+        <button (click)="drawer.close();" routerLink="/shop" mat-button>
+          Shop Now <i class="fab fa-shopify"></i>
         </button>
       </mat-toolbar-row>
     </mat-toolbar>
@@ -74,26 +79,40 @@
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
         <div class="offset-8" *ngIf="!(isHandset$ | async)">
-          <a *ngIf="gdService.IsAuthenticated()" mat-button class="nav-link h5 text-white"
-             routerLink="/">
-            Cart &nbsp; <i class="fas fa-cart-arrow-down"></i>
+          <a *ngIf="gdService.IsAuthenticated()"  mat-button class="nav-link h5 text-white"
+             routerLink="/cart">
+            Cart <i matBadge="5" class="fas fa-cart-arrow-down" matBadgeOverlap="false"
+                    matBadgePosition="above after" matBadgeSize="medium"
+                    matBadgeColor="accent"></i>
           </a>
-          <a *ngIf="gdService.IsAuthenticated()" mat-button class="nav-link h5 text-white"
-             routerLink="/">
+          <a *ngIf="gdService.IsAuthenticated()" mat-button [mat-menu-trigger-for]="userMenu"
+             class="nav-link ml-2 h5 text-white">
             {{gdService.Username}}
           </a>
-          <a (click)="gdService.userLogout()" *ngIf="gdService.IsAuthenticated()" class="nav-link h5 text-white"
+          <mat-menu overlapTrigger #userMenu>
+            <button mat-menu-item routerLink="/user-profile">
+              Profile
+            </button>
+            <button mat-menu-item routerLink="/orders">
+              Orders
+            </button>
+            <button mat-menu-item routerLink="invoices">
+              Invoices
+            </button>
+          </mat-menu>
+          <a (click)="gdService.userLogout()" *ngIf="gdService.IsAuthenticated()" class="nav-link ml-2 h5 text-white"
              mat-button
              routerLinkActive="active"
           >
             Logout <i class="fas fa-sign-out-alt"></i>
           </a>
-          <a *ngIf="!gdService.IsAuthenticated()" class="nav-link h5 text-white" mat-button
+          <a *ngIf="!gdService.IsAuthenticated()" class="nav-link ml-2 h5 text-white" mat-button
              routerLink="/auth/login" routerLinkActive="active"
           >
             Login <i class="fas fa-sign-in-alt"></i>
           </a>
-          <a *ngIf="!gdService.IsAuthenticated()" class="nav-link h5 text-white" mat-button routerLink="/auth/register"
+          <a *ngIf="!gdService.IsAuthenticated()" class="nav-link ml-2 h5 text-white" mat-button
+             routerLink="/auth/register"
              routerLinkActive="active"
           >
             Register <i class="far fa-user-circle"></i>

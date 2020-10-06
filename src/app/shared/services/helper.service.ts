@@ -196,10 +196,6 @@ export class HelperService {
     this.modalRef.hide();
   }
 
-  applyFilter(dataSource: any, event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    dataSource.filter = filterValue.trim().toLowerCase();
-  }
 
   // For Spinners
   showSpinner() {
@@ -208,18 +204,6 @@ export class HelperService {
 
   hideSpinner() {
     this.spinner.hide();
-  }
-
-  getFile(event) {
-    return event.files[0] as File;
-  }
-
-  getFileExtension(file) {
-    return extname(file.name);
-  }
-
-  isValidImageType(fileExtension) {
-    return this.validImageTypes.some(type => type === fileExtension);
   }
 
   productDetails(product: ProductModel) {
@@ -233,11 +217,6 @@ export class HelperService {
 
   onImageSelect(event) {
     const file = event.files[0] as File;
-    const fileExtension = this.getFileExtension(file);
-    if (!this.isValidImageType(fileExtension)) {
-      this.isInvalidImageType = true;
-      return;
-    }
     const imageReader = new FileReader();
     this.imageFormData.append('image', file);
     imageReader.onload = (d: any) => {
@@ -246,8 +225,6 @@ export class HelperService {
     imageReader.onerror = (e: any) => {
       console.log('File could not be read: ' + e.target.error.code);
     };
-    this.imageErrorMessage = null;
-    this.isInvalidImageType = false;
     imageReader.readAsDataURL(file);
   }
 

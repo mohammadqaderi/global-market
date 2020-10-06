@@ -1,4 +1,4 @@
-import {Action, Selector, State, StateContext} from '@ngxs/store';
+import {Action, Selector, State, StateContext, Store} from '@ngxs/store';
 import {ProfileActions, ProfileStateModel} from './profile.actions';
 import {Injectable} from '@angular/core';
 import {ProfileService} from '../../services/profile/profile.service';
@@ -10,7 +10,8 @@ import SetProfileImage = ProfileActions.SetProfileImage;
 import ChangeProfileImage = ProfileActions.ChangeProfileImage;
 import DeleteProfileImage = ProfileActions.DeleteProfileImage;
 import ClearProfileData = ProfileActions.ClearProfileData;
-import CreateAdminProfile = ProfileActions.CreateAdminProfile;
+import {SetUserProfile} from '../auth/auth-actions';
+import CreateUserProfile = ProfileActions.CreateUserProfile;
 
 
 @State<ProfileStateModel>({
@@ -21,7 +22,7 @@ import CreateAdminProfile = ProfileActions.CreateAdminProfile;
 })
 @Injectable()
 export class ProfileState {
-  constructor(private profileService: ProfileService) {
+  constructor(private profileService: ProfileService, private store: Store) {
   }
 
   @Selector()
@@ -29,13 +30,14 @@ export class ProfileState {
     return state.profile;
   }
 
-  @Action(CreateAdminProfile)
-  createAdminProfile(ctx: StateContext<ProfileStateModel>, action: CreateAdminProfile) {
-    return this.profileService.createAdminProfile(action.createProfileDto).pipe(
+  @Action(CreateUserProfile)
+  createUserProfile(ctx: StateContext<ProfileStateModel>, action: CreateUserProfile) {
+    return this.profileService.createUserProfile(action.createProfileDto).pipe(
       tap((profile: ProfileModel) => {
         ctx.setState({
           profile
         });
+        this.store.dispatch(new SetUserProfile(profile.id));
       })
     );
   }
@@ -49,7 +51,7 @@ export class ProfileState {
 
   @Action(EditProfile)
   editProfile(ctx: StateContext<ProfileStateModel>, action: EditProfile) {
-    return this.profileService.editAdminProfile(action.updateProfileDto).pipe(
+    return this.profileService.editUserProfile(action.updateProfileDto).pipe(
       tap((profile: ProfileModel) => {
         ctx.patchState({
           profile
@@ -59,8 +61,8 @@ export class ProfileState {
   }
 
   @Action(FetchUserProfile)
-  fetchAdminProfile(ctx: StateContext<ProfileStateModel>, action: FetchUserProfile) {
-    return this.profileService.getAdminProfile().pipe(
+  fetchUserProfile(ctx: StateContext<ProfileStateModel>, action: FetchUserProfile) {
+    return this.profileService.getUserProfile().pipe(
       tap((profile: ProfileModel) => {
         ctx.setState({
           profile

@@ -8,6 +8,7 @@ import {
 import {Observable, throwError} from 'rxjs';
 import {HelperService} from '../helper.service';
 import {Router} from '@angular/router';
+import {browser} from 'protractor';
 
 @Injectable()
 export class CheckConnectionInterceptor implements HttpInterceptor {
@@ -27,7 +28,11 @@ export class CheckConnectionInterceptor implements HttpInterceptor {
         statusText: 'Check Connectivity!'
       };
       this.helperService.setIsOnline(false);
-      this.router.navigate(['/no-internet']);
+      this.router.navigate(['/no-internet'], {
+        queryParams: {
+          returnUrl: this.router.url
+        }
+      });
       return throwError(new HttpErrorResponse(error));
     } else {
       // else return the normal request

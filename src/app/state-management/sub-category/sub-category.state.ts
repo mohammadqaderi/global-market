@@ -37,11 +37,6 @@ export class SubCategoryState {
     );
   }
 
-  getCloneSubCategory(id: number) {
-    return Object.assign({},
-      this.store.selectSnapshot(SubCategoryState.SubCategories).find(sub => sub.id === id));
-  }
-
 
   @Action(ClearSubCategory)
   clearSubCategories(ctx: StateContext<SubCategoryStateModel>, action: ClearSubCategory) {

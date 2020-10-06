@@ -29,6 +29,7 @@ import {SubCategoryActions} from '../../state-management/sub-category/sub-catego
 import ClearSubCategory = SubCategoryActions.ClearSubCategory;
 import {TagActions} from '../../state-management/tag/tag.actions';
 import ClearTags = TagActions.ClearTags;
+import {CartState} from '../../state-management/cart/cart.state';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,10 @@ export class GlobalDataService {
 
   get Username() {
     return this.store.selectSnapshot(AuthState.Username);
+  }
+
+  get Cart() {
+    return this.store.selectSnapshot(CartState.Cart);
   }
 
   get Categories() {

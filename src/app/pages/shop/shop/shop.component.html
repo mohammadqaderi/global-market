@@ -109,9 +109,9 @@
                 <div class=" pt-4 text-center">
                   <h4>{{product.name}}</h4>
                   <p>
-                    <span>{{product.currentPrice}} $</span>
+                    <span> ${{product.currentPrice}}</span>
                     <span class="ml-5">
-                    <del>20 $</del>
+                    <span class="text-grey"><s>$36.99</s></span>
                   </span>
                   </p>
                   <p><strong [innerText]="product.inStock? 'In Stock': 'Out of Stock'"></strong></p>

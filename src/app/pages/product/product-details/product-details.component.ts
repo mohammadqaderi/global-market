@@ -35,6 +35,9 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
+  backToTop(){
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+  }
   setData(productId: number, subCategoryId: number) {
     const subCategory = this.gdService.SubCategories.find(sc => sc.id === subCategoryId);
     if (subCategory) {

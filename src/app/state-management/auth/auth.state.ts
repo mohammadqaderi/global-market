@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Action, Selector, State, StateContext, Store} from '@ngxs/store';
-import {AuthStateModel, Login, Logout, Register, UpdateToken} from './auth-actions';
+import {AuthStateModel, Login, Logout, Register, SetUserCart, SetUserProfile, UpdateToken} from './auth-actions';
 import {tap} from 'rxjs/operators';
 import {AuthService} from '../../services/auth/auth.service';
 import {LoginResponse} from '../../commons/interfaces/login-response';
@@ -71,6 +71,24 @@ export class AuthState {
         }
       })
     );
+  }
+
+  @Action(SetUserProfile)
+  setUserProfile(ctx: StateContext<AuthStateModel>, action: SetUserProfile) {
+    const user = Object.assign({}, ctx.getState().user);
+    user.profileId = action.profileId;
+    ctx.patchState({
+      user
+    });
+  }
+
+  @Action(SetUserCart)
+  setUserCart(ctx: StateContext<AuthStateModel>, action: SetUserCart) {
+    const user = Object.assign({}, ctx.getState().user);
+    user.cartId = action.cartId;
+    ctx.patchState({
+      user
+    });
   }
 
   @Action(UpdateToken)

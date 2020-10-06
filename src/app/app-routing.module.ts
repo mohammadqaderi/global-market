@@ -9,6 +9,7 @@ import {ProductLayoutComponent} from './layouts/product-layout/product-layout.co
 import {InvoiceLayoutComponent} from './layouts/invoice-layout/invoice-layout.component';
 import {TagLayoutComponent} from './layouts/tag-layout/tag-layout.component';
 import {ShopLayoutComponent} from './layouts/shop-layout/shop-layout.component';
+import {CartLayoutComponent} from './layouts/cart-layout/cart-layout.component';
 
 
 const routes: Routes = [
@@ -54,6 +55,17 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('./layouts/sub-category-layout/sub-category-layout.module').then(subC => subC.SubCategoryLayoutModule)
+      }
+    ]
+  },
+  {
+    path: '',
+    component: CartLayoutComponent,
+    canActivate: [UserAuthGuard],
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./layouts/cart-layout/cart-layout.module').then(c => c.CartLayoutModule)
       }
     ]
   },

@@ -4,7 +4,7 @@ import {HelperService} from '../../../shared/services/helper.service';
 import {Store} from '@ngxs/store';
 import {ProductActions} from '../../../state-management/product/product.actions';
 import FetchMostSalesProducts = ProductActions.FetchMostSalesProducts;
-import FetchMonthProducts = ProductActions.FetchMonthProducts;
+import FetchMixLatestProducts = ProductActions.FetchMixLatestProducts;
 
 @Component({
   selector: 'app-home',
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     }
     if (!this.gdService.MonthProducts) {
       this.helperService.showSpinner();
-      this.store.dispatch(new FetchMonthProducts()).subscribe(() => {
+      this.store.dispatch(new FetchMixLatestProducts()).subscribe(() => {
         this.helperService.hideSpinner();
       });
     }

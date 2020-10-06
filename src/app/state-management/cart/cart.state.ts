@@ -1,4 +1,4 @@
-import {Action, Selector, State, StateContext} from '@ngxs/store';
+import {Action, Selector, State, StateContext, Store} from '@ngxs/store';
 import {Injectable} from '@angular/core';
 import {CartActions, CartStateModel} from './cart.actions';
 import {CartService} from '../../services/cart/cart.service';
@@ -12,6 +12,7 @@ import CheckoutOnCart = CartActions.CheckoutOnCart;
 import {CheckoutReturnData} from '../../commons/interfaces/checkout-return-data';
 import CheckoutOnSingleProduct = CartActions.CheckoutOnSingleProduct;
 import RemoveProductsFromCart = CartActions.RemoveProductsFromCart;
+import {SetUserCart} from '../auth/auth-actions';
 
 
 @State<CartStateModel>({
@@ -22,7 +23,7 @@ import RemoveProductsFromCart = CartActions.RemoveProductsFromCart;
 })
 @Injectable()
 export class CartState {
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService, private store: Store) {
   }
 
   @Selector()
@@ -48,6 +49,7 @@ export class CartState {
         ctx.setState({
           cart
         });
+        this.store.dispatch(new SetUserCart(cart.id));
       })
     );
   }

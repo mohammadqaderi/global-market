@@ -13,16 +13,16 @@ export class ProfileService {
   constructor(private _http: HttpClient) {
   }
 
-  getAdminProfile(): Observable<ProfileModel> {
+  getUserProfile(): Observable<ProfileModel> {
     return this._http.get<ProfileModel>(`${ApiEndpoints.ProfileEndpoints.rootProfile}/user-profile`);
   }
 
-  createAdminProfile(createProfileDto: CreateProfileDto): Observable<ProfileModel> {
+  createUserProfile(createProfileDto: CreateProfileDto): Observable<ProfileModel> {
     return this._http.post<ProfileModel>
     (`${ApiEndpoints.ProfileEndpoints.rootProfile}/create-profile`, createProfileDto);
   }
 
-  editAdminProfile(updateProfileDto: CreateProfileDto): Observable<ProfileModel> {
+  editUserProfile(updateProfileDto: CreateProfileDto): Observable<ProfileModel> {
     return this._http.put<ProfileModel>
     (`${ApiEndpoints.ProfileEndpoints.rootProfile}/user-profile/edit-profile`, updateProfileDto);
   }

@@ -6,6 +6,7 @@ import {Logout} from './state-management/auth/auth-actions';
 import {fromEvent} from 'rxjs';
 import {Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
+import {browser} from 'protractor';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +20,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    window.onclose = (e) => {
-      this.gdService.clearAllData().subscribe(() => {
-
-      });
-    };
     this.checkOnlineStatus();
     this.actions.pipe(ofActionDispatched(Logout)).subscribe(() => {
       this.router.navigate(['/auth/login']);
@@ -38,8 +34,25 @@ export class AppComponent implements OnInit {
     }));
     this.helperService.subscriptions.push(this.helperService.offlineEvent.subscribe(() => {
       this.helperService.setIsOnline(false);
-      this.router.navigate(['/no-internet']);
+      this.router.navigate(['/no-internet'], {
+        queryParams: {
+          returnUrl: this.router.url
+        }
+      });
     }));
+    let onlineStatus = false;
+    if (sessionStorage.getItem('isOnline') === 'true') {
+      onlineStatus = true;
+    } else {
+      onlineStatus = false;
+    }
+    if (!onlineStatus) {
+      this.router.navigate(['/no-internet'], {
+        queryParams: {
+          returnUrl: this.router.url
+        }
+      });
+    }
   };
 
 

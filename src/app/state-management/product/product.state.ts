@@ -10,6 +10,8 @@ import FetchMostSalesProducts = ProductActions.FetchMostSalesProducts;
 import FetchMonthProducts = ProductActions.FetchMonthProducts;
 import FetchShopProducts = ProductActions.FetchShopProducts;
 import FetchCustomProducts = ProductActions.FetchCustomProducts;
+import {SubCategoryService} from '../../services/category/sub-category.service';
+import FetchMixLatestProducts = ProductActions.FetchMixLatestProducts;
 
 @State<ProductStateModel>({
   name: 'products',
@@ -23,6 +25,7 @@ import FetchCustomProducts = ProductActions.FetchCustomProducts;
 @Injectable()
 export class ProductState {
   constructor(private productService: ProductService,
+              private subCategoryService: SubCategoryService,
               private store: Store) {
   }
 
@@ -74,16 +77,19 @@ export class ProductState {
     );
   }
 
-  @Action(FetchMonthProducts)
-  fetchMonthProducts(ctx: StateContext<ProductStateModel>, action: FetchMonthProducts) {
-    return this.productService.getMonthProducts().pipe(
+
+  @Action(FetchMixLatestProducts)
+  fetchMixLatestProducts(ctx: StateContext<ProductStateModel>, action: FetchMixLatestProducts) {
+    return this.subCategoryService.getMixLatestProducts().pipe(
       tap((data: ProductModel[]) => {
+        console.log(data.length);
         ctx.setState(patch({
           currentMonthProducts: data
         }));
       })
     );
   }
+
 
   @Action(ClearProducts)
   clearProducts(ctx: StateContext<ProductStateModel>, action: ClearProducts) {

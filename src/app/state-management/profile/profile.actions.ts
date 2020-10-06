@@ -6,8 +6,8 @@ export interface ProfileStateModel {
 }
 
 export namespace ProfileActions {
-  export class CreateAdminProfile {
-    static readonly type = '[Profile] Create Admin Profile';
+  export class CreateUserProfile {
+    static readonly type = '[Profile] Create User Profile';
 
     constructor(public createProfileDto: CreateProfileDto) {
     }
@@ -50,6 +50,7 @@ export namespace ProfileActions {
 
   export class ClearProfileData {
     static readonly type = '[Profile] Clear Profile Data';
+
     constructor() {
     }
   }

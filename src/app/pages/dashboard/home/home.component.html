@@ -1,12 +1,23 @@
 <ngx-spinner
   bdColor="rgba(51,51,51,0.8)"
-  size="small"
+  size="medium"
   color="#9344d4d"
   type="ball-spin-clockwise">
   <p style="font-size: 20px; color: white">
     Loading...
   </p>
 </ngx-spinner>
+<mdb-carousel allowSwipe [animation]="'slide'">
+  <mdb-carousel-item>
+    <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg" alt="First slide">
+  </mdb-carousel-item>
+  <mdb-carousel-item>
+    <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg" alt="Second slide">
+  </mdb-carousel-item>
+  <mdb-carousel-item>
+    <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg" alt="Third slide">
+  </mdb-carousel-item>
+</mdb-carousel>
 <div class="container-fluid ">
   <mdb-card class="m-4">
     <mdb-card-header>
@@ -38,7 +49,7 @@
                 <p>
                   <span>{{product.currentPrice}} $</span>
                   <span class="ml-5">
-                    <del>20 $</del>
+                    <span class="text-grey"><s>$36.99</s></span>
                   </span>
                 </p>
                 <p><strong [innerText]="product.inStock? 'In Stock': 'Out of Stock'"></strong></p>
@@ -82,7 +93,7 @@
         <!-- Grid row -->
         <div class="row m-4">
           <!-- Grid column -->
-          <div class="col-md-3 mb-4" *ngFor="let product of gdService.MostSalesProducts; let i = index">
+          <div class="col-md-3 mb-4" *ngFor="let product of gdService.MonthProducts; let i = index">
             <!-- Card -->
             <div class="">
               <div class="view zoom overlay z-depth-2 rounded">
@@ -101,9 +112,9 @@
               <div class=" pt-4 text-center">
                 <h4>{{product.name}}</h4>
                 <p>
-                  <span>{{product.currentPrice}} $</span>
+                  <span>${{product.currentPrice}}</span>
                   <span class="ml-5">
-                    <del>20 $</del>
+                    <span class="text-grey"><s>$36.99</s></span>
                   </span>
                 </p>
                 <p><strong [innerText]="product.inStock? 'In Stock': 'Out of Stock'"></strong></p>
@@ -111,7 +122,8 @@
                 <button type="button" class="btn btn-primary  btn-sm mr-1 mb-2"><i
                   class="fas fa-shopping-cart pr-2"></i>Add to cart
                 </button>
-                <button (click)="helperService.productDetails(product)" type="button" class="btn  btn-light btn-sm mr-1 mb-2"><i
+                <button (click)="helperService.productDetails(product)" type="button"
+                        class="btn  btn-light btn-sm mr-1 mb-2"><i
                   class="fas fa-info-circle pr-2"></i>Details
                 </button>
               </div>

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HelperService} from '../../../shared/services/helper.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-no-internet',
@@ -9,15 +9,27 @@ import {Router} from '@angular/router';
 })
 export class NoInternetComponent implements OnInit {
 
-  constructor(private helperService: HelperService, private router: Router) {
+  baseUrl = 'http://localhost:4200';
 
+  constructor(private helperService: HelperService, private router: Router, private route: ActivatedRoute) {
+    route.queryParamMap.subscribe((q: ParamMap) => {
+      this.returnUrl = q.get('returnUrl');
+      this.baseUrl = this.baseUrl + q.get('returnUrl');
+    });
   }
 
+  returnUrl: string;
+
   ngOnInit(): void {
-    const isOnline = sessionStorage.getItem('isOnline');
-    if (isOnline === 'true') {
-      this.router.navigate(['/home']);
+    if (this.isOnline) {
+      this.router.navigate([this.returnUrl]);
     }
+  }
+
+
+  get isOnline() {
+    const isOnline = sessionStorage.getItem('isOnline');
+    return isOnline === 'true';
   }
 
   reload() {

@@ -31,3 +31,20 @@ export class Register {
 export class Logout {
   static readonly type = '[Auth] Logout';
 }
+
+
+// For User Data
+
+export class SetUserProfile {
+  static readonly type = '[Auth] Set User Profile';
+
+  constructor(public profileId: number) {
+  }
+}
+
+export class SetUserCart {
+  static readonly type = '[Auth] Set User Cart';
+
+  constructor(public cartId: number) {
+  }
+}

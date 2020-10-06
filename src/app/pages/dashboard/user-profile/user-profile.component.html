@@ -1,1 +1,260 @@
-<p>user-profile works!</p>
+<div class="container-fluid">
+
+  <!-- Section: Edit Account -->
+  <section class="section m-3">
+    <!-- First row -->
+    <div class="row justify-content-center" *ngIf="Profile && updateProfileForm">
+      <!-- First column -->
+      <div class="col-lg-4 mb-4">
+
+        <!-- Card -->
+        <div class="card card-cascade narrower">
+
+          <!-- Card image -->
+          <mat-toolbar color="primary">
+            <mat-toolbar-row>
+              <h4 class="h4 text-center">Edit Image</h4>
+            </mat-toolbar-row>
+          </mat-toolbar>
+          <!-- Card image -->
+
+          <!-- Card content -->
+          <div class="card-body card-body-cascade text-center">
+            <a>
+              <input ng2FileSelect [uploader]="uploader" style="display: none" type="file"
+                     accept="image/x-png,image/gif,image/jpeg, image/jpg"
+                     (change)="onImageSelect(hiddenFileInput)"
+                     #hiddenFileInput>
+              <img #img *ngIf="!helperService.selectedImage" style="max-width: 300px; max-height: 200px;"
+                   [src]="Profile.image"
+                   (error)="img.src= '../../../../ass/img/theme/user.jpg'"
+                   class="avatar  ">
+              <img *ngIf="helperService.selectedImage" style="max-width: 170px; max-height: 150px;"
+                   [src]="helperService.selectedImage"
+                   class="avatar avatar-lg rounded-circle">
+            </a>
+            <div class="row flex-center">
+              <button *ngIf="!helperService.selectedImage && Profile.image" (click)="hiddenFileInput.click()"
+                      class="btn btn-info btn-rounded btn-sm">Change Image
+              </button>
+              <button *ngIf="!Profile.image && !helperService.selectedImage" (click)="hiddenFileInput.click()"
+                      class="btn btn-info btn-rounded btn-sm">Upload New Image
+              </button>
+              <div class="justify-content-center mt-2" *ngIf="Profile.image && helperService.selectedImage">
+                <div class="btn-group justify-content-center" role="group" aria-label="Basic example">
+                  <button [disabled]="startUploadingImage"
+                          (click)="updateImage()"
+                          type="button" class="btn btn-sm btn-secondary">Save &nbsp; <i
+                    class="fas fa-save">
+                  </i></button>
+                  <button [disabled]="startUploadingImage" type="button" class="btn btn-sm btn-danger"
+                          (click)="helperService.selectedImage = null">Cancel &nbsp; <i class="fas fa-times"></i>
+                  </button>
+                </div>
+                <div *ngIf="startUploadingImage" class="mt-3 mb-2">
+                  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </div>
+              </div>
+
+
+              <div class="justify-content-center mt-2" *ngIf="!Profile.image && helperService.selectedImage">
+                <div class="btn-group justify-content-center" role="group" aria-label="Basic example">
+                  <button [disabled]="startUploadingImage"
+                          (click)="uploadImage()"
+                          type="button" class="btn btn-sm btn-secondary">Save &nbsp; <i
+                    class="fas fa-save">
+                  </i></button>
+                  <button [disabled]="startUploadingImage" type="button" class="btn btn-sm btn-danger"
+                          (click)="helperService.selectedImage = null">Cancel &nbsp; <i class="fas fa-times"></i>
+                  </button>
+                </div>
+                <div *ngIf="startUploadingImage" class="mt-3 mb-2">
+                  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card content -->
+
+        </div>
+
+        <div class="card mt-2 card-cascade narrower">
+
+          <!-- Card image -->
+          <mat-toolbar color="warn">
+            <mat-toolbar-row>
+              <h4 class="h4 text-center">Latest Orders</h4>
+            </mat-toolbar-row>
+          </mat-toolbar>
+
+          <!-- Card content -->
+          <div class="card-body card-body-cascade text-center">
+            <div class="text-center">
+              <mat-list>
+                <mat-list-item> Order 1</mat-list-item>
+                <mat-list-item> Order 2</mat-list-item>
+                <mat-list-item> Order 3</mat-list-item>
+                <mat-list-item> Order 4</mat-list-item>
+                <mat-list-item> Order 5</mat-list-item>
+
+              </mat-list>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="row justify-content-center">
+              <button class="text-center" type="button" mdbBtn color="info" mdbWavesEffect>
+                See all orders
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Card -->
+
+      </div>
+      <!-- First column -->
+
+      <!-- Second column -->
+      <div class="col-lg-8 mb-4">
+
+        <!-- Card -->
+        <div class="card card-cascade narrower">
+
+          <!-- Card image -->
+          <mat-toolbar color="accent">
+            <mat-toolbar-row>
+              <h4 class="h4 text-center">Edit Account</h4>
+            </mat-toolbar-row>
+          </mat-toolbar>
+          <!-- Card image -->
+
+          <!-- Card content -->
+          <div class="card-body card-body-cascade">
+
+            <!-- Edit Form -->
+            <form [formGroup]="updateProfileForm" novalidate>
+              <h3 class="heading-small text-muted mb-4">User information</h3>
+              <div class="row justify-content-start">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="input-display-name">Display Name</label>
+                    <input formControlName="displayName" type="text" id="input-display-name"
+                           class="form-control form-control-alternative"
+                           [class.is-invalid]="DisplayName.invalid && DisplayName.touched"
+                           placeholder="Display Name">
+
+                    <div *ngIf="(DisplayName.invalid && DisplayName.touched) || DisplayName.dirty">
+                      <small *ngIf="DisplayName.errors?.required"
+                             class="text-danger">{{errorMessages.requiredField('Display Name')}}</small>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Email</label>
+                    <input formControlName="email" type="email" id="input-email"
+                           class="form-control form-control-alternative"
+                           placeholder="jesse@example.com">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-country">Country</label>
+                    <input formControlName="country" type="text" id="input-country"
+                           class="form-control form-control-alternative"
+                           [class.is-invalid]="Controls['country'].invalid && Controls['country'].touched"
+                           placeholder="Country">
+                    <div
+                      *ngIf="(Controls['country'].invalid && Controls['country'].touched) || Controls['country'].dirty">
+                      <small *ngIf="Controls['country'].errors?.required"
+                             class="text-danger">{{errorMessages.requiredField('Country')}}</small>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-city">City</label>
+                    <input formControlName="city" type="text" id="input-city"
+                           class="form-control form-control-alternative"
+                           [class.is-invalid]="Controls['city'].invalid && Controls['city'].touched"
+                           placeholder="City">
+                    <div
+                      *ngIf="(Controls['city'].invalid && Controls['city'].touched) || Controls['city'].dirty">
+                      <small *ngIf="Controls['city'].errors?.required"
+                             class="text-danger">{{errorMessages.requiredField('City')}}</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="input-gender">Gender</label>
+                    <select formControlName="gender"
+                            [class.is-invalid]="Controls['gender'].invalid && Controls['gender'].touched"
+                            class="form-control" id="input-gender">
+                      <option *ngFor="let g of ['MALE', 'FEMALE']" [value]="g">{{g}}</option>
+                    </select>
+                    <div
+                      *ngIf="(Controls['gender'].invalid && Controls['gender'].touched) || Controls['gender'].dirty">
+                      <small *ngIf="Controls['gender'].errors?.required"
+                             class="text-danger">{{errorMessages.requiredField('Gender')}}</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="my-4"/>
+              <h3 class="heading-small text-muted mb-4">Contact information</h3>
+              <div class="pl-lg-4">
+                <app-add-contacts [form]="updateProfileForm" [Contacts]="Contacts"></app-add-contacts>
+              </div>
+
+            </form>
+
+          </div>
+          <div class="card-footer">
+            <div class="float-right pull-right">
+              <button type="button"
+                      [disabled]="updateProfileForm.invalid || !formChanged"
+                      (click)="helperService.openModal(template)"
+                      mat-raised-button color="accent">Update Profile
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+<ng-template #createUserProfile>
+  <app-create-user-profile (change)="afterCreateUserProfile()" [state]="state"></app-create-user-profile>
+</ng-template>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#9344d4d"
+  type="ball-spin-clockwise">
+  <p style="font-size: 20px; color: white" *ngIf="state">
+    {{state}}
+  </p>
+</ngx-spinner>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Do you want to confirm?</p>
+    <button type="button" (click)="helperService.hideModal(); updateProfile()"
+            class="btn btn-default">Yes
+    </button>
+    <button type="button" class="btn btn-primary" (click)="helperService.hideModal()">No</button>
+  </div>
+</ng-template>

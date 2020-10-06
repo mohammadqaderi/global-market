@@ -20,6 +20,10 @@ export class SubCategoryService {
     return this._http.get<SubCategoryModel[]>(this.prefixURI);
   }
 
+  getMixLatestProducts(): Observable<ProductModel[]> {
+    return this._http.get<ProductModel[]>(`${this.prefixURI}/mix-latest-products`);
+  }
+
   getSubCategoriesByTagName(tagName: string): Observable<SubCategoryModel> {
     return this._http.get<SubCategoryModel>(`${this.prefixURI}/search-by-tag-name/${tagName}`);
   }
