@@ -11,8 +11,15 @@ import {FileModule} from './modules/file.module';
 import {AddContactsComponent} from './components/add-contacts/add-contacts.component';
 import {MdbModule} from './modules/mdb.module';
 import {LoginFirstComponent} from './components/login-first/login-first.component';
+import {AddToCartComponent} from './components/products/add-to-cart/add-to-cart.component';
+
 @NgModule({
-  declarations: [InvalidCredentialsComponent, ShowErrorDialogComponent, AddContactsComponent, LoginFirstComponent,
+  declarations: [
+    InvalidCredentialsComponent,
+    ShowErrorDialogComponent,
+    AddContactsComponent,
+    LoginFirstComponent,
+    AddToCartComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +43,7 @@ import {LoginFirstComponent} from './components/login-first/login-first.componen
     NgxModule,
     InvalidCredentialsComponent,
     ShowErrorDialogComponent,
+    AddToCartComponent,
     CustomFormsModule,
     NgbDropdownModule,
     NgbPaginationModule,

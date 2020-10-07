@@ -4,6 +4,7 @@ import {ShopComponent} from '../../pages/shop/shop/shop.component';
 import {RouterModule} from '@angular/router';
 import {ShopLayoutRoutes} from './shop-layout.routing';
 import {SharedModule} from '../../shared/shared-global.module';
+import {PipesModule} from '../../commons/pipes/pipes.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import {SharedModule} from '../../shared/shared-global.module';
   imports: [
     CommonModule,
     RouterModule.forChild(ShopLayoutRoutes),
-    SharedModule
+    SharedModule,
+    PipesModule
   ]
 })
 export class ShopLayoutModule {

@@ -119,13 +119,17 @@
                 </p>
                 <p><strong [innerText]="product.inStock? 'In Stock': 'Out of Stock'"></strong></p>
 
-                <button type="button" class="btn btn-primary  btn-sm mr-1 mb-2"><i
+                <button type="button" (click)="helperService.openModal(addToCartTemp)"
+                        class="btn btn-primary  btn-sm mr-1 mb-2"><i
                   class="fas fa-shopping-cart pr-2"></i>Add to cart
                 </button>
                 <button (click)="helperService.productDetails(product)" type="button"
                         class="btn  btn-light btn-sm mr-1 mb-2"><i
                   class="fas fa-info-circle pr-2"></i>Details
                 </button>
+                <ng-template #addToCartTemp>
+                  <app-add-to-cart [product]="product"></app-add-to-cart>
+                </ng-template>
               </div>
               <hr class="my-2">
             </div>
@@ -315,4 +319,3 @@
 
   </div>
 </div>
-

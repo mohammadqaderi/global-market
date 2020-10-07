@@ -74,8 +74,13 @@
           </div>
         </div>
         <div class="row justify-content-center my-2">
-          <button (click)="loadCustomProducts()" mdbBtn type="button" color="elegant" mdbWavesEffect>Filter <i
-            class="fas fa-filter"></i>
+          <button (click)="loadCustomProducts()" mdbBtn color="secondary" type="button">
+            <span *ngIf="showFilter" class="spinner-border spinner-border-sm" role="status" aria-hidden="true">
+              <i
+                class="fas fa-filter"></i>
+            </span>
+            <span *ngIf="!showFilter">Filter &nbsp; <i
+              class="fas fa-filter"></i></span>
           </button>
         </div>
       </mdb-card-body>
@@ -83,15 +88,16 @@
   </div>
   <div class="col-xl-8">
     <mdb-card>
-      <mdb-card-header>
-        Shop
-      </mdb-card-header>
       <mdb-card-body>
+            <mat-form-field appearance="fill" style="width: 100%">
+              <mat-label>Search for product</mat-label>
+              <input type="text" matInput placeholder="Search for product" name="searchTerm" [(ngModel)]="searchTerm">
+            </mat-form-field>
         <section>
           <!-- Grid row -->
           <div class="row m-4">
             <!-- Grid column -->
-            <div class="col-xl-4 mb-4" *ngFor="let product of products; let i = index">
+            <div class="col-xl-4 mb-4" *ngFor="let product of products | productFilter: searchTerm; let i = index">
               <div class="">
                 <div class="view zoom overlay z-depth-2 rounded">
                   <img class="img-fluid fadeInUp  w-100"

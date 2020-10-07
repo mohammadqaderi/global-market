@@ -28,10 +28,11 @@ export class ShopComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   subCategory: SubCategoryModel;
   showSpinner = false;
+  showFilter = false;
   products: ProductModel[] = [];
   startDate = new Date(2016, 11, 1);
   scId: number;
-
+  searchTerm: string;
   productsCustomFilterDto: ProductsCustomFilterDto = {
     range1: null,
     range2: null,
@@ -81,7 +82,7 @@ export class ShopComponent implements OnInit {
     this.products = this.gdService.ShopProducts;
   }
 
-  backToTop(){
+  backToTop() {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
 
@@ -92,10 +93,10 @@ export class ShopComponent implements OnInit {
   loadCustomProducts() {
     this.setTakeLength(10);
     localStorage.setItem('loadType', LoadType.CUSTOM);
-    this.helperService.showSpinner();
+    this.showFilter = true;
     this.store.dispatch(new FetchCustomProducts(this.productsCustomFilterDto)).subscribe(() => {
       this.refreshProducts();
-      this.helperService.hideSpinner();
+      this.showFilter = false;
     });
   }
 

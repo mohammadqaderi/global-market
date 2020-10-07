@@ -1,0 +1,69 @@
+<ng-template #errorTemplate>
+  <app-show-error-dialog
+    [error]="helperService.error"></app-show-error-dialog>
+</ng-template>
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header text-center">
+      <h4 class="modal-title w-100 font-weight-bold">Add to cart</h4>
+      <button type="button" (click)="helperService.hideModal()" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body mx-3">
+      <div class="row">
+        <div class="col-xl-auto">
+          <p>{{product.name}}</p>
+        </div>
+        <div class="col-xl-auto">
+          <p>${{product.currentPrice}}</p>
+        </div>
+      </div>
+      <span class="my-2 mx-2"></span>
+      <div class="row mt-2">
+        <div class="col-xl-4">
+          <div class="view zoom overlay z-depth-2 rounded">
+            <img class="img-fluid fadeInUp  w-100"
+                 style="max-height: 250px; height: 250px"
+                 [src]="product.images[0]" alt="Sample">
+          </div>
+        </div>
+        <div class="col-xl-1">
+          <mat-divider class="ml-2 mr-2" vertical style="height: 100%"></mat-divider>
+        </div>
+        <div class="col-xl-7 mt-3">
+          <label for="quantity">
+            Enter Quantity over here
+          </label>
+          <div class="md-form input-group">
+            <div class="input-group-prepend" id="button-addon3">
+              <button (click)="onSubtract()" mdbBtn color="info" size="md" class="m-0 px-3 py-2" type="button"
+                      mdbWavesEffect>
+                <i class="fas fa-minus"></i>
+              </button>
+            </div>
+            <input #inputElement type="number" name="quantity" [(ngModel)]="quantity"
+                   (ngModelChange)="checkValue(inputElement)"
+                   class="form-control text-center" id="quantity"
+                   placeholder="Quantity"
+                   aria-label="Quantity"
+                   aria-describedby="button-addon4">
+            <div class="input-group-append" id="button-addon4">
+              <button (click)="onAdd()" mdbBtn color="info" size="md" class="m-0 px-3 py-2" type="button"
+                      mdbWavesEffect>
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <p>
+            <strong>Note:</strong> &nbsp;<span class="text-muted">Maximum value for quantity is 10 items only</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer d-flex justify-content-xl-end">
+      <button mdbBtn color="default" class="waves-light" mdbWavesEffect>Add to cart</button>
+      <button type="button" (click)="helperService.hideModal()" mdbBtn color="light" mdbWavesEffect>Close</button>
+    </div>
+  </div>
+</div>

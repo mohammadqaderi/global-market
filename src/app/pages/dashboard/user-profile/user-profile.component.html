@@ -258,3 +258,7 @@
     <button type="button" class="btn btn-primary" (click)="helperService.hideModal()">No</button>
   </div>
 </ng-template>
+<ng-template #errorTemplate>
+  <app-show-error-dialog
+    [error]="helperService.error"></app-show-error-dialog>
+</ng-template>

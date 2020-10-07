@@ -41,12 +41,13 @@ export class AppComponent implements OnInit {
       });
     }));
     let onlineStatus = false;
-    if (sessionStorage.getItem('isOnline') === 'true') {
+    let isOnline = sessionStorage.getItem('isOnline');
+    if (isOnline && isOnline === 'true') {
       onlineStatus = true;
+      this.helperService.setIsOnline(onlineStatus);
     } else {
       onlineStatus = false;
-    }
-    if (!onlineStatus) {
+      this.helperService.setIsOnline(onlineStatus);
       this.router.navigate(['/no-internet'], {
         queryParams: {
           returnUrl: this.router.url
