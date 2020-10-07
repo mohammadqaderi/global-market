@@ -42,18 +42,21 @@ export class AppComponent implements OnInit {
     }));
     let onlineStatus = false;
     let isOnline = sessionStorage.getItem('isOnline');
-    if (isOnline && isOnline === 'true') {
-      onlineStatus = true;
-      this.helperService.setIsOnline(onlineStatus);
-    } else {
-      onlineStatus = false;
-      this.helperService.setIsOnline(onlineStatus);
-      this.router.navigate(['/no-internet'], {
-        queryParams: {
-          returnUrl: this.router.url
-        }
-      });
+    if (isOnline) {
+      if (isOnline === 'true') {
+        onlineStatus = true;
+        this.helperService.setIsOnline(onlineStatus);
+      } else {
+        onlineStatus = false;
+        this.helperService.setIsOnline(onlineStatus);
+        this.router.navigate(['/no-internet'], {
+          queryParams: {
+            returnUrl: this.router.url
+          }
+        });
+      }
     }
+
   };
 
 

@@ -37,6 +37,14 @@ export class UserCartComponent implements OnInit {
     }
   }
 
+  totalPurchase() {
+    let total = 0;
+    for (let i = 0; i < this.Cart.cartProducts.length; i++) {
+      total += this.Cart.cartProducts[i].totalPrice;
+    }
+    return total;
+  }
+
   get Cart() {
     return this.gdService.Cart;
   }

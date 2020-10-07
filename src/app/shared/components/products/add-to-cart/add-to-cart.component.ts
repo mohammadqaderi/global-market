@@ -16,7 +16,9 @@ import AddToCart = ProductActions.AddToCart;
 export class AddToCartComponent implements OnInit {
 
   @Input() product: ProductModel;
-  quantity: number = 1;
+  createCartProductDto = {
+    quantity: 1
+  };
   @ViewChild('errorTemplate', {static: true}) errorTemplate: TemplateRef<any>;
 
   constructor(public helperService: HelperService,
@@ -45,29 +47,30 @@ export class AddToCartComponent implements OnInit {
   }
 
   onAdd() {
-    if (this.quantity >= 10) {
+    if (this.createCartProductDto.quantity >= 10) {
       return;
     }
-    this.quantity += 1;
+    this.createCartProductDto.quantity += 1;
 
   }
 
 
   onSubtract() {
-    if (this.quantity === 0) {
+    if (this.createCartProductDto.quantity === 0) {
       return;
     }
-    this.quantity -= 1;
+    this.createCartProductDto.quantity -= 1;
   }
 
 
   addToCart() {
     this.helperService.showSpinner();
-    this.store.dispatch(new AddToCart(this.product.id, this.gdService.Cart.id)).subscribe(() => {
+    this.store.dispatch(new AddToCart(this.product.id, this.gdService.Cart.id, this.createCartProductDto)).subscribe(() => {
       this.helperService.hideSpinner();
+      this.helperService.hideModal();
       this.helperService.openSnackbar('Product added successfully into your cart', 'Close');
     }, error => {
-      this.helperService.hideDialog();
+      this.helperService.hideModal();
       this.helperService.showErrorDialog(error, this.errorTemplate);
     });
   }

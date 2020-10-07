@@ -60,7 +60,7 @@ export namespace ProductActions {
   export class AddToCart {
     static readonly type = '[Product] Add To Cart';
 
-    constructor(public productId: number, public cartId: number) {
+    constructor(public productId: number, public cartId: number, public createCartProductDto: { quantity: number }) {
     }
   }
 

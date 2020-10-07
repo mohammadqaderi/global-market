@@ -13,6 +13,8 @@ import {CheckoutReturnData} from '../../commons/interfaces/checkout-return-data'
 import CheckoutOnSingleProduct = CartActions.CheckoutOnSingleProduct;
 import RemoveProductsFromCart = CartActions.RemoveProductsFromCart;
 import {SetUserCart} from '../auth/auth-actions';
+import AddProductToCart = CartActions.AddProductToCart;
+import {patch} from '@ngxs/store/operators';
 
 
 @State<CartStateModel>({
@@ -63,6 +65,16 @@ export class CartState {
         });
       })
     );
+  }
+
+  @Action(AddProductToCart)
+  addProductToCart(ctx: StateContext<CartStateModel>, action: AddProductToCart) {
+    const cart = Object.assign({}, ctx.getState().cart);
+    cart.cartProducts = [...cart.cartProducts, action.productCart];
+    cart.totalItems += 1;
+    ctx.setState(patch({
+      cart
+    }));
   }
 
   @Action(CheckoutOnCart)

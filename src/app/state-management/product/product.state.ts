@@ -12,6 +12,10 @@ import FetchShopProducts = ProductActions.FetchShopProducts;
 import FetchCustomProducts = ProductActions.FetchCustomProducts;
 import {SubCategoryService} from '../../services/category/sub-category.service';
 import FetchMixLatestProducts = ProductActions.FetchMixLatestProducts;
+import AddToCart = ProductActions.AddToCart;
+import {CartProductModel} from '../../models/Cart/cart-product.model';
+import {CartActions} from '../cart/cart.actions';
+import AddProductToCart = CartActions.AddProductToCart;
 
 @State<ProductStateModel>({
   name: 'products',
@@ -77,6 +81,14 @@ export class ProductState {
     );
   }
 
+  @Action(AddToCart)
+  addToCart(ctx: StateContext<ProductStateModel>, action: AddToCart) {
+    return this.productService.addToCart(action.productId, action.cartId, action.createCartProductDto).pipe(
+      tap((data: CartProductModel) => {
+        this.store.dispatch(new AddProductToCart(data));
+      })
+    );
+  }
 
   @Action(FetchMixLatestProducts)
   fetchMixLatestProducts(ctx: StateContext<ProductStateModel>, action: FetchMixLatestProducts) {
