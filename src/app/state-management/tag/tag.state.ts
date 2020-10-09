@@ -2,16 +2,20 @@ import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {TagActions, TagStateModel} from './tag.actions';
 import {Injectable} from '@angular/core';
 import {TagService} from '../../services/tag/tag.service';
-import FetchAllTags = TagActions.FetchAllTags;
 import {tap} from 'rxjs/operators';
-import {TagModel} from '../../models/Tag/tag.model';
 import ClearTags = TagActions.ClearTags;
+import FetchSubCategoriesTags = TagActions.FetchSubCategoriesTags;
+import {SubCategoryTagModel} from '../../models/Categories/sub-category-tag.model';
+import {patch} from '@ngxs/store/operators';
+import FetchProductsTags = TagActions.FetchProductsTags;
+import {ProductTagModel} from '../../models/Products/product-tag.model';
 
 
 @State<TagStateModel>({
   name: 'tags',
   defaults: {
-    tags: null
+    subCategoriesTags: null,
+    productsTags: null
   }
 })
 @Injectable()
@@ -20,26 +24,42 @@ export class TagState {
   }
 
   @Selector()
-  static Tags(state: TagStateModel) {
-    return state.tags;
+  static SubCategoriesTags(state: TagStateModel) {
+    return state.subCategoriesTags;
   }
 
-  @Action(FetchAllTags)
-  fetchAllTags(ctx: StateContext<TagStateModel>, action: FetchAllTags) {
-    return this.tagService.getAllTags().pipe(
-      tap((tags: TagModel[]) => {
-        ctx.setState({
-          tags
-        });
+  @Selector()
+  static ProductsTags(state: TagStateModel) {
+    return state.productsTags;
+  }
+
+  @Action(FetchSubCategoriesTags)
+  fetchSubCategoriesTags(ctx: StateContext<TagStateModel>, action: FetchSubCategoriesTags) {
+    return this.tagService.getSubCategoriesTags().pipe(
+      tap((tags: SubCategoryTagModel[]) => {
+        ctx.setState(patch({
+          subCategoriesTags: tags
+        }));
       })
     );
   }
 
+  @Action(FetchProductsTags)
+  fetchProductsTags(ctx: StateContext<TagStateModel>, action: FetchProductsTags) {
+    return this.tagService.getProductsTags().pipe(
+      tap((tags: ProductTagModel[]) => {
+        ctx.setState(patch({
+          productsTags: tags
+        }));
+      })
+    );
+  }
 
   @Action(ClearTags)
   clearTags(ctx: StateContext<TagStateModel>, action: ClearTags) {
     ctx.setState({
-      tags: null
+      subCategoriesTags: null,
+      productsTags: null
     });
   }
 

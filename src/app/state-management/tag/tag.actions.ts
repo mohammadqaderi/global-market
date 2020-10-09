@@ -1,12 +1,21 @@
-import {TagModel} from '../../models/Tag/tag.model';
+import {SubCategoryTagModel} from '../../models/Categories/sub-category-tag.model';
+import {ProductTagModel} from '../../models/Products/product-tag.model';
 
 export interface TagStateModel {
-  tags: TagModel[];
+  subCategoriesTags: SubCategoryTagModel[];
+  productsTags: ProductTagModel[]
 }
 
 export namespace TagActions {
-  export class FetchAllTags {
-    static readonly type = '[Tag] Fetch All Tags';
+  export class FetchSubCategoriesTags {
+    static readonly type = '[Tag] Fetch SubCategories Tags';
+
+    constructor() {
+    }
+  }
+
+  export class FetchProductsTags {
+    static readonly type = '[Tag] Fetch Products Tags';
 
     constructor() {
     }

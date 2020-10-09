@@ -7,5 +7,6 @@ export interface CheckoutReturnData {
   order: OrderModel;
   invoice: InvoiceModel;
   payment: PaymentModel;
-  cart?: CartModel;
+  cart: CartModel;
+  customerId: string
 }

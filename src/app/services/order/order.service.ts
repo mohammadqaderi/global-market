@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {OrderModel} from '../../models/Orders/order.model';
 import {ApiEndpoints} from '../../commons/api-endpoints';
 import {OrderDto} from '../../commons/public-dto/order.dto';
+import {ProductModel} from '../../models/Products/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,10 @@ export class OrderService {
 
   cancelOrder(id: number): Observable<void> {
     return this._http.delete<void>(`${ApiEndpoints.OrderEndpoints.rootOrders}/${id}/cancel`);
+  }
+
+  getOrderDetails(id: number): Observable<{ order: OrderModel, orderItemsProducts: ProductModel[] }> {
+    return this._http.get<{ order: OrderModel, orderItemsProducts: ProductModel[] }>(`${ApiEndpoints.OrderEndpoints.rootOrders}/${id}/details`);
   }
 
   getOrderById(id: number): Observable<OrderModel> {

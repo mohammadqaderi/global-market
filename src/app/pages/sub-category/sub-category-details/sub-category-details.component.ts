@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
 import {HelperService} from '../../../shared/services/helper.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Store} from '@ngxs/store';
@@ -6,14 +6,17 @@ import {SubCategoryService} from '../../../services/category/sub-category.servic
 import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {SubCategoryModel} from '../../../models/Categories/sub-category.model';
 import {ProductModel} from '../../../models/Products/product.model';
+import {ProductTagModel} from '../../../models/Products/product-tag.model';
 
 @Component({
   selector: 'app-sub-category-details',
   templateUrl: './sub-category-details.component.html',
   styleUrls: ['./sub-category-details.component.css']
 })
-export class SubCategoryDetailsComponent implements OnInit {
+export class SubCategoryDetailsComponent implements OnInit, DoCheck {
   showSpinner = false;
+  selectedTag: number;
+  isAllSelected = true;
 
   constructor(public helperService: HelperService,
               public router: Router,
@@ -21,6 +24,36 @@ export class SubCategoryDetailsComponent implements OnInit {
               private subCategoryService: SubCategoryService,
               public route: ActivatedRoute,
               public gdService: GlobalDataService) {
+
+  }
+
+  products: ProductModel[];
+  productsTags: ProductTagModel[];
+
+  loadMoreProducts() {
+    this.showSpinner = true;
+    setTimeout(() => {
+      this.loadProducts(this.products, this.subCategory.products.length + 5);
+      this.productsTagsInit();
+    }, 800);
+  }
+
+  onTagSelect(productTag: ProductTagModel) {
+    this.selectedTag = productTag.id;
+    this.isAllSelected = false;
+    let products = [];
+    for (let i = 0; i < this.subCategory.products.length; i++) {
+      const item = this.subCategory.products[i].productTags.find(pTag => pTag.id === productTag.id);
+      if (item) {
+        products = [...products, this.subCategory.products[i]];
+      }
+    }
+    this.loadProducts(products, 6);
+  }
+
+  subCategory: SubCategoryModel;
+
+  ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       let subCategoryId = params.get('subCategoryId');
       let categoryId = params.get('categoryId');
@@ -32,7 +65,8 @@ export class SubCategoryDetailsComponent implements OnInit {
             const subCategory = category.subCategories.find(s => s.id === +subCategoryId);
             if (subCategory) {
               this.subCategory = subCategory;
-              this.loadProducts(subCategory, 6);
+              this.loadProducts(subCategory.products, 6);
+              this.productsTagsInit();
             }
           }
           this.helperService.hideSpinner();
@@ -41,14 +75,16 @@ export class SubCategoryDetailsComponent implements OnInit {
           const subCategoryModel = this.gdService.SubCategories.find(s => s.id === +subCategoryId);
           if (subCategoryModel) {
             this.subCategory = subCategoryModel;
-            this.loadProducts(subCategoryModel, 6);
+            this.loadProducts(subCategoryModel.products, 6);
+            this.productsTagsInit();
             this.helperService.hideSpinner();
           }
         } else {
           this.helperService.showSpinner();
           this.subCategoryService.getSubCategoryById(+subCategoryId).subscribe((subCategory: SubCategoryModel) => {
             this.subCategory = subCategory;
-            this.loadProducts(subCategory, 6);
+            this.loadProducts(subCategory.products, 6);
+            this.productsTagsInit();
             this.helperService.hideSpinner();
           });
         }
@@ -56,23 +92,35 @@ export class SubCategoryDetailsComponent implements OnInit {
     });
   }
 
-  products: ProductModel[];
-
-  loadMoreProducts() {
-    this.showSpinner = true;
-    setTimeout(() => {
-      this.loadProducts(this.subCategory, this.subCategory.products.length + 5);
-    }, 800);
+  getAll() {
+    this.selectedTag = null;
+    this.isAllSelected = true;
+    this.loadProducts(this.subCategory.products, 6);
   }
 
-  subCategory: SubCategoryModel;
-
-  ngOnInit(): void {
+  productsTagsInit() {
+    this.productsTags = [];
+    for (let i = 0; i < this.products.length; i++) {
+      for (let j = 0; j < this.products[i].productTags.length; j++) {
+        this.productsTags = [...this.productsTags, this.products[i].productTags[j]];
+      }
+    }
+    let uniqueArray: ProductTagModel[] = [];
+    for (let i = 0; i < this.productsTags.length; i++) {
+      const item = uniqueArray.find(item => item.name === this.productsTags[i].name);
+      if (!item) {
+        uniqueArray = [...uniqueArray, this.productsTags[i]];
+      }
+    }
+    this.productsTags = uniqueArray;
   }
 
-  loadProducts(subCategory: SubCategoryModel, slice: number) {
-    this.products = subCategory.products.slice(0, slice);
+  loadProducts(products: ProductModel[], slice: number) {
+    this.products = products.slice(0, slice);
     this.showSpinner = false;
+  }
+
+  ngDoCheck(): void {
   }
 
 }

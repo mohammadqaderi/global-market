@@ -12,6 +12,7 @@ import {AddContactsComponent} from './components/add-contacts/add-contacts.compo
 import {MdbModule} from './modules/mdb.module';
 import {LoginFirstComponent} from './components/login-first/login-first.component';
 import {AddToCartComponent} from './components/products/add-to-cart/add-to-cart.component';
+import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {AddToCartComponent} from './components/products/add-to-cart/add-to-cart.
     CustomFormsModule,
     NgbDropdownModule,
     NgbPaginationModule,
-    MdbModule
+    MdbModule,
+    RxReactiveFormsModule.forRoot()
   ],
   exports: [
     MaterialModule,
@@ -48,7 +50,8 @@ import {AddToCartComponent} from './components/products/add-to-cart/add-to-cart.
     NgbDropdownModule,
     NgbPaginationModule,
     AddContactsComponent,
-    MdbModule
+    MdbModule,
+    RxReactiveFormsModule
   ]
 })
 export class SharedModule {

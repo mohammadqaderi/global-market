@@ -30,6 +30,8 @@ import ClearSubCategory = SubCategoryActions.ClearSubCategory;
 import {TagActions} from '../../state-management/tag/tag.actions';
 import ClearTags = TagActions.ClearTags;
 import {CartState} from '../../state-management/cart/cart.state';
+import {CartActions} from '../../state-management/cart/cart.actions';
+import ClearCartFromStorage = CartActions.ClearCartFromStorage;
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +52,14 @@ export class GlobalDataService {
 
   get Cart() {
     return this.store.selectSnapshot(CartState.Cart);
+  }
+
+  get TotalPurchase() {
+    let total = 0;
+    for (let i = 0; i < this.Cart.cartProducts.length; i++) {
+      total += this.Cart.cartProducts[i].totalPrice;
+    }
+    return total;
   }
 
   get Categories() {
@@ -73,10 +83,12 @@ export class GlobalDataService {
     return this.store.selectSnapshot(ProductState.MostSalesProducts);
   }
 
-  get Tags() {
-    return this.store.selectSnapshot(TagState.Tags);
+  get SubCategoriesTags() {
+    return this.store.selectSnapshot(TagState.SubCategoriesTags);
   }
-
+  get ProductsTags() {
+    return this.store.selectSnapshot(TagState.ProductsTags);
+  }
   get Invoices() {
     return this.store.selectSnapshot(InvoiceState.Invoices);
   }
@@ -136,6 +148,7 @@ export class GlobalDataService {
     return this.store.dispatch([
       new Logout(),
       new ClearProfileData(),
+      new ClearCartFromStorage(),
       new ClearInvoicesFromStorage(),
       new ClearOrdersFromStorage(),
       new ClearPaymentsFromStorage()]).subscribe(() => {

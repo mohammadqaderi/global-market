@@ -7,6 +7,9 @@ import {tap} from 'rxjs/operators';
 import {SubCategoryModel} from '../../models/Categories/sub-category.model';
 import ClearSubCategory = SubCategoryActions.ClearSubCategory;
 import {CategoryService} from '../../services/category/category.service';
+import FetchSubCategoriesByTagName = SubCategoryActions.FetchSubCategoriesByTagName;
+import {ProductActions} from '../product/product.actions';
+import UpdateShopProducts = ProductActions.UpdateShopProducts;
 
 
 @State<SubCategoryStateModel>({
@@ -24,6 +27,21 @@ export class SubCategoryState {
   @Selector()
   static SubCategories(state: SubCategoryStateModel) {
     return state.subCategories;
+  }
+
+
+  @Action(FetchSubCategoriesByTagName)
+  fetchSubCategoriesByTagName(ctx: StateContext<SubCategoryStateModel>, action: FetchSubCategoriesByTagName) {
+    return this.subCategoryService.getSubCategoriesByTagName(action.tagName).pipe(
+      tap((subCategories: SubCategoryModel[]) => {
+        let products = [];
+        for (let i = 0; i < subCategories.length; i++) {
+          const subCategory = Object.assign({}, subCategories[i]);
+          products = products.concat(subCategory.products.slice(0, 5));
+        }
+        this.store.dispatch(new UpdateShopProducts(products));
+      })
+    );
   }
 
   @Action(FetchAllSubCategories)

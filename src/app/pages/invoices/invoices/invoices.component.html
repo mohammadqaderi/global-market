@@ -1,1 +1,50 @@
-<p>invoices works!</p>
+<div class="container-fluid">
+  <div class="row m-4">
+    <mdb-card class="w-100">
+      <mdb-card-header>
+        <h1 class="h1">Invoices</h1>
+      </mdb-card-header>
+      <mdb-card-body>
+        <div *ngIf="Invoices && Invoices.length === 0" class="row justify-content-center mt-3 mb-3">
+          <h4>
+            No Invoices Available!
+          </h4>
+        </div>
+        <div class="table-responsive mat-elevation-z8">
+          <table mat-table [dataSource]="helperService.invoicesDataSource" matSort>
+            <ng-container matColumnDef="id">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef> Id</th>
+              <td mat-cell *matCellDef="let invoice"> {{invoice.id}} </td>
+            </ng-container>
+            <ng-container matColumnDef="total">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef>Total</th>
+              <td mat-cell *matCellDef="let invoice"> ${{invoice.total}} </td>
+            </ng-container>
+            <ng-container matColumnDef="date">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef>Created In</th>
+              <td mat-cell *matCellDef="let invoice">
+                {{invoice.date | date: 'short'}}
+              </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="dueDate">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef> Due Date</th>
+              <td mat-cell *matCellDef="let invoice">
+                {{invoice.dueDate | date: 'short'}}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="paymentDate">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef> Payment Date</th>
+              <td mat-cell *matCellDef="let invoice">
+                {{invoice.paymentDate | date: 'short'}}
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20, 300]" showFirstLastButtons></mat-paginator>
+        </div>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+</div>

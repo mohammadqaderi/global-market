@@ -25,12 +25,20 @@
             <h3>Select a Tag</h3>
           </div>
         </div>
-        <div class="row">
-          <a mat-button *ngFor="let tag of gdService.Tags" class="badge  badge-lg p-1  m-1 badge-dark">
-            <strong>{{tag.name}}</strong>
-          </a>
-        </div>
-
+        <ul class="nav grey lighten-3 ">
+          <li class="nav-item">
+            <a (click)="getAll()" mat-button [ngClass]="{'bg-danger': isAllSelected }"
+               class="nav-link m-1">
+              All
+            </a>
+          </li>
+          <li class="nav-item m-1" *ngFor="let tag of gdService.SubCategoriesTags">
+            <a mat-button (click)="fetchByTagName(tag)" [ngClass]="{'bg-danger': tag.id === selectedTag }"
+               class="nav-link">
+              {{tag.name}}
+            </a>
+          </li>
+        </ul>
         <mat-divider class="my-2 w-100" style="width: 100%"></mat-divider>
         <h2>Custom Filter</h2>
         <mat-divider class="my-1 w-100" style="width: 100%"></mat-divider>
@@ -89,10 +97,10 @@
   <div class="col-xl-8">
     <mdb-card>
       <mdb-card-body>
-            <mat-form-field appearance="fill" style="width: 100%">
-              <mat-label>Search for product</mat-label>
-              <input type="text" matInput placeholder="Search for product" name="searchTerm" [(ngModel)]="searchTerm">
-            </mat-form-field>
+        <mat-form-field appearance="fill" style="width: 100%">
+          <mat-label>Search for product</mat-label>
+          <input type="text" matInput placeholder="Search for product" name="searchTerm" [(ngModel)]="searchTerm">
+        </mat-form-field>
         <section>
           <!-- Grid row -->
           <div class="row m-4">
@@ -122,9 +130,13 @@
                   </p>
                   <p><strong [innerText]="product.inStock? 'In Stock': 'Out of Stock'"></strong></p>
 
-                  <button type="button" class="btn btn-primary  btn-sm mr-1 mb-2"><i
+                  <button (click)="helperService.openModal(addToCartTemp)" type="button"
+                          class="btn btn-primary  btn-sm mr-1 mb-2"><i
                     class="fas fa-shopping-cart pr-2"></i>Add to cart
                   </button>
+                  <ng-template #addToCartTemp>
+                    <app-add-to-cart [product]="product"></app-add-to-cart>
+                  </ng-template>
                   <button (click)="helperService.productDetails(product)" type="button"
                           class="btn  btn-light btn-sm mr-1 mb-2"><i
                     class="fas fa-info-circle pr-2"></i>Details

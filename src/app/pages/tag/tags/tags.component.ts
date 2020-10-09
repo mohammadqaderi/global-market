@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {HelperService} from '../../../shared/services/helper.service';
 import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {TagActions} from '../../../state-management/tag/tag.actions';
-import FetchAllTags = TagActions.FetchAllTags;
+import FetchSubCategoriesTags = TagActions.FetchSubCategoriesTags;
 
 @Component({
   selector: 'app-tags',
@@ -19,9 +19,9 @@ export class TagsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.gdService.Tags) {
+    if (!this.gdService.SubCategoriesTags) {
       this.helperService.showSpinner();
-      this.store.dispatch(new FetchAllTags()).subscribe(() => {
+      this.store.dispatch(new FetchSubCategoriesTags()).subscribe(() => {
         this.helperService.hideSpinner();
       });
     }

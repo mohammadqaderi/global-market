@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
   <div class="row m-4  justify-content-center" *ngIf="Cart && Cart.totalItems === 0">
     <mdb-card class="w-75">
       <mdb-card-body>
@@ -144,7 +144,9 @@
                       <span><strong>${{totalPurchase()}}</strong></span>
                     </li>
                   </ul>
-                  <button routerLink="/checkout" type="button" class="btn btn-primary btn-block">go to checkout</button>
+                  <button [disabled]="gdService.Cart.totalItems ===0" routerLink="/checkout" type="button"
+                          class="btn btn-primary btn-block">go to checkout
+                  </button>
                 </div>
               </div>
             </div>

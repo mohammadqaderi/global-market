@@ -16,6 +16,7 @@ import AddToCart = ProductActions.AddToCart;
 import {CartProductModel} from '../../models/Cart/cart-product.model';
 import {CartActions} from '../cart/cart.actions';
 import AddProductToCart = CartActions.AddProductToCart;
+import UpdateShopProducts = ProductActions.UpdateShopProducts;
 
 @State<ProductStateModel>({
   name: 'products',
@@ -57,6 +58,13 @@ export class ProductState {
         }));
       })
     );
+  }
+
+  @Action(UpdateShopProducts)
+  updateShopProducts(ctx: StateContext<ProductStateModel>, action: UpdateShopProducts) {
+    ctx.setState(patch({
+      shopProducts: action.products
+    }));
   }
 
   @Action(FetchMostSalesProducts)

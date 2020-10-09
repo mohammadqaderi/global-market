@@ -13,10 +13,24 @@ export namespace PaymentActions {
     }
   }
 
+  export class PushPayment {
+    static readonly type = '[Payment] Push Payment';
+
+    constructor(public payment: PaymentModel) {
+    }
+  }
+
   export class FetchPaymentById {
     static readonly type = '[Payment] Fetch Payment By Id';
 
     constructor(public id: number) {
+    }
+  }
+
+  export class SetCustomerToken {
+    static readonly type = '[Payment] Set Customer Token';
+
+    constructor(public customerId: string) {
     }
   }
 

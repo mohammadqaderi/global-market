@@ -21,10 +21,18 @@ export namespace OrderActions {
     }
   }
 
+
   export class UpdateOrder {
     static readonly type = '[Order] Update Order';
 
     constructor(public id: number, public updateOrderDto: OrderDto) {
+    }
+  }
+
+  export class PushOrder {
+    static readonly type = '[Order] Push Order';
+
+    constructor(public order: OrderModel) {
     }
   }
 

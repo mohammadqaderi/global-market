@@ -6,14 +6,16 @@ import {tap} from 'rxjs/operators';
 import {InvoiceModel} from '../../models/Invoice/invoice.model';
 import FetchUserInvoices = InvoiceActions.FetchUserInvoices;
 import ClearInvoicesFromStorage = InvoiceActions.ClearInvoicesFromStorage;
+import PushInvoice = InvoiceActions.PushInvoice;
+import {append, patch} from '@ngxs/store/operators';
 
 
-State<InvoiceStateModel>({
+@State<InvoiceStateModel>({
   name: 'invoices',
   defaults: {
     invoices: null
   }
-});
+})
 
 @Injectable()
 export class InvoiceState {
@@ -35,6 +37,13 @@ export class InvoiceState {
         });
       })
     );
+  }
+
+  @Action(PushInvoice)
+  pushInvoice(ctx: StateContext<InvoiceStateModel>, action: PushInvoice) {
+    ctx.setState(patch({
+      invoices: append<InvoiceModel>([action.invoice])
+    }));
   }
 
   @Action(ClearInvoicesFromStorage)

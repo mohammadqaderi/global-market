@@ -1,0 +1,62 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header text-center">
+      <h4 class="modal-title w-100 font-weight-bold">Fill your card information, and description</h4>
+      <button type="button" (click)="helperService.hideModal()" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body mx-3">
+      <form [formGroup]="createPaymentDto">
+        <div formGroupName="stripeData">
+          <div class="form-group">
+            <label for="amount">Amount</label>
+            <input type="text" id="amount" class="form-control" formControlName="amount" placeholder="Example: $300">
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea type="text" id="description"
+                      name="description"
+                      class="form-control" formControlName="description" placeholder="Example: many products to buy">
+            </textarea>
+            <div
+              *ngIf="(StripeData['description'].invalid && StripeData['description'].touched) || StripeData['description'].dirty">
+              <small *ngIf="StripeData['description'].errors?.required" class="text-danger">Description is
+                required</small>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="card-element">Card</label>
+          <div id="card-element" class="form-control"></div>
+        </div>
+      </form>
+      <div class="row mt-2 mb-2" *ngIf="errorOnCharge.message || errorOnCharge.code || errorOnCharge.type">
+        <div class="col-xl-12 alert alert-danger">
+          <p *ngIf="errorOnCharge.code">{{errorOnCharge.code}}</p>
+          <p *ngIf="errorOnCharge.message">{{errorOnCharge.message}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer d-flex justify-content-center">
+      <button [disabled]="createPaymentDto.get('stripeData').invalid" (click)="buy()" mdbBtn color="success"
+              class="waves-light" mdbWavesEffect>Make purchase
+      </button>
+      <button type="button" (click)="helperService.hideModal()" mdbBtn color="light" mdbWavesEffect>Close</button>
+    </div>
+  </div>
+</div>
+<ng-template #errorTemplate>
+  <app-show-error-dialog
+    [error]="helperService.error"></app-show-error-dialog>
+</ng-template>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#9344d4d"
+  type="ball-spin-clockwise">
+  <p style="font-size: 20px; color: white">
+    Please wait...
+  </p>
+</ngx-spinner>

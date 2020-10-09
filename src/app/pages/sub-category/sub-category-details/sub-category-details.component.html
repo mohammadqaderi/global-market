@@ -1,6 +1,26 @@
 <div class="container-fluid" *ngIf="subCategory">
   <div class="card m-4">
     <section>
+      <div class="row justify-content-center m-4" *ngIf="productsTags && productsTags.length >=1">
+        <div class="card">
+          <div class="card-body">
+            <ul class="nav grey lighten-3 ">
+              <li class="nav-item">
+                <a (click)="getAll()" mat-button [ngClass]="{'bg-danger': isAllSelected }"
+                   class="nav-link">
+                  All
+                </a>
+              </li>
+              <li class="nav-item" *ngFor="let tag of productsTags">
+                <a (click)="onTagSelect(tag)" mat-button [ngClass]="{'bg-danger': tag.id === selectedTag }"
+                   class="nav-link">
+                  {{tag.name}}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div class="row m-4">
         <div *ngIf="subCategory && subCategory.products.length === 0" class="col-xl-12">
           <h2 class="text-center "> No Products Available in this sub category yet!

@@ -19,11 +19,11 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-divider></mat-divider>
-<mat-toolbar *ngIf="gdService.Tags && (isHandset$ | async)">
+<mat-toolbar *ngIf="gdService.SubCategoriesTags && (isHandset$ | async)">
   <mat-toolbar-row class="mt-3 " *ngIf="isHandset$ | async">
     Tags
   </mat-toolbar-row>
-  <mat-toolbar-row *ngFor="let tag of gdService.Tags ; let i = index">
+  <mat-toolbar-row *ngFor="let tag of gdService.SubCategoriesTags ; let i = index">
     <a style="width: 100%" mat-button class="nav-link text-left">
       <span>{{tag.name}}</span>
     </a>

@@ -25,6 +25,10 @@ import {ErrorInterceptor} from './services/auth/error.interceptor';
 import {TagLayoutComponent} from './layouts/tag-layout/tag-layout.component';
 import {CookieService} from 'ngx-cookie-service';
 import {BrowserModule} from '@angular/platform-browser';
+import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
+import {StripeIntegrationModule} from './modules/stripe-integration/stripe-integration.module';
+import {NgxStripeModule} from 'ngx-stripe';
+import {AsyncPipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -57,7 +61,10 @@ import {BrowserModule} from '@angular/platform-browser';
       storage: StorageOption.LocalStorage
     }),
     BrowserAnimationsModule,
+    StripeIntegrationModule,
     SharedModule,
+    NgxStripeModule.forRoot('pk_test_NGZldNb6iALz1pXcygYAYYZv000hYAH7Lb'),
+
   ],
   providers: [
     {
@@ -65,6 +72,7 @@ import {BrowserModule} from '@angular/platform-browser';
       useClass: TokenInterceptor,
       multi: true
     },
+    AsyncPipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,

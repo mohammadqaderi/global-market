@@ -15,6 +15,13 @@ export namespace ProductActions {
     }
   }
 
+  export class UpdateShopProducts {
+    static readonly type = '[Product] Update Shop Products';
+
+    constructor(public products: ProductModel[]) {
+    }
+  }
+
   export class FetchMostSalesProducts {
     static readonly type = '[Product] Fetch Most Sales Products';
 

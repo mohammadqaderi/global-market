@@ -1,1 +1,99 @@
-<p>order-details works!</p>
+<div class="container">
+  <div class="row m-4">
+    <mdb-card class="w-100">
+      <mdb-card-header>
+        <button mat-raised-button routerLink="/orders">
+          <i style="font-size: 22px" class="fas fa-chevron-circle-left"></i>
+          &nbsp; Back to orders
+        </button>
+      </mdb-card-header>
+      <mdb-card-body *ngIf="order">
+        <div class="row">
+          <div class="col-xl-4">
+            <div class="col-xl-12">
+              <mdb-card>
+                <mdb-card-header>
+                  <h2>Basic Information</h2>
+                </mdb-card-header>
+                <mdb-card-body>
+                  <p>Status: {{order.status}}</p>
+                  <p>{{order.createdAt | date: 'short'}}</p>
+                  <p>Shipped in: {{order.shipmentDate | date: 'short'}}</p>
+                  <button mdbBtn type="button" size="medium" color="deep-purple" mdbWavesEffect>View Invoice</button>
+                </mdb-card-body>
+              </mdb-card>
+              <hr class="my-2 mx-2">
+              <mdb-card>
+                <mdb-card-header>
+                  <h2>Billing Address</h2>
+                </mdb-card-header>
+                <mdb-card-body>
+                  <p>{{order.billingAddress.fullName}}</p>
+                  <p>{{order.billingAddress.email}}</p>
+                  <p>{{order.billingAddress.address1}}</p>
+                  <p *ngIf="order.billingAddress.address2">{{order.billingAddress.address2}}</p>
+                  <p>{{order.billingAddress.country}}</p>
+                  <p>{{order.billingAddress.city}}</p>
+                  <p>{{order.billingAddress.postalCode}}</p>
+                  <p>{{order.billingAddress.phone}}</p>
+                  <p>{{order.billingAddress.comments}}</p>
+                </mdb-card-body>
+              </mdb-card>
+            </div>
+          </div>
+          <div class="col-xl-8">
+            <div class="col-xl-12">
+              <mdb-card>
+                <mdb-card-header>
+                  <h2>Items</h2>
+                </mdb-card-header>
+                <mdb-card-body>
+                  <div class="col-xl-12" *ngFor="let orderItem of order.orderItems; let i  = index">
+                    <div class="row ">
+                      <div class="col-md-5 col-lg-3 col-xl-3">
+                        <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+                          <img class="img-fluid w-100"
+                               [src]="orderItemsProducts[i].images[0]"
+                               alt="Sample">
+                          <a>
+                            <div class="mask">
+                              <img class="img-fluid w-100"
+                                   [src]="orderItemsProducts[i].images[0]">
+                              <div class="mask rgba-black-slight"></div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="col-md-7 w-100 col-lg-3 col-xl-3">
+                        <div>
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h5>{{orderItemsProducts[i].name}}</h5>
+                              <p class="mb-3 text-muted text-uppercase">Unit Price:
+                                ${{orderItemsProducts[i].currentPrice}}</p>
+                              <p class="mb-3 text-muted text-uppercase">Quantity: {{orderItem.quantity}}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="my-2">
+                  </div>
+                </mdb-card-body>
+              </mdb-card>
+            </div>
+          </div>
+        </div>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="small"
+  color="#9344d4d"
+  type="ball-spin-clockwise">
+  <p style="font-size: 20px; color: white">
+    Loading Order
+  </p>
+</ngx-spinner>

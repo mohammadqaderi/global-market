@@ -4,6 +4,8 @@ import {TagModel} from '../../models/Tag/tag.model';
 import {ApiEndpoints} from '../../commons/api-endpoints';
 import {Observable} from 'rxjs';
 import {TagDto} from '../../commons/public-dto/tag.dto';
+import {SubCategoryTagModel} from '../../models/Categories/sub-category-tag.model';
+import {ProductTagModel} from '../../models/Products/product-tag.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,23 +15,16 @@ export class TagService {
   constructor(private _http: HttpClient) {
   }
 
-  getAllTags(): Observable<TagModel[]> {
-    return this._http.get<TagModel[]>(ApiEndpoints.TagEndpoints.rootTags);
+  getSubCategoriesTags(): Observable<SubCategoryTagModel[]> {
+    return this._http.get<SubCategoryTagModel[]>(`${ApiEndpoints.TagEndpoints.rootTags}/sub-categories`);
+  }
+
+  getProductsTags(): Observable<ProductTagModel[]> {
+    return this._http.get<ProductTagModel[]>(`${ApiEndpoints.TagEndpoints.rootTags}/products`);
   }
 
   getTagById(id: number): Observable<TagModel> {
     return this._http.get<TagModel>(`${ApiEndpoints.TagEndpoints.rootTags}/${id}`);
   }
 
-  newTag(tagDto: TagDto): Observable<TagModel> {
-    return this._http.post<TagModel>(`${ApiEndpoints.TagEndpoints.rootTags}/new`, tagDto);
-  }
-
-  updateTag(id: number, tagDto: TagDto): Observable<TagModel> {
-    return this._http.put<TagModel>(`${ApiEndpoints.TagEndpoints.rootTags}/${id}/update`, tagDto);
-  }
-
-  deleteTag(id: number): Observable<void> {
-    return this._http.delete<void>(`${ApiEndpoints.TagEndpoints.rootTags}/${id}/delete`);
-  }
 }

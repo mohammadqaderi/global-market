@@ -6,9 +6,10 @@ import {OrderActions, OrderStateModel} from './order.actions';
 import {OrderModel} from '../../models/Orders/order.model';
 import FetchUserOrders = OrderActions.FetchUserOrders;
 import UpdateOrder = OrderActions.UpdateOrder;
-import {patch, removeItem, updateItem} from '@ngxs/store/operators';
+import {append, patch, removeItem, updateItem} from '@ngxs/store/operators';
 import CancelOrder = OrderActions.CancelOrder;
 import ClearOrdersFromStorage = OrderActions.ClearOrdersFromStorage;
+import PushOrder = OrderActions.PushOrder;
 
 
 @State<OrderStateModel>({
@@ -48,6 +49,13 @@ export class OrderState {
         }));
       })
     );
+  }
+
+  @Action(PushOrder)
+  pushOrder(ctx: StateContext<OrderStateModel>, action: PushOrder) {
+    ctx.setState(patch({
+      orders: append<OrderModel>([action.order])
+    }));
   }
 
   @Action(ClearOrdersFromStorage)

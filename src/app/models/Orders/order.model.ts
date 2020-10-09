@@ -11,9 +11,7 @@ export class OrderModel {
 
   updatedAt: Date;
 
-  comments: string;
-
-  address: BillingAddress;
+  billingAddress: BillingAddress;
 
   shipmentDate: Date;
 

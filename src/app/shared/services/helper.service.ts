@@ -13,6 +13,9 @@ import {ProductModel} from '../../models/Products/product.model';
 import {Observable, Subscription} from 'rxjs';
 import {Router} from '@angular/router';
 import {LoginFirstComponent} from '../components/login-first/login-first.component';
+import {MatTableDataSource} from '@angular/material/table';
+import {OrderModel} from '../../models/Orders/order.model';
+import {InvoiceModel} from '../../models/Invoice/invoice.model';
 
 @Injectable({
   providedIn: 'root'
@@ -241,6 +244,10 @@ export class HelperService {
     this.startLoadingFlag = false;
     this.imageErrorMessage = null;
   }
+
+  // data sources
+  orderDataSource: MatTableDataSource<OrderModel> = new MatTableDataSource<OrderModel>([]);
+  invoicesDataSource: MatTableDataSource<InvoiceModel> = new MatTableDataSource<InvoiceModel>([]);
 
   // for toast messages
   openSnackbar(message: string, action: string) {

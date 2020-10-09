@@ -20,6 +20,16 @@ export class UpdateToken {
   }
 }
 
+export class UpdateUser {
+  static readonly type = '[Auth] Update User';
+
+  constructor(public user: UserModel) {
+  }
+}
+
+
+
+
 export class Register {
   static readonly type = '[Auth] Register';
 

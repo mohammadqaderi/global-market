@@ -28,6 +28,8 @@ export class UserModel {
 
   cartId: number;
 
+  stripeId: string;
+
   constructor(public adminId: number, public adminUsername: string, public isEmailVerified: boolean,
               protected adminEmail: string) {
   }

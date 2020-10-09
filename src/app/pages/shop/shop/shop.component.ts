@@ -11,6 +11,10 @@ import {SubCategoryModel} from '../../../models/Categories/sub-category.model';
 import {ProductModel} from '../../../models/Products/product.model';
 import FetchCustomProducts = ProductActions.FetchCustomProducts;
 import {ProductsCustomFilterDto} from '../../../commons/public-dto/products-custom-filter.dto';
+import {SubCategoryTagModel} from '../../../models/Categories/sub-category-tag.model';
+import {TagActions} from '../../../state-management/tag/tag.actions';
+import FetchSubCategoriesTags = TagActions.FetchSubCategoriesTags;
+import FetchSubCategoriesByTagName = SubCategoryActions.FetchSubCategoriesByTagName;
 
 export enum LoadType {
   TAG = 'TAG',
@@ -31,6 +35,8 @@ export class ShopComponent implements OnInit {
   showFilter = false;
   products: ProductModel[] = [];
   startDate = new Date(2016, 11, 1);
+  selectedTag: number;
+  isAllSelected = true;
   scId: number;
   searchTerm: string;
   productsCustomFilterDto: ProductsCustomFilterDto = {
@@ -74,6 +80,12 @@ export class ShopComponent implements OnInit {
         this.helperService.hideSpinner();
       });
     }
+    if (!this.gdService.SubCategoriesTags) {
+      this.helperService.showSpinner();
+      this.store.dispatch(new FetchSubCategoriesTags()).subscribe(() => {
+        this.helperService.hideSpinner();
+      });
+    }
     localStorage.setItem('loadType', LoadType.SHOP_PRODUCTS);
     this.refreshProducts();
   }
@@ -86,9 +98,29 @@ export class ShopComponent implements OnInit {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
 
-  fetchByTagName() {
-
+  fetchByTagName(subCategoryTag: SubCategoryTagModel) {
+    this.setTakeLength(10);
+    localStorage.setItem('loadType', LoadType.TAG);
+    this.selectedTag = subCategoryTag.id;
+    this.isAllSelected = null;
+    this.helperService.showSpinner();
+    this.store.dispatch(new FetchSubCategoriesByTagName(subCategoryTag.name)).subscribe(() => {
+      this.refreshProducts();
+      this.helperService.hideSpinner();
+    });
   }
+
+  getAll() {
+    this.selectedTag = null;
+    this.isAllSelected = true;
+    localStorage.setItem('loadType', LoadType.SHOP_PRODUCTS);
+    this.helperService.showSpinner();
+    this.store.dispatch(new FetchShopProducts(10)).subscribe(() => {
+      this.helperService.hideSpinner();
+      this.refreshProducts();
+    });
+  }
+
 
   loadCustomProducts() {
     this.setTakeLength(10);

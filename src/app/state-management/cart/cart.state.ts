@@ -15,6 +15,14 @@ import RemoveProductsFromCart = CartActions.RemoveProductsFromCart;
 import {SetUserCart} from '../auth/auth-actions';
 import AddProductToCart = CartActions.AddProductToCart;
 import {patch} from '@ngxs/store/operators';
+import {InvoiceActions} from '../invoice/invoice.actions';
+import PushInvoice = InvoiceActions.PushInvoice;
+import {OrderActions} from '../order/order.actions';
+import PushOrder = OrderActions.PushOrder;
+import {PaymentActions} from '../payment/payment.actions';
+import PushPayment = PaymentActions.PushPayment;
+import {AuthState} from '../auth/auth.state';
+import SetCustomerToken = PaymentActions.SetCustomerToken;
 
 
 @State<CartStateModel>({
@@ -80,25 +88,40 @@ export class CartState {
   @Action(CheckoutOnCart)
   checkoutOnCart(ctx: StateContext<CartStateModel>, action: CheckoutOnCart) {
     return this.cartService.checkoutOnCart(action.payload).pipe(
-      tap((data: CheckoutReturnData) => {
-        const {order, cart, invoice, payment} = data;
-        ctx.patchState({
-          cart
-        });
-        // Rest of code will be implemented later
+      tap((result: CheckoutReturnData) => {
+        if (result) {
+          const {cart, customerId} = result;
+          ctx.patchState({
+            cart
+          });
+          this.afterCheckoutComplete(result);
+          if (!this.store.selectSnapshot(AuthState.User).stripeId) {
+            this.store.dispatch(new SetCustomerToken(customerId));
+          }
+        }
       })
     );
   }
 
+  afterCheckoutComplete(result: CheckoutReturnData) {
+    const {order, invoice, payment} = result;
+    this.store.dispatch(new PushInvoice(invoice));
+    this.store.dispatch(new PushPayment(payment));
+    this.store.dispatch(new PushOrder(order));
+  }
+
+
   @Action(CheckoutOnSingleProduct)
   checkoutOnSingleProduct(ctx: StateContext<CartStateModel>, action: CheckoutOnSingleProduct) {
     return this.cartService.checkoutOnSingleProduct(action.cartProductId, action.payload).pipe(
-      tap((data: CheckoutReturnData) => {
-        const {order, cart, invoice, payment} = data;
-        ctx.patchState({
-          cart
-        });
-        // Rest of code will be implemented later
+      tap((result: CheckoutReturnData) => {
+        if (result) {
+          const {cart} = result;
+          ctx.patchState({
+            cart
+          });
+          this.afterCheckoutComplete(result);
+        }
       })
     );
   }

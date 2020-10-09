@@ -7,70 +7,120 @@
         <div class="col-lg-8 ">
           <!-- Card -->
           <div class="container-fluid m-2">
-              <form [formGroup]="billingForm" novalidate>
-                <h2 class="mb-2">Billing details</h2>
-                <div class="row">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Full Name</mat-label>
-                    <input type="text" matInput formControlName="fullName" placeholder="Full Name">
-                  </mat-form-field>
-                </div>
-                <div class="row">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Email</mat-label>
-                    <input type="text" matInput formControlName="email" placeholder="Email">
-                  </mat-form-field>
-                </div>
-                <div class="row">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Country</mat-label>
-                    <mat-select placeholder="Country" formControlName="country">
-                      <mat-option *ngFor="let country of countries" [value]="country">
+            <form [formGroup]="billingForm" novalidate>
+              <h2 class="mb-2">Billing details</h2>
+              <div class="row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Full Name</mat-label>
+                  <input type="text" name="fullName" matInput formControlName="fullName" placeholder="Full Name">
+                  <span
+                    *ngIf="(Controls['fullName'].invalid && Controls['fullName'].touched) || Controls['fullName'].dirty">
+                    <mat-error *ngIf="Controls['fullName'].errors?.required" class="text-danger">Full Name is
+                      required
+                    </mat-error>
+                  </span>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input type="text" matInput name="email" formControlName="email" placeholder="Email">
+                  <span *ngIf="(Controls['email'].invalid && Controls['email'].touched) || Controls['email'].dirty">
+                    <mat-error *ngIf="Controls['email'].errors?.required"
+                               class="text-danger">Email is required</mat-error>
+                    <mat-error *ngIf="Controls['email'].errors?.pattern" class="text-danger">Please provide a valid email
+                      address</mat-error>
+                  </span>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Country</mat-label>
+                  <mat-select placeholder="Country" name="country" formControlName="country">
+                    <mat-option *ngFor="let country of countries" [value]="country">
                        <span>
                          {{country}}
                        </span>
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                <div class="row">
-                  <mat-form-field appearance="outline">
-                    <mat-label>City</mat-label>
-                    <input type="text" matInput formControlName="city" placeholder="City">
-                  </mat-form-field>
-                </div>
-                <div class="row">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Address1</mat-label>
-                    <input type="text" matInput formControlName="address1" placeholder="Address1">
-                  </mat-form-field>
-                </div>
-                <div class="row">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Address2</mat-label>
-                    <input type="text" matInput formControlName="address2" placeholder="Address2 (Optional)">
-                  </mat-form-field>
-                </div>
-                <div class="row">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Postal Code</mat-label>
-                    <input type="text" matInput formControlName="postalCode" placeholder="Postal Code">
-                  </mat-form-field>
-                </div>
-                <div class="row">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Phone Number</mat-label>
-                    <input type="text" matInput formControlName="phone" placeholder="Phone Number">
-                  </mat-form-field>
-                </div>
-                <div class="row">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Comments</mat-label>
-                    <textarea  matInput formControlName="comments" placeholder="Comments">
+                    </mat-option>
+                  </mat-select>
+                  <span
+                    *ngIf="(Controls['country'].invalid && Controls['country'].touched) || Controls['country'].dirty">
+                    <mat-error *ngIf="Controls['country'].errors?.required"
+                               class="text-danger">Country is required</mat-error>
+                  </span>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field appearance="outline">
+                  <mat-label>City</mat-label>
+                  <input type="text" name="city" matInput formControlName="city" placeholder="City">
+                  <span *ngIf="(Controls['city'].invalid && Controls['city'].touched) || Controls['city'].dirty">
+                    <mat-error *ngIf="Controls['city'].errors?.required"
+                               class="text-danger">City is required</mat-error>
+                  </span>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Address1</mat-label>
+                  <input type="text" name="address1" matInput formControlName="address1" placeholder="Address1">
+                  <span
+                    *ngIf="(Controls['address1'].invalid && Controls['address1'].touched) || Controls['address1'].dirty">
+                    <mat-error *ngIf="Controls['address1'].errors?.required"
+                               class="text-danger">Address1 is required</mat-error>
+                  </span>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Address2</mat-label>
+                  <input type="number" name="address2" matInput formControlName="address2"
+                         placeholder="Address2 (Optional)">
+                  <mat-hint>This Field is optional</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Postal Code</mat-label>
+                  <input type="text" name="postalCode" matInput formControlName="postalCode" placeholder="Postal Code">
+                  <span
+                    *ngIf="(Controls['postalCode'].invalid && Controls['postalCode'].touched) || Controls['postalCode'].dirty">
+                    <mat-error *ngIf="Controls['postalCode'].errors?.required"
+                               class="text-danger">Postal Code is required</mat-error>
+                    <mat-error *ngIf="Controls['postalCode'].errors?.maxlength"
+                               class="text-danger">Max value is 5 digits</mat-error>
+                    <mat-error *ngIf="Controls['postalCode'].errors?.pattern"
+                               class="text-danger">Please enter a valid postal code</mat-error>
+                  </span>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Phone Number</mat-label>
+                  <input type="text" name="phone" matInput formControlName="phone" placeholder="Phone Number">
+                  <span
+                    *ngIf="(Controls['phone'].invalid && Controls['phone'].touched) || Controls['phone'].dirty">
+                    <mat-error *ngIf="Controls['phone'].errors?.required"
+                               class="text-danger">Phone is required</mat-error>
+                    <mat-error *ngIf="Controls['phone'].errors?.mask"
+                               class="text-danger">Please enter a valid phone number</mat-error>
+                  </span>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Comments</mat-label>
+                  <textarea matInput name="comments" formControlName="comments" placeholder="Comments">
                     </textarea>
-                  </mat-form-field>
-                </div>
-              </form>
+                  <span
+                    *ngIf="(Controls['comments'].invalid && Controls['comments'].touched) || Controls['comments'].dirty">
+                    <mat-error *ngIf="Controls['comments'].errors?.required"
+                               class="text-danger">Comments is required</mat-error>
+                  </span>
+                </mat-form-field>
+              </div>
+            </form>
+            {{billingForm.value | json}}
           </div>
           <!-- Card -->
 
@@ -87,10 +137,6 @@
               <h5 class="mb-3">The total amount of</h5>
 
               <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                  Temporary amount
-                  <span>$53.98</span>
-                </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                   Shipping
                   <span>Gratis</span>
@@ -102,12 +148,17 @@
                       <p class="mb-0">(including VAT)</p>
                     </strong>
                   </div>
-                  <span><strong>$53.98</strong></span>
+                  <span><strong>${{gdService.TotalPurchase}}</strong></span>
                 </li>
               </ul>
 
-              <button type="button" class="btn btn-primary btn-block waves-effect waves-light">Make purchase</button>
-
+              <button [disabled]="billingForm.invalid"
+                      (click)="helperService.openModal(stripeTemp)" type="button"
+                      class="btn btn-primary btn-block waves-effect waves-light">Make purchase
+              </button>
+              <ng-template #stripeTemp>
+                <app-stripe-checkout [createOrderDto]="billingForm"></app-stripe-checkout>
+              </ng-template>
             </div>
           </div>
         </div>

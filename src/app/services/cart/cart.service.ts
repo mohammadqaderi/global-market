@@ -22,7 +22,7 @@ export class CartService {
     return this._http.post<CartModel>(`${ApiEndpoints.CartEndpoints.rootCart}/create-user-cart`, null);
   }
 
-  checkoutOnCart(payload: any): Observable<CheckoutReturnData> {
+  checkoutOnCart(payload: { createPaymentDto: any, createOrderDto: any }): Observable<CheckoutReturnData> {
     return this._http.post<CheckoutReturnData>
     (`${ApiEndpoints.CartEndpoints.rootCart}/checkout-on-cart`, payload);
   }
