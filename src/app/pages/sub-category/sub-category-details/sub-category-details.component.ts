@@ -17,7 +17,6 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
   showSpinner = false;
   selectedTag: number;
   isAllSelected = true;
-
   constructor(public helperService: HelperService,
               public router: Router,
               public store: Store,
@@ -30,25 +29,17 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
   products: ProductModel[];
   productsTags: ProductTagModel[];
 
-  loadMoreProducts() {
-    this.showSpinner = true;
-    setTimeout(() => {
-      this.loadProducts(this.products, this.subCategory.products.length + 5);
-      this.productsTagsInit();
-    }, 800);
-  }
-
   onTagSelect(productTag: ProductTagModel) {
     this.selectedTag = productTag.id;
     this.isAllSelected = false;
     let products = [];
     for (let i = 0; i < this.subCategory.products.length; i++) {
-      const item = this.subCategory.products[i].productTags.find(pTag => pTag.id === productTag.id);
+      const item = this.subCategory.products[i].productTags.find(pTag => pTag.name === productTag.name);
       if (item) {
         products = [...products, this.subCategory.products[i]];
       }
     }
-    this.loadProducts(products, 6);
+    this.products = products.slice(0, 6);
   }
 
   subCategory: SubCategoryModel;
@@ -65,7 +56,7 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
             const subCategory = category.subCategories.find(s => s.id === +subCategoryId);
             if (subCategory) {
               this.subCategory = subCategory;
-              this.loadProducts(subCategory.products, 6);
+              this.loadProducts(subCategory);
               this.productsTagsInit();
             }
           }
@@ -75,7 +66,7 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
           const subCategoryModel = this.gdService.SubCategories.find(s => s.id === +subCategoryId);
           if (subCategoryModel) {
             this.subCategory = subCategoryModel;
-            this.loadProducts(subCategoryModel.products, 6);
+            this.loadProducts(subCategoryModel);
             this.productsTagsInit();
             this.helperService.hideSpinner();
           }
@@ -83,7 +74,7 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
           this.helperService.showSpinner();
           this.subCategoryService.getSubCategoryById(+subCategoryId).subscribe((subCategory: SubCategoryModel) => {
             this.subCategory = subCategory;
-            this.loadProducts(subCategory.products, 6);
+            this.loadProducts(subCategory);
             this.productsTagsInit();
             this.helperService.hideSpinner();
           });
@@ -95,16 +86,17 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
   getAll() {
     this.selectedTag = null;
     this.isAllSelected = true;
-    this.loadProducts(this.subCategory.products, 6);
+    this.loadProducts(this.subCategory);
   }
 
   productsTagsInit() {
     this.productsTags = [];
-    for (let i = 0; i < this.products.length; i++) {
-      for (let j = 0; j < this.products[i].productTags.length; j++) {
-        this.productsTags = [...this.productsTags, this.products[i].productTags[j]];
+    for (let i = 0; i < this.subCategory.products.length; i++) {
+      for (let j = 0; j < this.subCategory.products[i].productTags.length; j++) {
+        this.productsTags = [...this.productsTags, this.subCategory.products[i].productTags[j]];
       }
     }
+    console.log(this.productsTags);
     let uniqueArray: ProductTagModel[] = [];
     for (let i = 0; i < this.productsTags.length; i++) {
       const item = uniqueArray.find(item => item.name === this.productsTags[i].name);
@@ -115,8 +107,8 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
     this.productsTags = uniqueArray;
   }
 
-  loadProducts(products: ProductModel[], slice: number) {
-    this.products = products.slice(0, slice);
+  loadProducts(subCategory: SubCategoryModel) {
+    this.products = subCategory.products;
     this.showSpinner = false;
   }
 

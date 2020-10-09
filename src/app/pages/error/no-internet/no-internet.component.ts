@@ -9,7 +9,7 @@ import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
 })
 export class NoInternetComponent implements OnInit {
 
-  baseUrl = 'https://global-market-demo.herokuapp.com';
+  baseUrl = 'http://localhost:4200';
 
   constructor(private helperService: HelperService, private router: Router, private route: ActivatedRoute) {
     route.queryParamMap.subscribe((q: ParamMap) => {

@@ -50,9 +50,13 @@
                     <span class="text-grey"><s>$36.99</s></span>
                   </span>
               </p>
-              <button type="button" class="btn btn-primary btn-sm mr-1 mb-2"><i
+              <button *ngIf="gdService.IsAuthenticated()" (click)="helperService.openModal(addToCartTemp)" type="button"
+                      class="btn btn-primary btn-sm mr-1 mb-2"><i
                 class="fas fa-shopping-cart pr-2"></i>Add to cart
               </button>
+              <ng-template #addToCartTemp>
+                <app-add-to-cart [product]="product"></app-add-to-cart>
+              </ng-template>
               <button (click)="helperService.productDetails(product)" type="button"
                       class="btn btn-light btn-sm mr-1 mb-2"><i
                 class="fas fa-info-circle pr-2"></i>Details
@@ -64,24 +68,10 @@
       </div>
     </section>
   </div>
-  <div class="card m-4">
-    <div class="card-body">
-      <div class="row justify-content-center">
-        <button
-          (click)="loadMoreProducts()"
-          mdbBtn
-          color="primary" type="button">
-        <span *ngIf="showSpinner" class="spinner-border spinner-border-sm" role="status"
-              aria-hidden="true"></span>
-          <span *ngIf="!showSpinner">Load More</span>
-        </button>
-      </div>
-    </div>
-  </div>
 </div>
 <ngx-spinner
   bdColor="rgba(51,51,51,0.8)"
-  size="large"
+  size="medium"
   color="#9344d4d"
   type="ball-spin-clockwise">
   <p style="font-size: 20px; color: white">

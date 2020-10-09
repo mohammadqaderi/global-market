@@ -25,7 +25,6 @@ import {ErrorInterceptor} from './services/auth/error.interceptor';
 import {TagLayoutComponent} from './layouts/tag-layout/tag-layout.component';
 import {CookieService} from 'ngx-cookie-service';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {StripeIntegrationModule} from './modules/stripe-integration/stripe-integration.module';
 import {NgxStripeModule} from 'ngx-stripe';
 import {AsyncPipe} from '@angular/common';
