@@ -87,10 +87,10 @@
         <!-- Grid row -->
         <div class="row m-4">
           <!-- Grid column -->
-          <div class="col-xl-4 mb-4" *ngFor="let product of relatedProducts; let i = index">
+          <div class="col-xl-3 mb-4" *ngFor="let product of relatedProducts; let i = index">
             <!-- Card -->
             <div class="">
-              <div class="view zoom overlay z-depth-2 rounded">
+              <div (click)="backToTop(); helperService.productDetails(product)" class="view zoom overlay z-depth-2 rounded">
                 <img class="img-fluid fadeInUp  w-100"
                      style="max-height: 250px; height: 250px"
                      [src]="product.images[0]" alt="Sample">
@@ -121,10 +121,6 @@
                 <ng-template #addToCartTemp>
                   <app-add-to-cart [product]="product"></app-add-to-cart>
                 </ng-template>
-                <button (click)="backToTop(); helperService.productDetails(product)" type="button"
-                        class="btn  btn-light btn-sm mr-1 mb-2"><i
-                  class="fas fa-info-circle pr-2"></i>Details
-                </button>
               </div>
               <hr class="my-2">
             </div>

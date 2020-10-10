@@ -17,6 +17,7 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
   showSpinner = false;
   selectedTag: number;
   isAllSelected = true;
+
   constructor(public helperService: HelperService,
               public router: Router,
               public store: Store,
@@ -33,13 +34,18 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
     this.selectedTag = productTag.id;
     this.isAllSelected = false;
     let products = [];
+    let dressesProducts = [];
     for (let i = 0; i < this.subCategory.products.length; i++) {
+      if (productTag.name === 'Dresses') {
+        dressesProducts = [...dressesProducts, this.subCategory.products[i]];
+      }
       const item = this.subCategory.products[i].productTags.find(pTag => pTag.name === productTag.name);
       if (item) {
         products = [...products, this.subCategory.products[i]];
       }
     }
-    this.products = products.slice(0, 6);
+    console.log(dressesProducts);
+    this.products = products;
   }
 
   subCategory: SubCategoryModel;
@@ -96,7 +102,6 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
         this.productsTags = [...this.productsTags, this.subCategory.products[i].productTags[j]];
       }
     }
-    console.log(this.productsTags);
     let uniqueArray: ProductTagModel[] = [];
     for (let i = 0; i < this.productsTags.length; i++) {
       const item = uniqueArray.find(item => item.name === this.productsTags[i].name);

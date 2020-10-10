@@ -107,7 +107,7 @@
             <!-- Grid column -->
             <div class="col-xl-4 mb-4" *ngFor="let product of products | productFilter: searchTerm; let i = index">
               <div class="">
-                <div class="view zoom overlay z-depth-2 rounded">
+                <div (click)="helperService.productDetails(product)" class="view zoom overlay z-depth-2 rounded">
                   <img class="img-fluid fadeInUp  w-100"
                        style="max-height: 250px; height: 250px"
                        [src]="product.images[0]" alt="Sample">
@@ -130,17 +130,14 @@
                   </p>
                   <p><strong [innerText]="product.inStock? 'In Stock': 'Out of Stock'"></strong></p>
 
-                  <button (click)="helperService.openModal(addToCartTemp)" type="button"
+                  <button *ngIf="gdService.IsAuthenticated()" (click)="helperService.openModal(addToCartTemp)"
+                          type="button"
                           class="btn btn-primary  btn-sm mr-1 mb-2"><i
                     class="fas fa-shopping-cart pr-2"></i>Add to cart
                   </button>
                   <ng-template #addToCartTemp>
                     <app-add-to-cart [product]="product"></app-add-to-cart>
                   </ng-template>
-                  <button (click)="helperService.productDetails(product)" type="button"
-                          class="btn  btn-light btn-sm mr-1 mb-2"><i
-                    class="fas fa-info-circle pr-2"></i>Details
-                  </button>
                 </div>
                 <hr class="my-2">
               </div>

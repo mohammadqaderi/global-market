@@ -35,6 +35,8 @@ export class ShopComponent implements OnInit {
   showFilter = false;
   products: ProductModel[] = [];
   startDate = new Date(2016, 11, 1);
+  subCategoryTag: SubCategoryTagModel;
+  startSlice = 5;
   selectedTag: number;
   isAllSelected = true;
   scId: number;
@@ -99,12 +101,12 @@ export class ShopComponent implements OnInit {
   }
 
   fetchByTagName(subCategoryTag: SubCategoryTagModel) {
-    this.setTakeLength(10);
     localStorage.setItem('loadType', LoadType.TAG);
     this.selectedTag = subCategoryTag.id;
+    this.subCategoryTag = subCategoryTag;
     this.isAllSelected = null;
     this.helperService.showSpinner();
-    this.store.dispatch(new FetchSubCategoriesByTagName(subCategoryTag.name)).subscribe(() => {
+    this.store.dispatch(new FetchSubCategoriesByTagName(subCategoryTag.name, this.startSlice)).subscribe(() => {
       this.refreshProducts();
       this.helperService.hideSpinner();
     });
@@ -145,6 +147,7 @@ export class ShopComponent implements OnInit {
     this.showSpinner = true;
     switch (type) {
       case LoadType.SHOP_PRODUCTS: {
+        this.resetSlice(5);
         this.store.dispatch(new FetchShopProducts(this.products.length + 10)).subscribe(() => {
           this.refreshProducts();
           this.showSpinner = false;
@@ -153,6 +156,7 @@ export class ShopComponent implements OnInit {
       }
       case LoadType.CUSTOM: {
         this.productsCustomFilterDto.take = this.products.length + 10;
+        this.resetSlice(5);
         this.setSkipLength(this.products.length);
         this.store.dispatch(new FetchCustomProducts(this.productsCustomFilterDto)).subscribe(() => {
           this.refreshProducts();
@@ -160,13 +164,26 @@ export class ShopComponent implements OnInit {
         });
         break;
       }
+      case LoadType.TAG: {
+        this.startSlice = this.startSlice + 5;
+        this.store.dispatch(new FetchSubCategoriesByTagName(this.subCategoryTag.name, this.startSlice)).subscribe(() => {
+          this.refreshProducts();
+          this.showSpinner = false;
+        });
+        break;
+      }
       case LoadType.SUB_CATEGORY: {
+        this.resetSlice(5);
         setTimeout(() => {
           this.fetchBySubCategoryName(this.subCategory, this.products.length + 5);
         }, 1000);
         break;
       }
     }
+  }
+
+  resetSlice(length: number) {
+    this.startSlice = length;
   }
 
   setSkipLength(length: number) {

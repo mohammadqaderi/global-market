@@ -35,16 +35,20 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
-  backToTop(){
+  backToTop() {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
+
   setData(productId: number, subCategoryId: number) {
     const subCategory = this.gdService.SubCategories.find(sc => sc.id === subCategoryId);
     if (subCategory) {
       this.subCategory = subCategory;
       const product = subCategory.products.find(p => p.id === productId);
       if (product) {
+        this.relatedProducts = [];
         this.product = product;
+        console.log(this.subCategory.products);
+        console.log(product.references);
         this.selectedImage = product.images[0];
         for (let i = 0; i < product.references.length; i++) {
           const productModel = subCategory.products.find(p => p.id === product.references[i]);
@@ -67,7 +71,6 @@ export class ProductDetailsComponent implements OnInit {
   product: ProductModel;
 
   ngOnInit(): void {
-
   }
 
 }

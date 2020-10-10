@@ -8,7 +8,7 @@ export const TagLayoutRoutes: Routes = [
     component: TagsComponent
   },
   {
-    path: 'tag-items/:id',
+    path: 'tag-items/:name',
     component: TagItemsComponent
   }
 ];

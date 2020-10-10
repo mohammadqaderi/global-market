@@ -28,7 +28,7 @@
         </div>
         <div class="col-md-3 mb-4" *ngFor="let product of products; let i = index">
           <div class="">
-            <div class="view zoom overlay z-depth-2 rounded">
+            <div (click)="helperService.productDetails(product)" class="view zoom overlay z-depth-2 rounded">
               <img class="img-fluid w-100"
                    style="max-height: 250px; height: 250px"
                    [src]="product.images[0]" alt="Sample">
@@ -57,11 +57,6 @@
               <ng-template #addToCartTemp>
                 <app-add-to-cart [product]="product"></app-add-to-cart>
               </ng-template>
-              <button (click)="helperService.productDetails(product)" type="button"
-                      class="btn btn-light btn-sm mr-1 mb-2"><i
-                class="fas fa-info-circle pr-2"></i>Details
-              </button>
-
             </div>
           </div>
         </div>

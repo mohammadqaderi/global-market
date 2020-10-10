@@ -32,6 +32,7 @@ import ClearTags = TagActions.ClearTags;
 import {CartState} from '../../state-management/cart/cart.state';
 import {CartActions} from '../../state-management/cart/cart.actions';
 import ClearCartFromStorage = CartActions.ClearCartFromStorage;
+import {SubCategoryModel} from '../../models/Categories/sub-category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -86,9 +87,11 @@ export class GlobalDataService {
   get SubCategoriesTags() {
     return this.store.selectSnapshot(TagState.SubCategoriesTags);
   }
+
   get ProductsTags() {
     return this.store.selectSnapshot(TagState.ProductsTags);
   }
+
   get Invoices() {
     return this.store.selectSnapshot(InvoiceState.Invoices);
   }
@@ -128,6 +131,16 @@ export class GlobalDataService {
       const invoice = this.Invoices.find(i => i.id === id);
       return invoice ? invoice.number : 'No Number';
     }
+  }
+
+  navigateToSubCategory(subCategory: SubCategoryModel) {
+    const category = this.Categories.find(c => c.id === subCategory.categoryId);
+    this.router.navigate([`/sub-categories/${category.id}`, subCategory.id], {
+      queryParams: {
+        Department: category.name,
+        subCategory: subCategory.name
+      }
+    });
   }
 
 

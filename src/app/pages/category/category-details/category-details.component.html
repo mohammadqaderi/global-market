@@ -1,0 +1,40 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#9344d4d"
+  type="ball-spin-clockwise">
+  <p style="font-size: 20px; color: white">
+    Loading Category...
+  </p>
+</ngx-spinner>
+<div class="container-fluid " *ngIf="category">
+  <div class="row m-4 justify-content-center">
+    <div class="col-xl-12">
+      <section class="my-2 mb-2">
+        <div class="row m-4 justify-content-center">
+          <div class="col-md-3 mb-4" *ngFor="let subCategory of category.subCategories; let i = index">
+            <div class="">
+              <div (click)="gdService.navigateToSubCategory(subCategory)"
+                   class="view zoom overlay z-depth-2 rounded">
+                <img class="img-fluid w-100"
+                     style="max-height: 250px; height: 250px"
+                     [src]="subCategory.products[0].images[0]" alt="Sample">
+                <a>
+                  <div class="mask">
+                    <img class="img-fluid w-100"
+                         style="max-height: 250px; height: 250px"
+                         [src]="subCategory.products[0].images[0]">
+                    <div class="mask rgba-black-slight"></div>
+                  </div>
+                </a>
+              </div>
+              <div class="text-center pt-4">
+                <h4>{{subCategory.name}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

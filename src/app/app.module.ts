@@ -28,6 +28,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {StripeIntegrationModule} from './modules/stripe-integration/stripe-integration.module';
 import {NgxStripeModule} from 'ngx-stripe';
 import {AsyncPipe} from '@angular/common';
+import {CategoryLayoutComponent} from './layouts/category-layout/category-layout.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {AsyncPipe} from '@angular/common';
     PaymentLayoutComponent,
     ProductLayoutComponent,
     ShopLayoutComponent,
+    CategoryLayoutComponent,
     TagLayoutComponent,
     AuthComponent,
   ],

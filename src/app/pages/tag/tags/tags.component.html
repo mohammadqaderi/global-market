@@ -10,7 +10,8 @@
           <!-- Grid column -->
           <div class="col-md-3 mb-4" *ngFor="let tag of gdService.SubCategoriesTags; let i = index">
             <!-- Card -->
-            <button mdbBtn style="border-radius: 50%; width: 160px; max-width: 160px" type="button" color="deep-purple"
+            <button (click)="fetchTagItems(tag)" mdbBtn style="border-radius: 50%; width: 160px; max-width: 160px"
+                    type="button" color="deep-purple"
                     mdbWavesEffect>
               #{{tag.name}}</button>
             <!-- Card -->

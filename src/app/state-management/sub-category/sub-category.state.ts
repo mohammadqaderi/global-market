@@ -37,7 +37,7 @@ export class SubCategoryState {
         let products = [];
         for (let i = 0; i < subCategories.length; i++) {
           const subCategory = Object.assign({}, subCategories[i]);
-          products = products.concat(subCategory.products.slice(0, 5));
+          products = products.concat(subCategory.products.slice(0, action.slice));
         }
         this.store.dispatch(new UpdateShopProducts(products));
       })

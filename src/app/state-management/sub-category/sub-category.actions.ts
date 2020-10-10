@@ -20,11 +20,10 @@ export namespace SubCategoryActions {
   }
 
 
-
   export class FetchSubCategoriesByTagName {
     static readonly type = '[SubCategory] Fetch SubCategories By Tag Name';
 
-    constructor(public tagName: string) {
+    constructor(public tagName: string, public slice: number) {
     }
   }
 

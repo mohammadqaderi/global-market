@@ -10,6 +10,9 @@ import {InvoiceLayoutComponent} from './layouts/invoice-layout/invoice-layout.co
 import {TagLayoutComponent} from './layouts/tag-layout/tag-layout.component';
 import {ShopLayoutComponent} from './layouts/shop-layout/shop-layout.component';
 import {CartLayoutComponent} from './layouts/cart-layout/cart-layout.component';
+import {CommonLayoutRoutes} from './layouts/common-layout/common-layout.routing';
+import {CommonLayoutComponent} from './layouts/common-layout/common-layout.component';
+import {CategoryLayoutComponent} from './layouts/category-layout/category-layout.component';
 
 
 const routes: Routes = [
@@ -82,6 +85,16 @@ const routes: Routes = [
   },
   {
     path: '',
+    component: CommonLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./layouts/common-layout/common-layout.module').then(c => c.CommonLayoutModule)
+      }
+    ]
+  },
+  {
+    path: '',
     component: ShopLayoutComponent,
     children: [
       {
@@ -90,28 +103,17 @@ const routes: Routes = [
       }
     ]
   },
-  // {
-  //   path: '',
-  //   component: PaymentLayoutComponent,
-  //   canActivate: [UserAuthGuard],
-  //   children: [
-  //     {
-  //       path: '',
-  //       loadChildren: () => import('./layouts/payment-layout/payment-layout.module').then(p => p.PaymentLayoutModule)
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '',
-  //   component: CategoryLayoutComponent,
-  //   canActivate: [UserAuthGuard],
-  //   children: [
-  //     {
-  //       path: '',
-  //       loadChildren: () => import('./layouts/category-layout/category-layout.module').then(c => c.CategoryLayoutModule)
-  //     }
-  //   ]
-  // },
+  {
+    path: '',
+    component: CategoryLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./layouts/category-layout/category-layout.module').then(c => c.CategoryLayoutModule)
+      }
+    ]
+  },
+
   {
     path: '',
     component: TagLayoutComponent,

@@ -55,6 +55,10 @@ export const ApiEndpoints = {
     newSubscriber: `${prefixRoute}/notifications/subscribers/new`,
     sendNotification: `${prefixRoute}/notifications/send-notification`
   },
+
+  Search: {
+    searchByName: `${prefixRoute}/search`
+  },
   VapidKeys: {
     publicKey: 'BKmeS0raBK4YrI7tiG3FaQ-TQJJjq-b4YsqxbiNgcTidYR3yvEkfLRFrFiljjAcXuNcVLErufWJ2pvhsN0O7uN8',
     privateKey: 'Psk8q_qyekL2hrPwnYF8k-ckTmb8JRmjBUBsmv9FquY',

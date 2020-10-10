@@ -1,0 +1,180 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#9344d4d"
+  type="ball-spin-clockwise">
+  <p style="font-size: 20px; color: white">
+    Searching...
+  </p>
+</ngx-spinner>
+
+
+<!-- Start Of Categories Search Result -->
+<div class="container-fluid " *ngIf="categoriesArray">
+  <div class="row m-4 justify-content-center">
+    <div class="col-xl-12">
+      <section>
+        <div class="row justify-content-center">
+          <h2>
+            <span>You've searched for: {{name}}</span>
+            &nbsp;, that exist in Categories section
+          </h2>
+        </div>
+      </section>
+      <section *ngIf="categoriesArray.length === 0">
+        <div class="row justify-content-center bg-warning">
+          <h3 class="text-center">There are no result for what you searched</h3>
+        </div>
+      </section>
+      <section class="my-2 mb-2">
+        <div class="row m-4">
+          <div class="col-md-3 mb-4" *ngFor="let category of categoriesArray; let i = index">
+            <div class="">
+              <div (click)="navigateToCategoryDetails(category)"
+                   class="view zoom overlay z-depth-2 rounded">
+                <img class="img-fluid w-100"
+                     style="max-height: 250px; height: 250px"
+                     [src]="category.subCategories[0].products[0].images[0]" alt="Sample">
+                <a>
+                  <div class="mask">
+                    <img class="img-fluid w-100"
+                         style="max-height: 250px; height: 250px"
+                         [src]="category.subCategories[0].products[0].images[0]">
+                    <div class="mask rgba-black-slight"></div>
+                  </div>
+                </a>
+              </div>
+              <div class="text-center pt-4">
+                <h4>{{category.name}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- End Of Categories Search Result -->
+
+
+<!-- Start Of Sub Categories Search Result -->
+
+<div class="container-fluid " *ngIf="subCategoriesArray">
+  <div class="row m-4 justify-content-center">
+    <div class="col-xl-12">
+      <section>
+        <div class="row justify-content-center">
+          <h2 class="text-center">
+            <span>You've searched for: {{name}}</span>
+            &nbsp;, that exist in Sub Categories section
+          </h2>
+        </div>
+      </section>
+      <section *ngIf="subCategoriesArray.length === 0">
+        <div class="row justify-content-center bg-warning">
+          <h3 class="text-center">There are no result for what you searched</h3>
+        </div>
+      </section>
+      <section class="my-2 mb-2">
+        <div class="row m-4">
+          <div class="col-md-3 mb-4" *ngFor="let subCategory of subCategoriesArray; let i = index">
+            <div class="">
+              <div (click)="gdService.navigateToSubCategory(subCategory)"
+                   class="view zoom overlay z-depth-2 rounded">
+                <img class="img-fluid w-100"
+                     style="max-height: 250px; height: 250px"
+                     [src]="subCategory.products[0].images[0]" alt="Sample">
+                <a>
+                  <div class="mask">
+                    <img class="img-fluid w-100"
+                         style="max-height: 250px; height: 250px"
+                         [src]="subCategory.products[0].images[0]">
+                    <div class="mask rgba-black-slight"></div>
+                  </div>
+                </a>
+              </div>
+              <div class="text-center pt-4">
+                <h4>{{subCategory.name}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<!-- End Of Sub Categories Search Result -->
+
+
+<!-- Products Search Result -->
+<div class="container-fluid " *ngIf="productsArray">
+  <div class="row m-4 justify-content-center">
+    <div class="col-xl-12">
+      <section>
+        <div class="row justify-content-center">
+          <h2 class="text-center">
+            <span>You've searched for: {{name}}</span>
+            &nbsp;, that exist in Sub Categories section
+          </h2>
+        </div>
+      </section>
+      <section *ngIf="productsArray.length === 0">
+        <div class="row justify-content-center bg-warning">
+          <h3 class="text-center">There are no result for what you searched</h3>
+        </div>
+      </section>
+      <section class="my-2 mb-2">
+        <div class="row m-4">
+          <div class="col-md-3 mb-4" *ngFor="let product of productsArray; let i = index">
+            <div class="">
+              <div (click)="helperService.productDetails(product)" class="view zoom overlay z-depth-2 rounded">
+                <img class="img-fluid w-100"
+                     style="max-height: 250px; height: 250px"
+                     [src]="product.images[0]" alt="Sample">
+                <a>
+                  <div class="mask">
+                    <img class="img-fluid w-100"
+                         style="max-height: 250px; height: 250px"
+                         [src]="product.images[0]">
+                    <div class="mask rgba-black-slight"></div>
+                  </div>
+                </a>
+              </div>
+              <div class="text-center pt-4">
+                <h4>{{product.name}}</h4>
+                <p>
+                  <span>${{product.currentPrice}}</span>
+                  <span class="ml-5">
+                    <span class="text-grey"><s>$36.99</s></span>
+                  </span>
+                </p>
+                <button *ngIf="gdService.IsAuthenticated()" (click)="helperService.openModal(addToCartTemp)"
+                        type="button"
+                        class="btn btn-primary btn-sm mr-1 mb-2"><i
+                  class="fas fa-shopping-cart pr-2"></i>Add to cart
+                </button>
+                <ng-template #addToCartTemp>
+                  <app-add-to-cart [product]="product"></app-add-to-cart>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<!-- End Of Products Search Result -->
+
+<div class="container-fluid" *ngIf="showLoadMore()">
+  <div class="row justify-content-center">
+    <button (click)="loadMore()" mdbBtn color="primary" type="button">
+      <span *ngIf="showSpinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      <span *ngIf="!showSpinner">Load More</span>
+    </button>
+    <button (click)="backToTop()" mdbBtn color="deep-purple" type="button">
+      Back to Top &nbsp; <i class="fas fa-arrow-up"></i>
+    </button>
+  </div>
+</div>
