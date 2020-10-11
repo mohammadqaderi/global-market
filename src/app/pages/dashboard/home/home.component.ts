@@ -96,7 +96,7 @@ export class HomeComponent implements OnInit {
           'Okay'
         );
       }, error => {
-        error.error = 'Could not send subscription object to server';
+        error.error = 'Error';
         error.message = 'Could not send subscription object to server';
         this.helperService.showErrorDialog(error, this.errorTemplate);
       });
