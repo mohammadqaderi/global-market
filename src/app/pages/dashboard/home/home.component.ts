@@ -22,7 +22,6 @@ export class HomeComponent implements OnInit {
   contactMessageDto: FormGroup;
   state: string;
   @ViewChild('errorTemplate', {static: true}) errorTemplate: TemplateRef<any>;
-  subscriber: PushSubscription;
   subscriptionForm: FormGroup;
 
   constructor(public gdService: GlobalDataService, public helperService: HelperService,
@@ -89,7 +88,6 @@ export class HomeComponent implements OnInit {
     this.swPush.requestSubscription({
       serverPublicKey: ApiEndpoints.VapidKeys.publicKey
     }).then(subscriber => {
-      this.subscriber = subscriber;
       this.notifyService.addPushSubscriber(subscriber, this.subscriptionForm.value.email).subscribe(() => {
         this.helperService.openSnackbar(
           'Now, you are a new subscriber, and you will get our newsletter',
