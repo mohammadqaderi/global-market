@@ -28,13 +28,21 @@
                 <small *ngIf="Email.errors?.pattern" class="text-danger">Please provide a valid email address</small>
               </div>
             </div>
-            <div class="for-group">
+            <div class="form-group">
               <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-lock"></i></span>
                 </div>
                 <input formControlName="password" type="password" id="defaultLoginFormPassword" class="form-control"
                        placeholder="Password">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-xl-6">
+                <a (click)="helperService.openModal(forgotPass)" class="nav-link" mat-button>Forgot Your Password?</a>
+              </div>
+              <div class="col-xl-6">
+                <a class="nav-link" routerLink="/auth/register" mat-button>Or create a new account</a>
               </div>
             </div>
             <button class="btn btn-info btn-block my-4" [disabled]="emailLoginDto.invalid" type="submit">Sign in
@@ -59,47 +67,53 @@
   <app-show-error-dialog
     [error]="helperService.error"></app-show-error-dialog>
 </ng-template>
+
+
 <ng-template #forgotPass>
-  <h5 *ngIf="!isSent" class="text-center" mat-dialog-title>
-    Enter Your Email to Send Forgot Password Request
-  </h5>
-  <mat-dialog-content class="mat-typography" style="width: 500px; height: auto">
-    <div *ngIf="!isSent" class="row mb-1 mt-1 justify-content-center">
-      <form [formGroup]="emailRequestForm" novalidate>
-        <div class="form-group mb-3">
-          <div class="input-group input-group-alternative">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+  <div class="modal-content">
+    <div class="modal-header text-center">
+      <h4 *ngIf="!isSent" class="modal-title w-100 font-weight-bold">Enter Your Email to Send Forgot Password
+        Request</h4>
+      <button type="button" (click)="helperService.hideModal()" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body mx-1">
+      <div *ngIf="!isSent" class="row mb-1 mt-1 justify-content-center">
+        <form [formGroup]="emailRequestForm" novalidate>
+          <div class="form-group mb-2">
+            <div class="input-group input-group-alternative mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-at"></i></span>
+              </div>
+              <input type="email"
+                     id="email"
+                     formControlName="email" name="email"
+                     class="form-control " placeholder="E-mail"
+                     [class.is-invalid]="ForgotRequestEmail.invalid && ForgotRequestEmail.touched">
             </div>
-            <input formControlName="email" name="email"
-                   class="form-control" placeholder="Email" type="email"
-                   [class.is-invalid]="ForgotRequestEmail.invalid && ForgotRequestEmail.touched">
+            <div *ngIf="(ForgotRequestEmail.invalid && ForgotRequestEmail.touched) || ForgotRequestEmail.dirty">
+              <small *ngIf="ForgotRequestEmail.errors?.required" class="text-danger">Email is required</small>
+              <small *ngIf="ForgotRequestEmail.errors?.pattern" class="text-danger">Please provide a valid email
+                address</small>
+            </div>
           </div>
-          <div *ngIf="(ForgotRequestEmail.invalid && ForgotRequestEmail.touched) || ForgotRequestEmail.dirty">
-            <small *ngIf="ForgotRequestEmail.errors?.required" class="text-danger">Email is required</small>
-            <small *ngIf="ForgotRequestEmail.errors?.pattern" class="text-danger">Please provide a valid email
-              address</small>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
+      <div *ngIf="message && isSent" class="row m-3 justify-content-center">
+        <p class="lead">
+          {{message}}
+        </p>
+      </div>
     </div>
-    <div *ngIf="message && isSent" class="row mb-1 mt-1 justify-content-center">
-      <p class="lead text-warning">
-        {{message}}
-      </p>
+    <div class="modal-footer d-flex justify-content-xl-end">
+      <button *ngIf="!isSent" (click)="sendEmailForgotPassword()" [disabled]="emailRequestForm.invalid" mdbBtn
+              color="default"
+              class="waves-light" mdbWavesEffect>Send Request
+      </button>
+      <button type="button" (click)="helperService.hideModal()" mdbBtn color="light" mdbWavesEffect>Close</button>
     </div>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button *ngIf="!isSent" (click)="sendEmailForgotPassword()" [disabled]="emailRequestForm.invalid" mat-raised-button
-            color="primary"
-            style="width: 150px">
-      Send Request
-    </button>
-    <button style="width: 120px" (click)="helperService.hideDialog()"
-            class="btn btn-outline-warning pull-right ml-1">
-      Close
-    </button>
-  </mat-dialog-actions>
+  </div>
   <ngx-spinner
     bdColor="rgba(51,51,51,0.8)"
     size="medium"

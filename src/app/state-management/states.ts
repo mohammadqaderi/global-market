@@ -8,7 +8,6 @@ import {ProductState} from './product/product.state';
 import {SubCategoryState} from './sub-category/sub-category.state';
 import {TagState} from './tag/tag.state';
 import {PaymentState} from './payment/payment.state';
-import {NotificationState} from './notification/notification.state';
 
 export const StatesNames = [
   'auth',
@@ -20,8 +19,7 @@ export const StatesNames = [
   'tags',
   'subCategories',
   'payments',
-  'products',
-  'notificationsData',
+  'products'
 ];
 export const States = [
   AuthState,
@@ -33,6 +31,5 @@ export const States = [
   TagState,
   InvoiceState,
   ProfileState,
-  OrderState,
-  NotificationState,
+  OrderState
 ];

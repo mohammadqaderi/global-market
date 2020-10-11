@@ -81,7 +81,6 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/home']);
       this.helperService.hideSpinner();
     }, error => {
-      this.helperService.hideDialog();
       this.helperService.showErrorDialog(error, this.errorTemplate);
     });
   }

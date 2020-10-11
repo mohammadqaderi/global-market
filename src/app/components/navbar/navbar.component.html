@@ -1,3 +1,5 @@
+
+
 <mat-sidenav-container class="sidenav-container">
 
 
@@ -6,6 +8,7 @@
                position="end"
                [mode]="(isHandset$ | async) ? 'over' : 'push'"
   >
+
     <mat-toolbar>
       <mat-toolbar-row>
         <mat-icon (click)="drawer.close()">close</mat-icon>
@@ -174,10 +177,10 @@
         </div>
       </mat-toolbar-row>
     </mat-toolbar>
+
     <router-outlet>
 
     </router-outlet>
-
     <app-footer></app-footer>
 
   </mat-sidenav-content>

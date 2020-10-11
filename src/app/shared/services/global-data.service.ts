@@ -15,7 +15,6 @@ import {ProfileActions} from '../../state-management/profile/profile.actions';
 import {InvoiceActions} from '../../state-management/invoice/invoice.actions';
 import {OrderActions} from '../../state-management/order/order.actions';
 import {PaymentActions} from '../../state-management/payment/payment.actions';
-import {NotificationState} from '../../state-management/notification/notification.state';
 import ClearProfileData = ProfileActions.ClearProfileData;
 import ClearInvoicesFromStorage = InvoiceActions.ClearInvoicesFromStorage;
 import ClearOrdersFromStorage = OrderActions.ClearOrdersFromStorage;
@@ -114,15 +113,6 @@ export class GlobalDataService {
 
   Token() {
     return this.store.selectSnapshot(AuthState.Token);
-  }
-
-
-  get Notifications() {
-    return this.store.selectSnapshot(NotificationState.Notifications);
-  }
-
-  get Subscribers() {
-    return this.store.selectSnapshot(NotificationState.Subscribers);
   }
 
 

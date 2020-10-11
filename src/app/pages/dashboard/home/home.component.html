@@ -4,9 +4,13 @@
   color="#9344d4d"
   type="ball-spin-clockwise">
   <p style="font-size: 20px; color: white">
-    Loading...
+    {{state}}
   </p>
 </ngx-spinner>
+<ng-template #errorTemplate>
+  <app-show-error-dialog
+    [error]="helperService.error"></app-show-error-dialog>
+</ng-template>
 <mdb-carousel allowSwipe [animation]="'slide'">
   <mdb-carousel-item>
     <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg" alt="First slide">
@@ -54,7 +58,8 @@
                 </p>
                 <p><strong [innerText]="product.inStock? 'In Stock': 'Out of Stock'"></strong></p>
 
-                <button *ngIf="gdService.IsAuthenticated()" (click)="helperService.openModal(addToCartTemp)" type="button"
+                <button *ngIf="gdService.IsAuthenticated()" (click)="helperService.openModal(addToCartTemp)"
+                        type="button"
                         class="btn btn-primary btn-sm mr-1 mb-2"><i
                   class="fas fa-shopping-cart pr-2"></i>Add to cart
                 </button>
@@ -119,7 +124,8 @@
                 </p>
                 <p><strong [innerText]="product.inStock? 'In Stock': 'Out of Stock'"></strong></p>
 
-                <button *ngIf="gdService.IsAuthenticated()" (click)="helperService.openModal(addToCartTemp)" type="button"
+                <button *ngIf="gdService.IsAuthenticated()" (click)="helperService.openModal(addToCartTemp)"
+                        type="button"
                         class="btn btn-primary btn-sm mr-1 mb-2"><i
                   class="fas fa-shopping-cart pr-2"></i>Add to cart
                 </button>
@@ -151,9 +157,8 @@
       <div class="card">
         <!--Section: Content-->
         <section>
-
           <!-- Section heading -->
-          <h3 class="text-center mb-4">Why is it so great?</h3>
+          <h2 class="h1-responsive font-weight-bold text-center my-4">Why we are the best?</h2>
           <!-- Section description -->
           <p class="text-center w-sm-75 mx-auto mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit enim ad
             minima veniam,
@@ -165,7 +170,7 @@
 
             <!-- Grid column -->
             <div class="col-lg-5 text-center text-lg-left">
-              <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/screens-section.jpg"
+              <img class="img-fluid" src="../../../../assets/img/brand/products.jpg"
                    alt="Sample image">
             </div>
             <!-- Grid column -->
@@ -212,105 +217,150 @@
     </div>
   </div>
   <div class="row justify-content-center m-2">
-    <div class="col-xl-10">
-      <!--Section: Contact v.2-->
-      <section class="mb-4">
+    <div class="col-xl-12">
+      <div class="card">
 
-        <!--Section heading-->
-        <h2 class="h1-responsive font-weight-bold text-center my-4">Contact us</h2>
-        <!--Section description-->
-        <p class="text-center w-responsive mx-auto mb-5">Do you have any questions? Please do not hesitate to contact us
-          directly. Our team will come back to you within
-          a matter of hours to help you.</p>
-
-        <div class="row">
-
-          <!--Grid column-->
-          <div class="col-md-9 mb-md-0 mb-5">
-            <form id="contact-form" name="contact-form" action="mail.php" method="POST">
-
-              <!--Grid row-->
-              <div class="row">
-
-                <!--Grid column-->
-                <div class="col-md-6">
-                  <div class="md-form mb-0">
-                    <input type="text" id="name" name="name" class="form-control">
-                    <label for="name" class="">Your name</label>
-                  </div>
+        <h2 class="h1-responsive font-weight-bold text-center my-4">Subscribe to our news letter</h2>
+        <p class="text-center w-responsive mx-auto mb-4 text-muted">You will get the latest notifications for new
+          products and offers</p>
+        <section class="mb-4">
+          <div class="row m-3">
+            <div class="col-xl-9">
+              <form [formGroup]="subscriptionForm" novalidate>
+                <div class="md-form mb-0">
+                  <input type="text" formControlName="email" id="subscriptionEmail" name="email" class="form-control"
+                         [class.is-invalid]="subscriptionForm.controls['email'].invalid && subscriptionForm.controls['email'].touched">
+                  <label for="subscriptionEmail" class="">Your email</label>
                 </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-md-6">
-                  <div class="md-form mb-0">
-                    <input type="text" id="email" name="email" class="form-control">
-                    <label for="email" class="">Your email</label>
-                  </div>
+                <div
+                  *ngIf="(subscriptionForm.controls['email'].invalid && subscriptionForm.controls['email'].touched) || subscriptionForm.controls['email'].dirty">
+                  <small *ngIf="subscriptionForm.controls['email'].errors?.required" class="text-danger">Email is
+                    required</small>
+                  <small *ngIf="subscriptionForm.controls['email'].errors?.pattern" class="text-danger">Please provide a valid
+                    email
+                    address</small>
                 </div>
-                <!--Grid column-->
-
-              </div>
-              <!--Grid row-->
-
-              <!--Grid row-->
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="md-form mb-0">
-                    <input type="text" id="subject" name="subject" class="form-control">
-                    <label for="subject" class="">Subject</label>
-                  </div>
-                </div>
-              </div>
-              <!--Grid row-->
-
-              <!--Grid row-->
-              <div class="row">
-
-                <!--Grid column-->
-                <div class="col-md-12">
-
-                  <div class="md-form">
-                    <textarea type="text" id="message" name="message" rows="2"
-                              class="form-control md-textarea"></textarea>
-                    <label for="message">Your message</label>
-                  </div>
-
-                </div>
-              </div>
-              <!--Grid row-->
-
-            </form>
-
-            <div class="text-center text-md-left">
-              <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();">Send</a>
+              </form>
             </div>
-            <div class="status"></div>
+            <div class="col-xl-3">
+              <div class="md-form mb-0">
+                <button [disabled]="subscriptionForm.invalid" (click)="subscribeToNotifications()"
+                        class="btn btn-info btn-block " type="submit">Subscribe
+                </button>
+              </div>
+
+            </div>
           </div>
-          <!--Grid column-->
+        </section>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center m-2">
+    <div class="col-xl-12">
+      <div class="card">
+        <section class="mb-4">
 
-          <!--Grid column-->
-          <div class="col-md-3 text-center">
-            <ul class="list-unstyled mb-0">
-              <li><i class="fas fa-map-marker-alt fa-2x"></i>
-                <p>San Francisco, CA 94126, USA</p>
-              </li>
+          <!--Section heading-->
+          <h2 class="h1-responsive font-weight-bold text-center my-4">Contact us</h2>
+          <!--Section description-->
+          <p class="text-center w-responsive mx-auto mb-5">Do you have any questions? Please do not hesitate to contact
+            us
+            directly. Our team will come back to you within
+            a matter of hours to help you.</p>
 
-              <li><i class="fas fa-phone mt-4 fa-2x"></i>
-                <p>+ 01 234 567 89</p>
-              </li>
+          <div class="row m-3">
 
-              <li><i class="fas fa-envelope mt-4 fa-2x"></i>
-                <p>contact@mdbootstrap.com</p>
-              </li>
-            </ul>
+            <!--Grid column-->
+            <div class="col-md-9 mb-md-0 mb-5">
+              <form [formGroup]="contactMessageDto" novalidate>
+                <!--Grid row-->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="md-form mb-0">
+                      <input type="text" formControlName="email" id="email" name="email" class="form-control"
+                             [class.is-invalid]="ContactControls['email'].invalid && ContactControls['email'].touched">
+                      <label for="email" class="">Your email</label>
+                    </div>
+                    <div
+                      *ngIf="(ContactControls['email'].invalid && ContactControls['email'].touched) || ContactControls['email'].dirty">
+                      <small *ngIf="ContactControls['email'].errors?.required" class="text-danger">Email is
+                        required</small>
+                      <small *ngIf="ContactControls['email'].errors?.pattern" class="text-danger">Please provide a valid
+                        email
+                        address</small>
+                    </div>
+                  </div>
+                </div>
+                <!--Grid row-->
+
+                <!--Grid row-->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="md-form mb-0">
+                      <input formControlName="subject"
+                             [class.is-invalid]="ContactControls['subject'].invalid && ContactControls['subject'].touched"
+                             type="text" id="subject" name="subject" class="form-control">
+                      <label for="subject" class="">Subject</label>
+                    </div>
+                    <div
+                      *ngIf="(ContactControls['subject'].invalid && ContactControls['subject'].touched) || ContactControls['subject'].dirty">
+                      <small *ngIf="ContactControls['subject'].errors?.required" class="text-danger">Subject is
+                        required</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="md-form">
+                    <textarea formControlName="message" id="message" name="message"
+                              [class.is-invalid]="ContactControls['message'].invalid && ContactControls['message'].touched"
+                              class="form-control md-textarea"></textarea>
+                      <label for="message">Your message</label>
+                    </div>
+                    <div
+                      *ngIf="(ContactControls['message'].invalid && ContactControls['message'].touched) || ContactControls['message'].dirty">
+                      <small *ngIf="ContactControls['message'].errors?.required" class="text-danger">Message is
+                        required</small>
+                    </div>
+                  </div>
+
+                </div>
+                <!--Grid row-->
+
+              </form>
+
+              <div class="text-center text-md-right">
+                <button [disabled]="contactMessageDto.invalid" class="btn btn-primary" (click)="sendContactMessage()">
+                  Send
+                </button>
+              </div>
+              <div class="status"></div>
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-3 text-center">
+              <ul class="list-unstyled mb-0">
+                <li><i class="fas fa-map-marker-alt fa-2x"></i>
+                  <p>San Francisco, CA 94126, USA</p>
+                </li>
+
+                <li><i class="fas fa-phone mt-4 fa-2x"></i>
+                  <p>+ 01 234 567 89</p>
+                </li>
+
+                <li><i class="fas fa-envelope mt-4 fa-2x"></i>
+                  <p>contact@mdbootstrap.com</p>
+                </li>
+              </ul>
+            </div>
+            <!--Grid column-->
+
           </div>
-          <!--Grid column-->
 
-        </div>
+        </section>
+      </div>
 
-      </section>
-      <!--Section: Contact v.2-->
     </div>
 
   </div>
