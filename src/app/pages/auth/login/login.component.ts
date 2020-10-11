@@ -15,6 +15,8 @@ import {PaymentActions} from '../../../state-management/payment/payment.actions'
 import FetchUserPayments = PaymentActions.FetchUserPayments;
 import {InvoiceActions} from '../../../state-management/invoice/invoice.actions';
 import FetchUserInvoices = InvoiceActions.FetchUserInvoices;
+import {CartActions} from '../../../state-management/cart/cart.actions';
+import FetchUserCart = CartActions.FetchUserCart;
 
 @Component({
   selector: 'app-login',
@@ -72,6 +74,7 @@ export class LoginComponent implements OnInit {
     this.helperService.showSpinner();
     this.store.dispatch(new Login(this.emailLoginDto.value)).subscribe(() => {
       this.helperService.openSnackbar(`Welcome ${this.gdService.Username}`, 'Close');
+      this.store.dispatch(new FetchUserCart());
       this.store.dispatch(new FetchUserOrders());
       this.store.dispatch(new FetchUserPayments());
       this.store.dispatch(new FetchUserInvoices());

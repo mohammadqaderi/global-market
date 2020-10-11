@@ -61,6 +61,12 @@
           Shop Now <i class="fab fa-shopify"></i>
         </button>
       </mat-toolbar-row>
+      <mat-toolbar-row>
+        <div class="offset-0">
+          <app-search-bar [drawer]="drawer" [isHandset$]="isHandset$" [gdService]="gdService"
+                          [router]="router"></app-search-bar>
+        </div>
+      </mat-toolbar-row>
     </mat-toolbar>
     <app-sidebar [sidenav]="drawer" [isHandset$]="isHandset$"></app-sidebar>
   </mat-sidenav>
@@ -164,44 +170,7 @@
           </a>
         </div>
         <div class="offset-0 w-100">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <div class="btn-group" mdbDropdown>
-                <button type="button" style="width: auto" mdbBtn outline="true" size="md"
-                        class="z-depth-0 rgba-white-strong"
-                        mdbWavesEffect><strong>{{selectedOptionSearch}}</strong>
-                </button>
-                <button type="button" mdbDropdownToggle mdbBtn outline="true"
-                        class="dropdown-toggle dropdown-toggle-split z-depth-0 p-2 blue lighten-1"
-                        mdbWavesEffect></button>
-                <div class="dropdown-menu">
-                  <a (click)="setOptionSearch('Categories')" class="dropdown-item text-dark">Categories</a>
-                  <a (click)="setOptionSearch('Sub Categories')" class="dropdown-item text-dark">Sub Categories</a>
-                  <a (click)="setOptionSearch('Products')" class="dropdown-item text-dark">Products</a>
-                </div>
-              </div>
-            </div>
-            <input name="search" (keyup.enter)="submitSearch()"
-                   [(ngModel)]="search" type="text"
-                   placeholder="What's in your mind?"
-                   class="form-control" matAutocompletePosition="below" [defaultValue]="search"
-                   aria-label="Text input with dropdown button" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option (click)="search = option; submitSearch()"
-                          *ngFor="let option of selectedList | generalFilter: search"
-                          [value]="option">
-                {{option}}
-              </mat-option>
-            </mat-autocomplete>
-            <div class="input-group-append">
-              <div class="btn-group" mdbDropdown>
-                <button (click)="submitSearch()" type="button" mdbBtn color="default" outline="true" size="md"
-                        class="z-depth-0"
-                        mdbWavesEffect><i class="fas fa-search"></i>
-                </button>
-              </div>
-            </div>
-          </div>
+          <app-search-bar [isHandset$]="isHandset$" [gdService]="gdService" [router]="router"></app-search-bar>
         </div>
       </mat-toolbar-row>
     </mat-toolbar>

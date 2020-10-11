@@ -7,6 +7,7 @@ import {CartActions} from '../../../../state-management/cart/cart.actions';
 import FetchUserCart = CartActions.FetchUserCart;
 import {ProductActions} from '../../../../state-management/product/product.actions';
 import AddToCart = ProductActions.AddToCart;
+import CreateUserCart = CartActions.CreateUserCart;
 
 @Component({
   selector: 'app-add-to-cart',
@@ -27,6 +28,11 @@ export class AddToCartComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.gdService.User.cartId) {
+      this.store.dispatch(new CreateUserCart()).subscribe(() => {
+
+      });
+    }
     if (!this.gdService.Cart) {
       this.store.dispatch(new FetchUserCart()).subscribe(() => {
       });
@@ -36,8 +42,8 @@ export class AddToCartComponent implements OnInit {
 
   checkValue(quantityValue: HTMLInputElement) {
     const currentValue = parseFloat(quantityValue.value);
-    if (currentValue >= 10) {
-      quantityValue.value = (10).toString();
+    if (currentValue >= this.product.quantity) {
+      quantityValue.value = (this.product.quantity).toString();
       return;
     }
     if (currentValue <= 0) {
@@ -47,7 +53,7 @@ export class AddToCartComponent implements OnInit {
   }
 
   onAdd() {
-    if (this.createCartProductDto.quantity >= 10) {
+    if (this.createCartProductDto.quantity >= this.product.quantity) {
       return;
     }
     this.createCartProductDto.quantity += 1;

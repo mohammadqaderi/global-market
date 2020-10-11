@@ -23,6 +23,8 @@ import {PaymentActions} from '../payment/payment.actions';
 import PushPayment = PaymentActions.PushPayment;
 import {AuthState} from '../auth/auth.state';
 import SetCustomerToken = PaymentActions.SetCustomerToken;
+import UpdateCartProductQuantity = CartActions.UpdateCartProductQuantity;
+import RemoveCartProduct = CartActions.RemoveCartProduct;
 
 
 @State<CartStateModel>({
@@ -83,6 +85,28 @@ export class CartState {
     ctx.setState(patch({
       cart
     }));
+  }
+
+  @Action(UpdateCartProductQuantity)
+  updateCartProductQuantity(ctx: StateContext<CartStateModel>, action: UpdateCartProductQuantity) {
+    return this.cartService.updateCartProductQuantity(action.cartId, action.cartProductId, action.newQuantity).pipe(
+      tap((cart: CartModel) => {
+        ctx.patchState({
+          cart
+        });
+      })
+    );
+  }
+
+  @Action(RemoveCartProduct)
+  removeCartProduct(ctx: StateContext<CartStateModel>, action: RemoveCartProduct) {
+    return this.cartService.removeCartProductFromCart(action.cartId, action.cartProductId).pipe(
+      tap((cart: CartModel) => {
+        ctx.patchState({
+          cart
+        });
+      })
+    );
   }
 
   @Action(CheckoutOnCart)

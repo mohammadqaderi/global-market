@@ -31,6 +31,20 @@ export namespace CartActions {
     }
   }
 
+  export class UpdateCartProductQuantity {
+    static readonly type = '[Cart] Update Cart Product Quantity';
+
+    constructor(public cartId: number, public cartProductId: number, public newQuantity: number) {
+    }
+  }
+
+  export class RemoveCartProduct {
+    static readonly type = '[Cart] Remove Cart Product';
+
+    constructor(public cartId: number, public cartProductId: number) {
+    }
+  }
+
   export class AddProductToCart {
     static readonly type = '[Cart] Add Product To Cart';
 

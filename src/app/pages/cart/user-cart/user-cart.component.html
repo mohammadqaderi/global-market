@@ -57,20 +57,79 @@
                       <div>
                         <div class="d-flex justify-content-between">
                           <div>
-                            <h5>{{productCart.name}}</h5>
-                            <p class="mb-3 text-muted text-uppercase">Shirt - blue</p>
-                            <p class="mb-2 text-muted text-uppercase">Color: blue</p>
-                            <p class="mb-3 text-muted text-uppercase">Size: M</p>
-                            <p class="mb-3 text-muted text-uppercase">Quantity: {{productCart.quantity}}</p>
+                            <h3 class="mb-3">{{productCart.name}}</h3>
+                            <p class="mb-3 ">Quantity: {{productCart.quantity}}</p>
+                            <p class="mb-3 ">Total Price: &nbsp; <span><strong
+                              id="summary">${{productCart.totalPrice}}</strong></span>
+                            </p>
                           </div>
                           <!-- Enter Quantity Code over here-->
                         </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <a type="button" class="card-link-secondary small text-uppercase mr-3"><i
-                              class="fas fa-trash-alt mr-1"></i> Remove item </a>
+                        <div class="d-flex align-items-start justify-content-start">
+                          <div class="md-form input-group">
+                            <div class="input-group-prepend" id="button-addon3">
+                              <button (click)="onSubtract(productCart)" mdbBtn color="info" size="sm"
+                                      class="m-0 px-2 py-1" type="button"
+                                      mdbWavesEffect>
+                                <i class="fas fa-minus"></i>
+                              </button>
+                            </div>
+                            <input type="number" name="quantity" [(ngModel)]="productCart.quantity"
+                                   class="form-control text-center" id="quantity"
+                                   placeholder="Quantity"
+                                   aria-label="Quantity"
+                                   aria-describedby="button-addon4">
+                            <div class="input-group-append" id="button-addon4">
+                              <button (click)="onAdd(productCart)" mdbBtn color="info" size="sm" class="m-0 px-2 py-1"
+                                      type="button"
+                                      mdbWavesEffect>
+                                <i class="fas fa-plus"></i>
+                              </button>
+                            </div>
+                            <div *ngIf="showSaveChanges" class="input-group-append">
+                              <button (click)="updateCartProductQuantity(productCart)" mdbBtn color="primary" size="sm"
+                                      class="m-0 px-2 py-1"
+                                      type="button"
+                                      mdbWavesEffect>
+                                <span> Save changes ?</span>
+                              </button>
+                            </div>
+                            <div *ngIf="showSaveChanges" class="input-group-append">
+                              <button (click)="ignore()" mdbBtn color="danger" size="sm"
+                                      class="m-0 px-2 py-1"
+                                      type="button"
+                                      mdbWavesEffect>
+                                <span> Ignore</span>
+                              </button>
+                            </div>
+                            <div *ngIf="showSpinner" class="input-group-append">
+                              <button mdbBtn color="info" size="sm"
+                                      class="m-0 px-2 py-1"
+                                      type="button"
+                                      mdbWavesEffect>
+                                   <span class="spinner-border spinner-border-sm" role="status"
+                                         aria-hidden="true"></span>
+                              </button>
+                            </div>
                           </div>
-                          <p class="mb-0"><span><strong id="summary">${{productCart.totalPrice}}</strong></span></p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                          <div>
+                            <button (click)="helperService.openModal(deleteTemplate)" type="button" size="sm" mdbBtn
+                                    color="light" mdbWavesEffect>
+                              <i class="fas text-danger fa-trash"></i> &nbsp; Remove item
+                            </button>
+                            <ng-template #deleteTemplate>
+                              <div class="modal-body text-center">
+                                <p>Do you want to remove this product?</p>
+                                <button type="button" (click)="helperService.hideModal();removeCartProduct(productCart)"
+                                        class="btn btn-danger">Yes
+                                </button>
+                                <button type="button" class="btn btn-light" (click)="helperService.hideModal()">No
+                                </button>
+                              </div>
+                            </ng-template>
+                          </div>
                         </div>
                       </div>
                     </div>

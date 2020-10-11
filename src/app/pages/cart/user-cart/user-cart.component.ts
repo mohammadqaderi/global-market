@@ -5,6 +5,11 @@ import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {CartActions} from '../../../state-management/cart/cart.actions';
 import CreateUserCart = CartActions.CreateUserCart;
 import FetchUserCart = CartActions.FetchUserCart;
+import {CartProductModel} from '../../../models/Cart/cart-product.model';
+import {ProductModel} from '../../../models/Products/product.model';
+import UpdateCartProductQuantity = CartActions.UpdateCartProductQuantity;
+import RemoveProductsFromCart = CartActions.RemoveProductsFromCart;
+import RemoveCartProduct = CartActions.RemoveCartProduct;
 
 @Component({
   selector: 'app-user-cart',
@@ -14,6 +19,8 @@ import FetchUserCart = CartActions.FetchUserCart;
 export class UserCartComponent implements OnInit {
 
   state: string;
+  showSpinner = false;
+  showSaveChanges = false;
 
   constructor(private store: Store, public helperService: HelperService,
               public gdService: GlobalDataService) {
@@ -49,4 +56,66 @@ export class UserCartComponent implements OnInit {
     return this.gdService.Cart;
   }
 
+  onAdd(cartProduct: CartProductModel) {
+    const product = this.getCartProductReference(cartProduct.productId);
+    if (cartProduct.quantity >= product.quantity) {
+      return;
+    }
+    this.showSaveChanges = true;
+    cartProduct.quantity += 1;
+  }
+
+  updateCartProductQuantity(cartProduct: CartProductModel) {
+    this.showSaveChanges = false;
+    this.showSpinner = true;
+    this.store.dispatch(new UpdateCartProductQuantity(this.Cart.id, cartProduct.id, cartProduct.quantity)).subscribe(() => {
+      this.showSpinner = false;
+    });
+  }
+
+  removeCartProduct(cartProduct: CartProductModel) {
+    this.state = 'Remove product...';
+    this.helperService.showSpinner();
+    this.store.dispatch(new RemoveCartProduct(this.Cart.id, cartProduct.id)).subscribe(() => {
+      this.state = null;
+      this.helperService.hideSpinner();
+      this.helperService.openSnackbar('Product removed successfully from your cart', 'Close');
+    });
+  }
+
+  ignore() {
+    this.showSpinner = false;
+    this.showSaveChanges = false;
+  }
+
+  getCartProductReference(id: number) {
+    let product: ProductModel = null;
+    if (this.gdService.ShopProducts) {
+      product = this.gdService.ShopProducts.find(p => p.id === id);
+      if (product) {
+        return product;
+      }
+    } else if (this.gdService.MonthProducts) {
+      product = this.gdService.MonthProducts.find(p => p.id === id);
+    } else if (this.gdService.MostSalesProducts) {
+      product = this.gdService.MostSalesProducts.find(p => p.id === id);
+    } else {
+      for (let i = 0; i < this.gdService.SubCategories.length; i++) {
+        for (let j = 0; j < this.gdService.SubCategories[i].products.length; j++) {
+          if (this.gdService.SubCategories[i].products[j].id === id) {
+            product = this.gdService.SubCategories[i].products[j];
+            return product;
+          }
+        }
+      }
+    }
+  }
+
+  onSubtract(cartProduct: CartProductModel) {
+    if (cartProduct.quantity === 1) {
+      return;
+    }
+    this.showSaveChanges = true;
+    cartProduct.quantity -= 1;
+  }
 }

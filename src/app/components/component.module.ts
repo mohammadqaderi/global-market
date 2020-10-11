@@ -6,6 +6,7 @@ import {FooterComponent} from './footer/footer.component';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared/shared-global.module';
 import {PipesModule} from '../commons/pipes/pipes.module';
+import {CommonLayoutModule} from '../layouts/common-layout/common-layout.module';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {PipesModule} from '../commons/pipes/pipes.module';
     CommonModule,
     RouterModule,
     SharedModule,
-    PipesModule
+    PipesModule,
+    CommonLayoutModule
   ],
   exports: [
     NavbarComponent,
