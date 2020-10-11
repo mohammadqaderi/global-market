@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   state: string;
   @ViewChild('errorTemplate', {static: true}) errorTemplate: TemplateRef<any>;
   subscriptionForm: FormGroup;
+  subscriber: PushSubscription;
 
   constructor(public gdService: GlobalDataService, public helperService: HelperService,
               private contactService: ContactService,
@@ -88,14 +89,13 @@ export class HomeComponent implements OnInit {
     this.swPush.requestSubscription({
       serverPublicKey: ApiEndpoints.VapidKeys.publicKey
     }).then(subscriber => {
+      this.subscriber = subscriber;
       this.notifyService.addPushSubscriber(subscriber, this.subscriptionForm.value.email).subscribe(() => {
         this.helperService.openSnackbar(
           'Now, you are a new subscriber, and you will get our newsletter',
           'Okay'
         );
       }, error => {
-        error.error = 'Error';
-        error.message = 'Could not send subscription object to server';
         this.helperService.showErrorDialog(error, this.errorTemplate);
       });
     }).catch(err => {

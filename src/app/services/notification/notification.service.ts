@@ -20,8 +20,8 @@ export class NotificationsService {
     return this.http.get(ApiEndpoints.NotificationEndpoints.Notifications);
   }
 
-  addPushSubscriber(sub: any, email: string): Observable<any> {
-    return this.http.post<any>(ApiEndpoints.NotificationEndpoints.newSubscriber, {
+  addPushSubscriber(sub: any, email: string) {
+    return this.http.post(ApiEndpoints.NotificationEndpoints.newSubscriber, {
       subscriptionDto: {
         sub,
         email

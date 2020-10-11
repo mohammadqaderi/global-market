@@ -20,6 +20,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
+        console.log(err);
         if ([401].indexOf(err.status) !== -1) {
           this.gdService.userLogout();
         }
