@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit {
       serverPublicKey: ApiEndpoints.VapidKeys.publicKey
     }).then(subscriber => {
       this.subscriber = subscriber;
-      this.notifyService.addPushSubscriber(subscriber).subscribe(() => {
+      this.notifyService.addPushSubscriber(subscriber, this.subscriptionForm.value.email).subscribe(() => {
         this.helperService.openSnackbar(
           'Now, you are a new subscriber, and you will get our newsletter',
           'Okay'
