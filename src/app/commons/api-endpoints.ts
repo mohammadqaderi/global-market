@@ -13,7 +13,8 @@ export const ApiEndpoints = {
     getUserById: `${prefixRoute}/auth/users`,
     getSystemUsers: `${prefixRoute}/auth/system-users`,
     editUserRoles: `${prefixRoute}/auth/edit-user-roles`,
-    globalData: `${prefixRoute}/global-data`
+    globalData: `${prefixRoute}/auth/global-data`,
+    updateToken: `${prefixRoute}/auth/update-token`
   },
   ProfileEndpoints: {
     rootProfile: `${prefixRoute}/profiles`

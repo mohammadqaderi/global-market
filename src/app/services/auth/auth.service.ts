@@ -37,6 +37,10 @@ export class AuthService {
     return this._http.get(url);
   }
 
+  updateToken(email: string): Observable<{ jwt: string }> {
+    return this._http.put<{ jwt: string }>(`${ApiEndpoints.AuthEndpoints.updateToken}/${email}`, null);
+  }
+
   verifyEmail(token: string): Observable<{ isFullyVerified: boolean, user: UserModel }> {
     const url = `${ApiEndpoints.AuthEndpoints.verifyEmail}/${token}`;
     return this._http.get<{ isFullyVerified: boolean, user: UserModel }>(url);

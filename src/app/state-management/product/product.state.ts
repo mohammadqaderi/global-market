@@ -102,7 +102,6 @@ export class ProductState {
   fetchMixLatestProducts(ctx: StateContext<ProductStateModel>, action: FetchMixLatestProducts) {
     return this.subCategoryService.getMixLatestProducts().pipe(
       tap((data: ProductModel[]) => {
-        console.log(data.length);
         ctx.setState(patch({
           currentMonthProducts: data
         }));

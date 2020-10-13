@@ -4,6 +4,9 @@ import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {MatSidenav} from '@angular/material/sidenav';
+import {Store} from '@ngxs/store';
+import {CategoryActions} from '../../../state-management/category/category.actions';
+import FetchAllCategories = CategoryActions.FetchAllCategories;
 
 @Component({
   selector: 'app-search-bar',
@@ -17,14 +20,20 @@ export class SearchBarComponent implements OnInit {
   @Input() drawer: MatSidenav;
   @Input() isHandset$: Observable<boolean>;
 
-  constructor() {
+  constructor(private store: Store) {
   }
 
   @Input() gdService: GlobalDataService;
   @Input() router: Router;
 
   ngOnInit(): void {
-    this.checkAutoCompleteList(this.selectedOptionSearch);
+    if (!this.gdService.Categories) {
+      this.store.dispatch(new FetchAllCategories()).subscribe(() => {
+        this.checkAutoCompleteList(this.selectedOptionSearch);
+      });
+    } else {
+      this.checkAutoCompleteList(this.selectedOptionSearch);
+    }
   }
 
   submitSearch() {
