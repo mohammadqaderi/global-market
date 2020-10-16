@@ -22,6 +22,11 @@ export class CategoryService {
     return this._http.get<CategoryModel>(`${ApiEndpoints.CategoryEndpoints.rootCategories}/${id}`);
   }
 
+  searchByMatchingName(searchValue: string): Observable<CategoryModel[]> {
+    return this._http.get<CategoryModel[]>
+    (`${ApiEndpoints.CategoryEndpoints.rootCategories}/match-by-name/${searchValue}`);
+  }
+
   addNewCategory(createCategoryDto: CategoryDto): Observable<CategoryModel> {
     return this._http.post<CategoryModel>(ApiEndpoints.CategoryEndpoints.rootCategories, createCategoryDto);
   }

@@ -28,6 +28,11 @@ export class SubCategoryService {
     return this._http.get<SubCategoryModel[]>(`${this.prefixURI}/search-by-tag-name/${tagName}`);
   }
 
+  searchByMatchingName(searchValue: string): Observable<SubCategoryModel[]> {
+    return this._http.get<SubCategoryModel[]>
+    (`${ApiEndpoints.SubCategoryEndpoints.rootSubCategories}/match-by-name/${searchValue}`);
+  }
+
   getSubCategoryById(id: number): Observable<SubCategoryModel> {
     return this._http.get<SubCategoryModel>(`${this.prefixURI}/${id}`);
   }

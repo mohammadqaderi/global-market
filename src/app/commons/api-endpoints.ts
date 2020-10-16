@@ -1,4 +1,4 @@
-const prefixRoute = 'https://global-store-api.herokuapp.com';
+const prefixRoute = 'http://localhost:4000';
 export const ApiEndpoints = {
   AuthEndpoints: {
     registerUser: `${prefixRoute}/auth/register/user`,
@@ -30,7 +30,7 @@ export const ApiEndpoints = {
     searchByTagName: `${prefixRoute}/search-by-tag-name`,
   },
   CategoryEndpoints: {
-    rootCategories: `${prefixRoute}/categories`
+    rootCategories: `${prefixRoute}/categories`,
   },
   SubCategoryEndpoints: {
     rootSubCategories: `${prefixRoute}/sub-categories`

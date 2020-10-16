@@ -16,7 +16,7 @@
       </div>
     </div>
   </div>
-  <input name="search" (keyup.enter)="submitSearch()"
+  <input #searchField name="search" (keyup.enter)="submitSearch()"
          [(ngModel)]="search" type="text"
          [placeholder]="!(isHandset$ | async) ? 'What is in your mind': 'Search...'"
          class="form-control " matAutocompletePosition="below" [defaultValue]="search"

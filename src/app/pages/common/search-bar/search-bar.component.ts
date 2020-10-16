@@ -1,12 +1,19 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ProductModel} from '../../../models/Products/product.model';
 import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import {fromEvent, Observable} from 'rxjs';
 import {MatSidenav} from '@angular/material/sidenav';
 import {Store} from '@ngxs/store';
 import {CategoryActions} from '../../../state-management/category/category.actions';
 import FetchAllCategories = CategoryActions.FetchAllCategories;
+import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
+import {MatAutocomplete} from '@angular/material/autocomplete';
+import {ProductService} from '../../../services/product/product.service';
+import {SubCategoryService} from '../../../services/category/sub-category.service';
+import {CategoryService} from '../../../services/category/category.service';
+import {CategoryModel} from '../../../models/Categories/category.model';
+import {SubCategoryModel} from '../../../models/Categories/sub-category.model';
 
 @Component({
   selector: 'app-search-bar',
@@ -20,20 +27,30 @@ export class SearchBarComponent implements OnInit {
   @Input() drawer: MatSidenav;
   @Input() isHandset$: Observable<boolean>;
 
-  constructor(private store: Store) {
+  constructor(private productsService: ProductService, private subCategoryService: SubCategoryService,
+              private categoryService: CategoryService) {
   }
+
+  @ViewChild('searchField', {static: true}) searchField: ElementRef;
+  @ViewChild('matAutocomplete', {static: true}) matAutocomplete: MatAutocomplete;
 
   @Input() gdService: GlobalDataService;
   @Input() router: Router;
 
   ngOnInit(): void {
-    if (!this.gdService.Categories) {
-      this.store.dispatch(new FetchAllCategories()).subscribe(() => {
-        this.checkAutoCompleteList(this.selectedOptionSearch);
-      });
-    } else {
-      this.checkAutoCompleteList(this.selectedOptionSearch);
-    }
+    fromEvent(this.searchField.nativeElement, 'keyup')
+      .pipe(
+        // get value
+        map((event: any) => {
+          return event.target.value;
+        }),
+        debounceTime(200)
+        , distinctUntilChanged()
+      ).subscribe((value: string) => {
+      if (value && value.length > 0) {
+        this.setAutoCompleteList(value);
+      }
+    });
   }
 
   submitSearch() {
@@ -49,38 +66,37 @@ export class SearchBarComponent implements OnInit {
 
   setOptionSearch(value: string) {
     this.selectedOptionSearch = value;
-    this.checkAutoCompleteList(value);
+    if (this.search && this.search.length > 0) {
+      this.setAutoCompleteList(this.search);
+    }
   }
 
-  checkAutoCompleteList(value: string) {
-    this.selectedList = [];
-    switch (value) {
+  setAutoCompleteList(value?: string) {
+    switch (this.selectedOptionSearch) {
       case 'Categories': {
-        for (let i = 0; i < this.gdService.Categories.length; i++) {
-          this.selectedList = [...this.selectedList, this.gdService.Categories[i].name];
-        }
+        this.categoryService.searchByMatchingName(value).subscribe((data: CategoryModel[]) => {
+          for (let i = 0; i < data.length; i++) {
+            this.selectedList.push(data[i].name);
+          }
+        });
         break;
       }
       case 'Sub Categories': {
-        for (let i = 0; i < this.gdService.SubCategories.length; i++) {
-          this.selectedList = [...this.selectedList, this.gdService.SubCategories[i].name];
-        }
+        this.subCategoryService.searchByMatchingName(value).subscribe((data: SubCategoryModel[]) => {
+          for (let i = 0; i < data.length; i++) {
+            this.selectedList.push(data[i].name);
+          }
+        });
         break;
       }
       case 'Products': {
-        this.fillListByProducts(this.gdService.MostSalesProducts);
-        if (this.selectedList.length === 0) {
-          this.fillListByProducts(this.gdService.MonthProducts);
-        }
+        this.productsService.searchByMatchingName(value).subscribe((data: ProductModel[]) => {
+          for (let i = 0; i < data.length; i++) {
+            this.selectedList.push(data[i].name);
+          }
+        });
         break;
       }
     }
   }
-
-  fillListByProducts(products: ProductModel[]) {
-    for (let i = 0; i < products.length; i++) {
-      this.selectedList = [...this.selectedList, products[i].name];
-    }
-  }
-
 }
