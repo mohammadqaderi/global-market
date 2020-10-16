@@ -1,12 +1,13 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {GlobalDataService} from './shared/services/global-data.service';
-import {Actions, ofActionDispatched} from '@ngxs/store';
+import {Actions, ofActionDispatched, Store} from '@ngxs/store';
 import {HelperService} from './shared/services/helper.service';
-import {Logout} from './state-management/auth/auth-actions';
+import {Logout, UpdateToken} from './state-management/auth/auth-actions';
 import {fromEvent} from 'rxjs';
 import {Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
-import {browser} from 'protractor';
+import * as jwt from 'jsonwebtoken';
+import {AuthService} from './services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -16,10 +17,13 @@ import {browser} from 'protractor';
 export class AppComponent implements OnInit {
   constructor(public gdService: GlobalDataService,
               private cookieService: CookieService,
+              private store: Store,
+              private authService: AuthService,
               private router: Router, private actions: Actions, public helperService: HelperService) {
   }
 
   ngOnInit(): void {
+
     this.checkOnlineStatus();
     this.actions.pipe(ofActionDispatched(Logout)).subscribe(() => {
       this.router.navigate(['/auth/login']);
