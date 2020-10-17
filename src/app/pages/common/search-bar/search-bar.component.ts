@@ -4,9 +4,7 @@ import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {Router} from '@angular/router';
 import {fromEvent, Observable} from 'rxjs';
 import {MatSidenav} from '@angular/material/sidenav';
-import {Store} from '@ngxs/store';
 import {CategoryActions} from '../../../state-management/category/category.actions';
-import FetchAllCategories = CategoryActions.FetchAllCategories;
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {MatAutocomplete} from '@angular/material/autocomplete';
 import {ProductService} from '../../../services/product/product.service';
@@ -72,6 +70,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   setAutoCompleteList(value?: string) {
+    this.selectedList = [];
     switch (this.selectedOptionSearch) {
       case 'Categories': {
         this.categoryService.searchByMatchingName(value).subscribe((data: CategoryModel[]) => {
