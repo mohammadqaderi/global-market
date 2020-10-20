@@ -13,7 +13,6 @@ import {CheckoutReturnData} from '../../commons/interfaces/checkout-return-data'
 import CheckoutOnSingleProduct = CartActions.CheckoutOnSingleProduct;
 import RemoveProductsFromCart = CartActions.RemoveProductsFromCart;
 import {SetUserCart} from '../auth/auth-actions';
-import AddProductToCart = CartActions.AddProductToCart;
 import {patch} from '@ngxs/store/operators';
 import {InvoiceActions} from '../invoice/invoice.actions';
 import PushInvoice = InvoiceActions.PushInvoice;
@@ -25,6 +24,7 @@ import {AuthState} from '../auth/auth.state';
 import SetCustomerToken = PaymentActions.SetCustomerToken;
 import UpdateCartProductQuantity = CartActions.UpdateCartProductQuantity;
 import RemoveCartProduct = CartActions.RemoveCartProduct;
+import UpdateCartState = CartActions.UpdateCartState;
 
 
 @State<CartStateModel>({
@@ -77,13 +77,10 @@ export class CartState {
     );
   }
 
-  @Action(AddProductToCart)
-  addProductToCart(ctx: StateContext<CartStateModel>, action: AddProductToCart) {
-    const cart = Object.assign({}, ctx.getState().cart);
-    cart.cartProducts = [...cart.cartProducts, action.productCart];
-    cart.totalItems += 1;
+  @Action(UpdateCartState)
+  addProductToCart(ctx: StateContext<CartStateModel>, action: UpdateCartState) {
     ctx.setState(patch({
-      cart
+      cart: action.cart
     }));
   }
 

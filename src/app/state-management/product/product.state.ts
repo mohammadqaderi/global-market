@@ -7,16 +7,15 @@ import {ProductModel} from '../../models/Products/product.model';
 import ClearProducts = ProductActions.ClearProducts;
 import {patch} from '@ngxs/store/operators';
 import FetchMostSalesProducts = ProductActions.FetchMostSalesProducts;
-import FetchMonthProducts = ProductActions.FetchMonthProducts;
 import FetchShopProducts = ProductActions.FetchShopProducts;
 import FetchCustomProducts = ProductActions.FetchCustomProducts;
 import {SubCategoryService} from '../../services/category/sub-category.service';
 import FetchMixLatestProducts = ProductActions.FetchMixLatestProducts;
 import AddToCart = ProductActions.AddToCart;
-import {CartProductModel} from '../../models/Cart/cart-product.model';
 import {CartActions} from '../cart/cart.actions';
-import AddProductToCart = CartActions.AddProductToCart;
 import UpdateShopProducts = ProductActions.UpdateShopProducts;
+import {CartModel} from '../../models/Cart/cart.model';
+import UpdateCartState = CartActions.UpdateCartState;
 
 @State<ProductStateModel>({
   name: 'products',
@@ -92,8 +91,8 @@ export class ProductState {
   @Action(AddToCart)
   addToCart(ctx: StateContext<ProductStateModel>, action: AddToCart) {
     return this.productService.addToCart(action.productId, action.cartId, action.createCartProductDto).pipe(
-      tap((data: CartProductModel) => {
-        this.store.dispatch(new AddProductToCart(data));
+      tap((cart: CartModel) => {
+        this.store.dispatch(new UpdateCartState(cart));
       })
     );
   }

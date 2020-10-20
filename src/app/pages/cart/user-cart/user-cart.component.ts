@@ -56,14 +56,6 @@ export class UserCartComponent implements OnInit {
     return this.gdService.Cart;
   }
 
-  onAdd(cartProduct: CartProductModel) {
-    const product = this.getCartProductReference(cartProduct.productId);
-    if (cartProduct.quantity >= product.quantity) {
-      return;
-    }
-    this.showSaveChanges = true;
-    cartProduct.quantity += 1;
-  }
 
   updateCartProductQuantity(cartProduct: CartProductModel) {
     this.showSaveChanges = false;
@@ -86,19 +78,29 @@ export class UserCartComponent implements OnInit {
   ignore() {
     this.showSpinner = false;
     this.showSaveChanges = false;
+    this.store.dispatch(new FetchUserCart()).subscribe(() => {
+    })
   }
 
-  getCartProductReference(id: number) {
+  getCartProductReference(id: number): ProductModel {
     let product: ProductModel = null;
     if (this.gdService.ShopProducts) {
       product = this.gdService.ShopProducts.find(p => p.id === id);
       if (product) {
         return product;
       }
-    } else if (this.gdService.MonthProducts) {
+    }
+    if (this.gdService.MonthProducts) {
       product = this.gdService.MonthProducts.find(p => p.id === id);
-    } else if (this.gdService.MostSalesProducts) {
+      if (product) {
+        return product;
+      }
+    }
+    if (this.gdService.MostSalesProducts) {
       product = this.gdService.MostSalesProducts.find(p => p.id === id);
+      if (product) {
+        return product;
+      }
     } else {
       for (let i = 0; i < this.gdService.SubCategories.length; i++) {
         for (let j = 0; j < this.gdService.SubCategories[i].products.length; j++) {
@@ -108,6 +110,16 @@ export class UserCartComponent implements OnInit {
           }
         }
       }
+    }
+  }
+
+  onAdd(cartProduct: CartProductModel) {
+    const product = this.getCartProductReference(cartProduct.productId);
+    if (product && cartProduct.quantity <= product.quantity) {
+      this.showSaveChanges = true;
+      cartProduct.quantity += 1;
+    } else {
+      return;
     }
   }
 

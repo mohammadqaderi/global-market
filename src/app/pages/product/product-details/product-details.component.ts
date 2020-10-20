@@ -47,8 +47,6 @@ export class ProductDetailsComponent implements OnInit {
       if (product) {
         this.relatedProducts = [];
         this.product = product;
-        console.log(this.subCategory.products);
-        console.log(product.references);
         this.selectedImage = product.images[0];
         for (let i = 0; i < product.references.length; i++) {
           const productModel = subCategory.products.find(p => p.id === product.references[i]);

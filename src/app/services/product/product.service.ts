@@ -6,6 +6,7 @@ import {ApiEndpoints} from '../../commons/api-endpoints';
 import {CartProductModel} from '../../models/Cart/cart-product.model';
 import {ProductsCustomFilterDto} from '../../commons/public-dto/products-custom-filter.dto';
 import {SubCategoryModel} from '../../models/Categories/sub-category.model';
+import {CartModel} from '../../models/Cart/cart.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,8 +42,8 @@ export class ProductService {
   }
 
 
-  addToCart(productId: number, cartId: number, createCartProductDto: { quantity: number }): Observable<CartProductModel> {
-    return this._http.post<CartProductModel>
+  addToCart(productId: number, cartId: number, createCartProductDto: { quantity: number }): Observable<CartModel> {
+    return this._http.post<CartModel>
     (`${ApiEndpoints.ProductEndpoints.rootProducts}/${productId}/add-to-cart/${cartId}`, createCartProductDto);
   }
 

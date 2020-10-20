@@ -45,10 +45,10 @@ export namespace CartActions {
     }
   }
 
-  export class AddProductToCart {
-    static readonly type = '[Cart] Add Product To Cart';
+  export class UpdateCartState {
+    static readonly type = '[Cart] Update Cart State';
 
-    constructor(public productCart: CartProductModel) {
+    constructor(public cart: CartModel) {
     }
   }
 
