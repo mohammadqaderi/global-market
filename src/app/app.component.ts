@@ -23,7 +23,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.checkOnlineStatus();
     this.actions.pipe(ofActionDispatched(Logout)).subscribe(() => {
       this.router.navigate(['/auth/login']);

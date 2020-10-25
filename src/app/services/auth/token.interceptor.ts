@@ -26,13 +26,7 @@ export class TokenInterceptor implements HttpInterceptor {
         const {exp} = decoded as any;
         if (exp) {
           if (Date.now() >= exp * 1000) {
-            this.tokenService.updateToken();
-            tokenReq = request.clone({
-              setHeaders: {
-                Authorization: `Bearer ${token}`
-              }
-            });
-            return next.handle(tokenReq);
+            this.gdService.userLogout();
           } else {
             tokenReq = request.clone({
               setHeaders: {
@@ -43,7 +37,8 @@ export class TokenInterceptor implements HttpInterceptor {
           }
         }
       }
+    }else {
+      return next.handle(request);
     }
-    return next.handle(request);
   }
 }

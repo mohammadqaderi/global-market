@@ -148,7 +148,7 @@ export class GlobalDataService {
   }
 
   userLogout() {
-    return this.store.dispatch([
+    this.store.dispatch([
       new Logout(),
       new ClearProfileData(),
       new ClearCartFromStorage(),
