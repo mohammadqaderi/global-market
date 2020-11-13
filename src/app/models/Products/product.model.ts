@@ -1,7 +1,11 @@
-import {AbstractProduct} from '../../commons/classes/abstract-product';
 import {ProductTagModel} from './product-tag.model';
 
-export class ProductModel extends AbstractProduct {
+export class ProductModel  {
+  id: number;
+
+  name: string;
+
+  quantity: number;
 
   images: string[];
 

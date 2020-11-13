@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('errorTemplate', {static: true}) errorTemplate: TemplateRef<any>;
   subscriptionForm: FormGroup;
   subscriber: PushSubscription;
+  showSpinner = false;
 
   constructor(public gdService: GlobalDataService, public helperService: HelperService,
               private contactService: ContactService,
@@ -39,7 +40,7 @@ export class HomeComponent implements OnInit {
       this.store.dispatch(new FetchMostSalesProducts()).subscribe(() => {
       });
     }
-    if (!this.gdService.MonthProducts) {
+    if (!this.gdService.LatestProducts) {
       this.helperService.showSpinner();
       this.store.dispatch(new FetchMixLatestProducts()).subscribe(() => {
         this.helperService.hideSpinner();
@@ -86,11 +87,13 @@ export class HomeComponent implements OnInit {
   }
 
   subscribeToNotifications() {
+    this.showSpinner = true;
     this.swPush.requestSubscription({
       serverPublicKey: ApiEndpoints.VapidKeys.publicKey
     }).then(subscriber => {
       this.subscriber = subscriber;
       this.notifyService.addPushSubscriber(subscriber, this.subscriptionForm.value.email).subscribe(() => {
+        this.showSpinner = false;
         this.helperService.openSnackbar(
           'Now, you are a new subscriber, and you will get our newsletter',
           'Okay'

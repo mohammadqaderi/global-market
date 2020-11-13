@@ -5,14 +5,9 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FileUploader} from 'ng2-file-upload';
 import {ErrorMessages} from '../../commons/helpers/functions/error-messages';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {extname} from 'path';
-import {TagModel} from '../../models/Tag/tag.model';
-import {MatChipInputEvent} from '@angular/material/chips';
 import {ProductModel} from '../../models/Products/product.model';
 import {Observable, Subscription} from 'rxjs';
 import {Router} from '@angular/router';
-import {LoginFirstComponent} from '../components/login-first/login-first.component';
 import {MatTableDataSource} from '@angular/material/table';
 import {OrderModel} from '../../models/Orders/order.model';
 import {InvoiceModel} from '../../models/Invoice/invoice.model';
@@ -24,18 +19,9 @@ export class HelperService {
   modalRef: BsModalRef;
   selectedImage = null;
   startLoadingFlag = false;
-  visible = true;
-  selectable = true;
-  removable = true;
-  addOnBlur = true;
   isInvalidImageType = false;
-  validImageTypes = ['.jpg', '.jpeg', '.png'];
-  startPushing = false;
-  startDeleting = false;
   imageErrorMessage = null;
   imageFormData = new FormData();
-
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   error: {
     error: string,
     message: string,
@@ -54,113 +40,6 @@ export class HelperService {
   offlineEvent: Observable<Event>;
   subscriptions: Subscription[] = [];
 
-  // For References
-  selectedReferences: any[] = [];
-  chosenReferences = [];
-  referenceItems: { id: number, name: string }[] = [];
-
-  pushReferences() {
-    for (let i = 0; i < this.selectedReferences.length; i++) {
-      this.chosenReferences.push({
-        id: this.selectedReferences[i].id,
-        name: this.selectedReferences[i].name
-      });
-      this.referenceItems = this.referenceItems.filter(ref => ref.id !== this.selectedReferences[i].id);
-    }
-  }
-
-  openLoginForm() {
-    const initialState = {
-      helperService: this.injector.get(HelperService)
-    };
-    this.modalRef = this.modalService.show(LoginFirstComponent, {initialState});
-    this.modalRef.content.closeBtnName = 'Close';
-  }
-
-  removeReference(reference: string) {
-    this.referenceItems.push(this.chosenReferences.find(c => c.name === reference));
-    this.chosenReferences = this.chosenReferences.filter(c => c.name !== reference);
-  }
-
-  // prepare update references process //
-  prepareUpdateReferenceProcess(array, obj) {
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].id !== obj.id) {
-        this.referenceItems.push({id: array[i].id, name: array[i].name});
-      }
-    }
-    for (let i = 0; i < this.referenceItems.length; i++) {
-      const ref = obj.references.find(r => r === this.referenceItems[i].id);
-      if (ref) {
-        this.chosenReferences.push({
-          id: this.referenceItems[i].id,
-          name: this.referenceItems[i].name
-        });
-      }
-    }
-    for (let i = 0; i < obj.references.length; i++) {
-      const ref = this.referenceItems.find(r => r.id === obj.references[i]);
-      if (ref) {
-        this.referenceItems = this.referenceItems.filter(r => r.id !== ref.id);
-      }
-    }
-  }
-
-  //
-
-  clearReferences() {
-    this.chosenReferences = [];
-    this.selectedReferences = [];
-    this.referenceItems = [];
-  }
-
-  //
-
-  // For Tags
-  tags: TagModel[] = null;
-  transitionTags: TagModel[] = [];
-
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-    if ((value || '').trim()) {
-      this.tags.push(value.trim() as any);
-    }
-    if (input) {
-      input.value = '';
-    }
-  }
-
-  pushTag(tag: any) {
-    this.transitionTags.push(tag);
-    this.tags.splice(this.tags.indexOf(tag), 1);
-  }
-
-  remove(tag: any): void {
-    const index = this.transitionTags.indexOf(tag);
-    if (index >= 0) {
-      this.tags.push(tag);
-      this.transitionTags.splice(index, 1);
-    }
-  }
-
-  clearTags() {
-    this.chosenReferences = [];
-    this.selectedReferences = [];
-  }
-
-  // For Product Images
-
-  files: File[] = [];
-
-  onSelect(event) {
-    this.files.push(...event.addedFiles);
-  }
-
-  onRemove(event) {
-    this.files.splice(this.files.indexOf(event), 1);
-  }
-
 
   //
   showErrorDialog(error: any, template: any) {
@@ -177,14 +56,8 @@ export class HelperService {
               private snackBar: MatSnackBar) {
   }
 
-  public uploader: FileUploader = new FileUploader({});
-  errorMessages = new ErrorMessages();
   state: string;
 
-  // showing Dialogs
-  openDialog(template: TemplateRef<any>) {
-    this.dialog.open(template);
-  }
 
   hideDialog() {
     this.dialog.closeAll();
@@ -231,11 +104,6 @@ export class HelperService {
     imageReader.readAsDataURL(file);
   }
 
-
-  closeDialog() {
-    this.adjustData();
-    this.hideDialog();
-  }
 
   adjustData() {
     this.imageFormData.delete('image');

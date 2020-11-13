@@ -8,7 +8,6 @@ import {
 import {Observable, throwError} from 'rxjs';
 import {HelperService} from '../helper.service';
 import {Router} from '@angular/router';
-import {browser} from 'protractor';
 
 @Injectable()
 export class CheckConnectionInterceptor implements HttpInterceptor {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {HelperService} from '../../../shared/services/helper.service';
 import {ActivatedRoute, ParamMap} from '@angular/router';
@@ -12,6 +12,7 @@ import {ProductModel} from '../../../models/Products/product.model';
   styleUrls: ['./order-details.component.css']
 })
 export class OrderDetailsComponent implements OnInit {
+  @ViewChild('errorTemplate', {static: true}) errorTemplate: TemplateRef<any>;
 
   constructor(private gdService: GlobalDataService, private route: ActivatedRoute,
               private orderService: OrderService,
@@ -21,10 +22,11 @@ export class OrderDetailsComponent implements OnInit {
       const id = +params.get('id');
       if (id) {
         this.orderService.getOrderDetails(id).subscribe((data) => {
-          console.log(data);
           this.order = data.order;
           this.orderItemsProducts = data.orderItemsProducts;
           this.helperService.hideSpinner();
+        }, error => {
+          this.helperService.showErrorDialog(error, this.errorTemplate);
         });
       }
     });

@@ -23,8 +23,5 @@ export class TagService {
     return this._http.get<ProductTagModel[]>(`${ApiEndpoints.TagEndpoints.rootTags}/products`);
   }
 
-  getTagById(id: number): Observable<TagModel> {
-    return this._http.get<TagModel>(`${ApiEndpoints.TagEndpoints.rootTags}/${id}`);
-  }
 
 }

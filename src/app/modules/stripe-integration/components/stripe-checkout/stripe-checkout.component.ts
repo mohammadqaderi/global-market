@@ -143,7 +143,6 @@ export class StripeCheckoutComponent implements OnInit {
           this.helperService.openSnackbar('Process completed successfully', 'Close');
           this.router.navigate(['/orders']);
         }, error1 => {
-          this.helperService.hideSpinner();
           this.helperService.hideModal();
           this.helperService.showErrorDialog(this.errorTemplate, error1);
         });

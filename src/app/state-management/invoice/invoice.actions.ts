@@ -1,5 +1,4 @@
 import {InvoiceModel} from '../../models/Invoice/invoice.model';
-import {PaymentModel} from '../../models/Payments/payment.model';
 
 export interface InvoiceStateModel {
   invoices: InvoiceModel[];

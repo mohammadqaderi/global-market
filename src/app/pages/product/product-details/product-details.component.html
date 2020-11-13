@@ -40,7 +40,7 @@
             <h2 class="h2">{{product.name}}</h2>
             <p class="lead"><span class="mr-1"><strong>${{product.currentPrice}}</strong></span>
               <span *ngIf="product.previousPrice" class="ml-4">
-                <span class="text-grey"><s>$36.99</s></span>
+                <span class="text-grey"><s>${{product.previousPrice}}</s></span>
               </span>
             </p>
             <p class="pt-1 lead">{{product.description}}.</p>
@@ -48,12 +48,7 @@
               <table class="table table-sm table-borderless mb-0">
                 <tbody>
                 <tr>
-                  <th class="pl-0 w-25" scope="row"><strong>Model</strong></th>
-                  <td>{{subCategory.name}}</td>
-                </tr>
-                <tr>
-                  <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
-                  <td><p class="lead">Black</p></td>
+                  <hr/>
                 </tr>
                 <tr>
                   <th class="pl-0 w-25" scope="row"><strong>Delivery</strong></th>
@@ -90,7 +85,8 @@
           <div class="col-xl-3 mb-4" *ngFor="let product of relatedProducts; let i = index">
             <!-- Card -->
             <div class="">
-              <div (click)="backToTop(); helperService.productDetails(product)" class="view zoom overlay z-depth-2 rounded">
+              <div (click)="backToTop(); helperService.productDetails(product)"
+                   class="view zoom overlay z-depth-2 rounded">
                 <img class="img-fluid fadeInUp  w-100"
                      style="max-height: 250px; height: 250px"
                      [src]="product.images[0]" alt="Sample">
@@ -106,9 +102,9 @@
               <div class=" pt-4 text-center">
                 <h4>{{product.name}}</h4>
                 <p *ngIf="product.previousPrice">
-                  <span>{{product.currentPrice}} $</span>
+                  <span>${{product.currentPrice}} </span>
                   <span class="ml-5">
-                    <del>20 $</del>
+                   <s><del>${{product.previousPrice}}</del></s>
                   </span>
                 </p>
                 <p><strong [innerText]="product.inStock? 'In Stock': 'Out of Stock'"></strong></p>

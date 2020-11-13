@@ -120,7 +120,6 @@
                 </mat-form-field>
               </div>
             </form>
-            {{billingForm.value | json}}
           </div>
           <!-- Card -->
 
@@ -167,4 +166,7 @@
   </div>
 
 </div>
-
+<ng-template #errorTemplate>
+  <app-show-error-dialog
+    [error]="helperService.error"></app-show-error-dialog>
+</ng-template>

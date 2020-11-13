@@ -3,7 +3,7 @@ import {ProductsCustomFilterDto} from '../../commons/public-dto/products-custom-
 
 export interface ProductStateModel {
   shopProducts: ProductModel[];
-  currentMonthProducts: ProductModel[];
+  latestProducts: ProductModel[];
   mostSalesProducts: ProductModel[];
 }
 
@@ -29,8 +29,8 @@ export namespace ProductActions {
     }
   }
 
-  export class FetchMonthProducts {
-    static readonly type = '[Product] Fetch Month Products';
+  export class FetchLatestProducts {
+    static readonly type = '[Product] Fetch Latest Products';
 
     constructor() {
     }

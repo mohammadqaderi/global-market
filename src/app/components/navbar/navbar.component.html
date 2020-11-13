@@ -1,5 +1,3 @@
-
-
 <mat-sidenav-container class="sidenav-container">
 
 
@@ -12,9 +10,10 @@
     <mat-toolbar>
       <mat-toolbar-row>
         <mat-icon (click)="drawer.close()">close</mat-icon>
-        <a mat-button color="primary" class="ml-2 nav-link h5" style="font-family: 'Anton', sans-serif"
+        <a mat-button color="primary" class="ml-2 "
            routerLink="/">
-          Global Market
+          <img src="../../../assets/img/brand/logo.png" class="figure-img"
+               alt="" style="max-width: 100px; max-height: 100px">
         </a>
       </mat-toolbar-row>
     </mat-toolbar>
@@ -87,12 +86,16 @@
     <app-sidebar [isHandset$]="isHandset$" [sidenav]="sidenav"></app-sidebar>
   </mat-sidenav>
   <mat-sidenav-content style="width: 100%; height: 100%">
-    <mat-toolbar style="height: auto" class="bg-dark">
+    <mat-toolbar style="height: auto" class="desktop">
       <mat-toolbar-row style="width: 100%">
-        <a mat-button class="nav-link h2 text-white" style="font-family: 'Anton', sans-serif"
+        <a mat-button color="primary" class="ml-2 logo "
            routerLink="/">
-          Global Market
+          <strong>
+            <img class="img-fluid" src="../../../assets/img/brand/logo.png" alt="" style="zoom: 1; max-width: 100px;
+max-height: 100px">
+          </strong>
         </a>
+
         <span (click)="drawer.toggle()" class="example-spacer"></span>
         <button
           type="button"
@@ -106,7 +109,9 @@
         <div class="offset-8" *ngIf="!(isHandset$ | async)">
           <a *ngIf="gdService.IsAuthenticated()" mat-button class="nav-link h5 text-white"
              routerLink="/cart">
-            Cart <i matBadge="5" class="fas fa-cart-arrow-down" matBadgeOverlap="false"
+            Cart <i *ngIf="gdService.Cart && gdService.Cart.cartProducts.length >=1"
+                    [matBadge]="gdService.Cart.cartProducts.length.toString()"
+                    class="fas fa-cart-arrow-down" matBadgeOverlap="false"
                     matBadgePosition="above after" matBadgeSize="medium"
                     matBadgeColor="accent"></i>
           </a>

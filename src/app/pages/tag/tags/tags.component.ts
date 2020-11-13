@@ -5,7 +5,6 @@ import {HelperService} from '../../../shared/services/helper.service';
 import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {TagActions} from '../../../state-management/tag/tag.actions';
 import FetchSubCategoriesTags = TagActions.FetchSubCategoriesTags;
-import {TagModel} from '../../../models/Tag/tag.model';
 import {SubCategoryTagModel} from '../../../models/Categories/sub-category-tag.model';
 
 @Component({

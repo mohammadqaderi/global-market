@@ -72,6 +72,8 @@ export class UserProfileComponent implements OnInit {
         this.initializeProfile();
         this.state = null;
         this.helperService.hideSpinner();
+      }, error => {
+        this.helperService.showErrorDialog(error, this.errorTemplate);
       });
     } else {
       this.initializeProfile();

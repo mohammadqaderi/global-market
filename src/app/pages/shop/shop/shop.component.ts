@@ -34,7 +34,6 @@ export class ShopComponent implements OnInit {
   showSpinner = false;
   showFilter = false;
   products: ProductModel[] = [];
-  startDate = new Date(2016, 11, 1);
   subCategoryTag: SubCategoryTagModel;
   startSlice = 5;
   selectedTag: number;

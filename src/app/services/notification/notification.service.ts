@@ -12,14 +12,6 @@ export class NotificationsService {
   constructor(private http: HttpClient) {
   }
 
-  getAllSubscribers() {
-    return this.http.get(ApiEndpoints.NotificationEndpoints.Subscribers);
-  }
-
-  getAllNotifications() {
-    return this.http.get(ApiEndpoints.NotificationEndpoints.Notifications);
-  }
-
   addPushSubscriber(sub: any, email: string) {
     return this.http.post(ApiEndpoints.NotificationEndpoints.newSubscriber, {
       subscriptionDto: {
@@ -29,7 +21,4 @@ export class NotificationsService {
     });
   }
 
-  sendNotification(notificationPayloadDto: NotificationPayloadDto): Observable<any> {
-    return this.http.post<any>(ApiEndpoints.NotificationEndpoints.sendNotification, notificationPayloadDto);
-  }
 }

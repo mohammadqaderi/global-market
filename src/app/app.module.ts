@@ -29,7 +29,7 @@ import {StripeIntegrationModule} from './modules/stripe-integration/stripe-integ
 import {NgxStripeModule} from 'ngx-stripe';
 import {AsyncPipe} from '@angular/common';
 import {CategoryLayoutComponent} from './layouts/category-layout/category-layout.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import {ServiceWorkerModule} from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -65,8 +65,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     BrowserAnimationsModule,
     StripeIntegrationModule,
     SharedModule,
-    NgxStripeModule.forRoot('pk_test_NGZldNb6iALz1pXcygYAYYZv000hYAH7Lb'),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    NgxStripeModule.forRoot(environment.stripePublishedKey),
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
   ],
   providers: [
     {

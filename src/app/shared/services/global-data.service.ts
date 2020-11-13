@@ -8,7 +8,6 @@ import {SubCategoryState} from '../../state-management/sub-category/sub-category
 import {ProductState} from '../../state-management/product/product.state';
 import {TagState} from '../../state-management/tag/tag.state';
 import {InvoiceState} from '../../state-management/invoice/invoice.state';
-import {PaymentState} from '../../state-management/payment/payment.state';
 import {OrderState} from '../../state-management/order/order.state';
 import {Logout} from '../../state-management/auth/auth-actions';
 import {ProfileActions} from '../../state-management/profile/profile.actions';
@@ -20,14 +19,6 @@ import ClearInvoicesFromStorage = InvoiceActions.ClearInvoicesFromStorage;
 import ClearOrdersFromStorage = OrderActions.ClearOrdersFromStorage;
 import ClearPaymentsFromStorage = PaymentActions.ClearPaymentsFromStorage;
 import {Router} from '@angular/router';
-import {CategoryActions} from '../../state-management/category/category.actions';
-import ClearCategory = CategoryActions.ClearCategory;
-import {ProductActions} from '../../state-management/product/product.actions';
-import ClearProducts = ProductActions.ClearProducts;
-import {SubCategoryActions} from '../../state-management/sub-category/sub-category.actions';
-import ClearSubCategory = SubCategoryActions.ClearSubCategory;
-import {TagActions} from '../../state-management/tag/tag.actions';
-import ClearTags = TagActions.ClearTags;
 import {CartState} from '../../state-management/cart/cart.state';
 import {CartActions} from '../../state-management/cart/cart.actions';
 import ClearCartFromStorage = CartActions.ClearCartFromStorage;
@@ -75,8 +66,8 @@ export class GlobalDataService {
   }
 
 
-  get MonthProducts() {
-    return this.store.selectSnapshot(ProductState.MonthProducts);
+  get LatestProducts() {
+    return this.store.selectSnapshot(ProductState.LatestProducts);
   }
 
   get MostSalesProducts() {
@@ -87,17 +78,11 @@ export class GlobalDataService {
     return this.store.selectSnapshot(TagState.SubCategoriesTags);
   }
 
-  get ProductsTags() {
-    return this.store.selectSnapshot(TagState.ProductsTags);
-  }
 
   get Invoices() {
     return this.store.selectSnapshot(InvoiceState.Invoices);
   }
 
-  get Payments() {
-    return this.store.selectSnapshot(PaymentState.Payments);
-  }
 
   get Orders() {
     return this.store.selectSnapshot(OrderState.Orders);
@@ -133,19 +118,6 @@ export class GlobalDataService {
     });
   }
 
-
-  clearAllData() {
-    return this.store.dispatch([
-      new Logout(),
-      new ClearProfileData(),
-      new ClearInvoicesFromStorage(),
-      new ClearOrdersFromStorage(),
-      new ClearPaymentsFromStorage(),
-      new ClearCategory(),
-      new ClearProducts(),
-      new ClearSubCategory(),
-      new ClearTags()]);
-  }
 
   userLogout() {
     this.store.dispatch([

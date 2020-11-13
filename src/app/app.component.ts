@@ -1,12 +1,11 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GlobalDataService} from './shared/services/global-data.service';
 import {Actions, ofActionDispatched, Store} from '@ngxs/store';
 import {HelperService} from './shared/services/helper.service';
-import {Logout, UpdateToken} from './state-management/auth/auth-actions';
+import {Logout} from './state-management/auth/auth-actions';
 import {fromEvent} from 'rxjs';
 import {Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
-import * as jwt from 'jsonwebtoken';
 import {AuthService} from './services/auth/auth.service';
 
 @Component({

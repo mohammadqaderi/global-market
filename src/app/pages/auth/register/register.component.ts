@@ -68,7 +68,6 @@ export class RegisterComponent implements OnInit {
       email: this.registrationForm.value.email,
       password: this.registrationForm.value.password
     };
-    console.log(data);
     this.store.dispatch(new Register(data)).subscribe(() => {
       this.helperService.hideSpinner();
       this.router.navigate(['/home']);

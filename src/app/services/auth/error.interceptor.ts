@@ -20,10 +20,11 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
-        if ([401].indexOf(err.status) !== -1) {
-          this.gdService.userLogout();
-        }
         const {error} = err;
+        if ([401].indexOf(err.status) !== -1) {
+          this.gdService.userLogout()
+          return throwError(error);
+        }
         return throwError(error);
       })
     );

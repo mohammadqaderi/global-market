@@ -21,7 +21,7 @@ import UpdateCartState = CartActions.UpdateCartState;
   name: 'products',
   defaults: {
     shopProducts: null,
-    currentMonthProducts: null,
+    latestProducts: null,
     mostSalesProducts: null
   }
 })
@@ -39,8 +39,8 @@ export class ProductState {
   }
 
   @Selector()
-  static MonthProducts(state: ProductStateModel) {
-    return state.currentMonthProducts;
+  static LatestProducts(state: ProductStateModel) {
+    return state.latestProducts;
   }
 
   @Selector()
@@ -99,10 +99,10 @@ export class ProductState {
 
   @Action(FetchMixLatestProducts)
   fetchMixLatestProducts(ctx: StateContext<ProductStateModel>, action: FetchMixLatestProducts) {
-    return this.subCategoryService.getMixLatestProducts().pipe(
+    return this.productService.getMixLatestProducts().pipe(
       tap((data: ProductModel[]) => {
         ctx.setState(patch({
-          currentMonthProducts: data
+          latestProducts: data
         }));
       })
     );
@@ -114,7 +114,7 @@ export class ProductState {
     ctx.setState({
       shopProducts: null,
       mostSalesProducts: null,
-      currentMonthProducts: null
+      latestProducts: null
     });
   }
 

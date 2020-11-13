@@ -13,10 +13,6 @@ export class PaymentService {
   constructor(private _http: HttpClient) {
   }
 
-  getAllPayments(): Observable<PaymentModel[]> {
-    return this._http.get<PaymentModel[]>(`${ApiEndpoints.PaymentEndpoints.rootPayments}/all`);
-  }
-
   setCustomerToken(customerId: string): Observable<UserModel> {
     return this._http.post<UserModel>
     (`${ApiEndpoints.PaymentEndpoints.rootPayments}/customer/set-token`, {customerId});
@@ -26,7 +22,4 @@ export class PaymentService {
     return this._http.get<PaymentModel[]>(`${ApiEndpoints.PaymentEndpoints.rootPayments}/user`);
   }
 
-  getPaymentById(id: number): Observable<PaymentModel> {
-    return this._http.get<PaymentModel>(`${ApiEndpoints.PaymentEndpoints.rootPayments}/${id}`);
-  }
 }

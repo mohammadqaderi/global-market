@@ -1,7 +1,10 @@
-import {AbstractProduct} from '../../commons/classes/abstract-product';
 import {CartModel} from './cart.model';
 
-export class CartProductModel extends AbstractProduct {
+export class CartProductModel  {
+  id: number;
+  name: string;
+
+
   image: string;
 
   cart: CartModel;
@@ -9,6 +12,10 @@ export class CartProductModel extends AbstractProduct {
   totalPrice: number;
 
   cartId: number;
+
+  quantity: number;
+
+  maxPush: number;
 
   productId: number;
 }

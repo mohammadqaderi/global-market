@@ -1,5 +1,4 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {ProfileActions} from '../../../state-management/profile/profile.actions';
 import {Login} from '../../../state-management/auth/auth-actions';
 import {CustomValidators} from 'ngx-custom-validators';
 import {EmailPattern} from '../../../commons/constants';

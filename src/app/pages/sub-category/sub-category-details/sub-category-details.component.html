@@ -46,8 +46,8 @@
               <p class="mb-2 text-muted text-uppercase small">{{subCategory.name}}</p>
               <p>
                 <span>${{product.currentPrice}}</span>
-                <span class="ml-5">
-                    <span class="text-grey"><s>$36.99</s></span>
+                <span *ngIf="product.previousPrice" class="ml-5">
+                    <span class="text-grey"><s><del>${{product.previousPrice}}</del></s></span>
                   </span>
               </p>
               <button *ngIf="gdService.IsAuthenticated()" (click)="helperService.openModal(addToCartTemp)" type="button"

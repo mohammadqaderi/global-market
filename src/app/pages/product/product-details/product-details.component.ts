@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {HelperService} from '../../../shared/services/helper.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Store} from '@ngxs/store';

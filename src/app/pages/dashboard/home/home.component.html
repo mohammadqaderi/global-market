@@ -2,7 +2,7 @@
   bdColor="rgba(51,51,51,0.8)"
   size="medium"
   color="#9344d4d"
-  type="ball-spin-clockwise">
+  type="square-jelly-box">
   <p style="font-size: 20px; color: white">
     {{state}}
   </p>
@@ -11,23 +11,35 @@
   <app-show-error-dialog
     [error]="helperService.error"></app-show-error-dialog>
 </ng-template>
-<mdb-carousel allowSwipe [animation]="'slide'">
-  <mdb-carousel-item>
-    <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg" alt="First slide">
+
+<mdb-carousel class="carousel slide carousel-fade" [animation]="'slide'">
+  <mdb-carousel-item *ngFor="let p of gdService.MostSalesProducts">
+    <img class="center-cropped w-100" [src]="p.images[0]" alt="First slide">
   </mdb-carousel-item>
-  <mdb-carousel-item>
-    <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg" alt="Second slide">
-  </mdb-carousel-item>
-  <mdb-carousel-item>
-    <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg" alt="Third slide">
-  </mdb-carousel-item>
+
 </mdb-carousel>
+
 <div class="container-fluid ">
+
+  <div class="row m-4 justify-content-center">
+    <div class="col-xl-12">
+      <h1 style="font-family: 'Anton', sans-serif" class="text-center">
+        Welcome in Global Market
+      </h1>
+      <p class="lead text-center">This is the right place to buy what every you want, in anytime and in
+        anywhere</p>
+    </div>
+  </div>
   <mdb-card class="m-4">
-    <mdb-card-header>
-      <h2>Most Selling Products</h2>
+    <mdb-card-header class="header row">
+      <h2 class="text-light">Most Selling Products</h2>
+        <span class="example-spacer"></span>
+      <a routerLink="/shop" mat-button class="nav-link text-light" style="font-size: 18px">
+        Shop Now
+      </a>
+
     </mdb-card-header>
-    <mdb-card-body>
+    <mdb-card-body class="mdb-body z-depth-2 rounded">
       <section>
         <!-- Grid row -->
         <div class="row m-4">
@@ -51,9 +63,11 @@
               <div class=" pt-4 text-center">
                 <h4>{{product.name}}</h4>
                 <p>
-                  <span>{{product.currentPrice}} $</span>
-                  <span class="ml-5">
-                    <span class="text-grey"><s>$36.99</s></span>
+                  <span>${{product.currentPrice}} </span>
+                  <span *ngIf="product.previousPrice" class="ml-5">
+                    <span class="text-grey">
+                      <s><del>${{product.previousPrice}}</del></s>
+                    </span>
                   </span>
                 </p>
                 <p><strong [innerText]="product.inStock? 'In Stock': 'Out of Stock'"></strong></p>
@@ -85,20 +99,20 @@
     </mdb-card-body>
   </mdb-card>
   <mdb-card class="m-4">
-    <mdb-card-header>
-      <div class="d-flex">
-        <h2>Products in this month</h2>
-        <a routerLink="/shop" mat-button class="nav-link" style="font-size: 18px">
-          Shop Now
-        </a>
-      </div>
+    <mdb-card-header class="header row">
+      <h2 class="text-light">Latest Products</h2>
+      <span class="example-spacer"></span>
+      <a routerLink="/shop" mat-button class="nav-link text-light" style="font-size: 18px">
+        Shop Now
+      </a>
+
     </mdb-card-header>
-    <mdb-card-body>
+    <mdb-card-body class="mdb-body z-depth-2 rounded">
       <section>
         <!-- Grid row -->
         <div class="row m-4">
           <!-- Grid column -->
-          <div class="col-md-3 mb-4" *ngFor="let product of gdService.MonthProducts; let i = index">
+          <div class="col-md-3 mb-4" *ngFor="let product of gdService.LatestProducts; let i = index">
             <!-- Card -->
             <div class="">
               <div (click)="helperService.productDetails(product)" class="view zoom overlay z-depth-2 rounded">
@@ -118,8 +132,8 @@
                 <h4>{{product.name}}</h4>
                 <p>
                   <span>${{product.currentPrice}}</span>
-                  <span class="ml-5">
-                    <span class="text-grey"><s>$36.99</s></span>
+                  <span class="ml-5" *ngIf="product.previousPrice">
+                    <span class="text-grey"><s><del>${{product.previousPrice}}</del></s></span>
                   </span>
                 </p>
                 <p><strong [innerText]="product.inStock? 'In Stock': 'Out of Stock'"></strong></p>
@@ -160,10 +174,10 @@
           <!-- Section heading -->
           <h2 class="h1-responsive font-weight-bold text-center my-4">Why we are the best?</h2>
           <!-- Section description -->
-          <p class="text-center w-sm-75 mx-auto mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit enim ad
-            minima veniam,
-            quis nostrum exercitationem ullam. Reprehenderit maiores aperiam assumenda deleniti voluptas ratione
-            hic.</p>
+          <h3 class="text-center  mx-auto mb-5">
+            All of your needs are available in this store, especially when you want customized product
+            , you just can contact the customer service team to deliver it to you.
+          </h3>
 
           <!-- Grid row -->
           <div class="row">
@@ -182,25 +196,31 @@
                 <li class="d-flex justify-content-center pl-4">
                   <span class="fa-li pt-1"><i class="fas fa-share fa-lg text-primary"></i></span>
                   <div>
-                    <h5>Marketing</h5>
-                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam.</p>
+                    <h2>Marketing</h2>
+                    <p class="mb-4">
+                      We have a graph of social media accounts that's provide the latest products and the
+                      changes that may happen for some product, changes that may happen for some product
+                    </p>
                   </div>
                 </li>
                 <li class="d-flex justify-content-center pl-4">
                   <span class="fa-li pt-1"><i class="fas fa-share fa-lg text-primary"></i></span>
                   <div>
-                    <h5>Entertainment</h5>
-                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam.</p>
+                    <h2>Availability</h2>
+                    <p class="mb-4">
+                      With regard to the needs of people in (home, themselves, work, etc ...) we consider ourselves a guide that
+                      provides services suitable for their various needs.
+                    </p>
                   </div>
                 </li>
                 <li class="d-flex justify-content-center pl-4">
                   <span class="fa-li pt-1"><i class="fas fa-share fa-lg text-primary"></i></span>
                   <div>
-                    <h5>Communication</h5>
-                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam.</p>
+                    <h2>Super fast ordering and delivery</h2>
+                    <p class="mb-0">
+                      We provide our clients with flexible payment methods, you can use PAYPAL, Visa, Mastercard, etc.,
+                      your orders will be delivered to you in a few days without delay.
+                    </p>
                   </div>
                 </li>
               </ul>
@@ -236,7 +256,8 @@
                   *ngIf="(subscriptionForm.controls['email'].invalid && subscriptionForm.controls['email'].touched) || subscriptionForm.controls['email'].dirty">
                   <small *ngIf="subscriptionForm.controls['email'].errors?.required" class="text-danger">Email is
                     required</small>
-                  <small *ngIf="subscriptionForm.controls['email'].errors?.pattern" class="text-danger">Please provide a valid
+                  <small *ngIf="subscriptionForm.controls['email'].errors?.pattern" class="text-danger">Please provide a
+                    valid
                     email
                     address</small>
                 </div>
@@ -244,9 +265,14 @@
             </div>
             <div class="col-xl-3">
               <div class="md-form mb-0">
-                <button [disabled]="subscriptionForm.invalid" (click)="subscribeToNotifications()"
-                        class="btn btn-info btn-block " type="submit">Subscribe
+                <button (click)="subscribeToNotifications()" mdbBtn
+                        [disabled]="showSpinner || subscriptionForm.invalid"
+                        mdbWavesEffect class="btn btn-info btn-block " type="submit">
+                  <span *ngIf="!showSpinner">Subscribe</span>
+                  <span *ngIf="showSpinner " class="spinner-border spinner-border-md" role="status"
+                        aria-hidden="true"></span>
                 </button>
+
               </div>
 
             </div>

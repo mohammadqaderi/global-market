@@ -32,7 +32,4 @@ export class NoInternetComponent implements OnInit {
     return isOnline === 'true';
   }
 
-  reload() {
-    location.reload();
-  }
 }

@@ -33,6 +33,8 @@ export class InvoicesComponent implements OnInit {
       this.store.dispatch(new FetchUserInvoices()).subscribe(() => {
         this.refreshInvoices();
         this.helperService.hideSpinner();
+      }, error => {
+        this.helperService.showErrorDialog(error, this.errorTemplate);
       });
     } else {
       this.refreshInvoices();

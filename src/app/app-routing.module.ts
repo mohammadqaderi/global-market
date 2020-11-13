@@ -10,7 +10,6 @@ import {InvoiceLayoutComponent} from './layouts/invoice-layout/invoice-layout.co
 import {TagLayoutComponent} from './layouts/tag-layout/tag-layout.component';
 import {ShopLayoutComponent} from './layouts/shop-layout/shop-layout.component';
 import {CartLayoutComponent} from './layouts/cart-layout/cart-layout.component';
-import {CommonLayoutRoutes} from './layouts/common-layout/common-layout.routing';
 import {CommonLayoutComponent} from './layouts/common-layout/common-layout.component';
 import {CategoryLayoutComponent} from './layouts/category-layout/category-layout.component';
 

@@ -23,13 +23,9 @@ export class AuthService {
     return this._http.post<LoginResponse>(ApiEndpoints.AuthEndpoints.registerUser, authCredentialsDto);
   }
 
-  public getGlobalData(): Observable<GlobalDataDto> {
-    return this._http.get<GlobalDataDto>(ApiEndpoints.AuthEndpoints.globalData);
-  }
 
   checkUserName(username: string): Observable<boolean> {
     return this._http.get<boolean>(`${ApiEndpoints.AuthEndpoints.checkUsername}/${username}`);
-
   }
 
   sendEmailVerification(email: string) {

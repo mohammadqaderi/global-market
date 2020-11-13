@@ -13,9 +13,6 @@ export class OrderService {
   constructor(private _http: HttpClient) {
   }
 
-  getAllOrders(): Observable<OrderModel[]> {
-    return this._http.get<OrderModel[]>(`${ApiEndpoints.OrderEndpoints.rootOrders}/all`);
-  }
 
   getUserOrders(): Observable<OrderModel[]> {
     return this._http.get<OrderModel[]>(`${ApiEndpoints.OrderEndpoints.rootOrders}/user`);
@@ -33,7 +30,4 @@ export class OrderService {
     return this._http.get<{ order: OrderModel, orderItemsProducts: ProductModel[] }>(`${ApiEndpoints.OrderEndpoints.rootOrders}/${id}/details`);
   }
 
-  getOrderById(id: number): Observable<OrderModel> {
-    return this._http.get<OrderModel>(`${ApiEndpoints.OrderEndpoints.rootOrders}/${id}`);
-  }
 }

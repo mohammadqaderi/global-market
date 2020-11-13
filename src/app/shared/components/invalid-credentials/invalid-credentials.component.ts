@@ -18,8 +18,5 @@ export class InvalidCredentialsComponent implements OnInit {
 
   }
 
-  hide() {
-    this.modalRef.hide();
-  }
 
 }

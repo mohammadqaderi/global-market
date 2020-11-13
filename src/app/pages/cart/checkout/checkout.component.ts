@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Countries} from '../../../commons/constants/countries';
 import {HelperService} from '../../../shared/services/helper.service';
@@ -14,6 +14,7 @@ import {GlobalDataService} from '../../../shared/services/global-data.service';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
+  @ViewChild('errorTemplate', {static: true}) errorTemplate: TemplateRef<any>;
 
   billingForm: FormGroup;
   countries = Countries;

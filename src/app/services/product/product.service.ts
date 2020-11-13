@@ -3,9 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {ProductModel} from '../../models/Products/product.model';
 import {Observable} from 'rxjs';
 import {ApiEndpoints} from '../../commons/api-endpoints';
-import {CartProductModel} from '../../models/Cart/cart-product.model';
 import {ProductsCustomFilterDto} from '../../commons/public-dto/products-custom-filter.dto';
-import {SubCategoryModel} from '../../models/Categories/sub-category.model';
 import {CartModel} from '../../models/Cart/cart.model';
 
 @Injectable({
@@ -28,8 +26,8 @@ export class ProductService {
     return this._http.get<ProductModel[]>(`${ApiEndpoints.ProductEndpoints.rootProducts}/most-sales`);
   }
 
-  getMonthProducts(): Observable<ProductModel[]> {
-    return this._http.get<ProductModel[]>(`${ApiEndpoints.ProductEndpoints.rootProducts}/current-month`);
+  getMixLatestProducts(): Observable<ProductModel[]> {
+    return this._http.get<ProductModel[]>(`${ApiEndpoints.ProductEndpoints.rootProducts}/mix-latest-products`);
   }
 
   searchByMatchingName(searchValue: string): Observable<ProductModel[]> {

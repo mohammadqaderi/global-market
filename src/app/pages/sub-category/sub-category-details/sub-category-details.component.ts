@@ -44,7 +44,6 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
         products = [...products, this.subCategory.products[i]];
       }
     }
-    console.log(dressesProducts);
     this.products = products;
   }
 

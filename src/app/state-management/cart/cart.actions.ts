@@ -2,7 +2,6 @@ import {CartModel} from '../../models/Cart/cart.model';
 import {OrderDto} from '../../commons/public-dto/order.dto';
 import {CreatePaymentDto} from '../../commons/public-dto/create-payment.dto';
 import {RemoveCartItem} from '../../commons/interfaces/remove-cart-item.interface';
-import {CartProductModel} from '../../models/Cart/cart-product.model';
 
 export interface CartStateModel {
   cart: CartModel;

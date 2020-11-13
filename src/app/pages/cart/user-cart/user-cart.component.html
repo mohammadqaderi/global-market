@@ -65,54 +65,7 @@
                           </div>
                           <!-- Enter Quantity Code over here-->
                         </div>
-                        <div class="d-flex align-items-start justify-content-start">
-                          <div class="md-form input-group">
-                            <div class="input-group-prepend" id="button-addon3">
-                              <button (click)="onSubtract(productCart)" mdbBtn color="info" size="sm"
-                                      class="m-0 px-2 py-1" type="button"
-                                      mdbWavesEffect>
-                                <i class="fas fa-minus"></i>
-                              </button>
-                            </div>
-                            <input type="number" name="quantity" [(ngModel)]="productCart.quantity"
-                                   class="form-control text-center" id="quantity"
-                                   placeholder="Quantity"
-                                   aria-label="Quantity"
-                                   aria-describedby="button-addon4">
-                            <div class="input-group-append" id="button-addon4">
-                              <button (click)="onAdd(productCart)" mdbBtn color="info" size="sm" class="m-0 px-2 py-1"
-                                      type="button"
-                                      mdbWavesEffect>
-                                <i class="fas fa-plus"></i>
-                              </button>
-                            </div>
-                            <div *ngIf="showSaveChanges" class="input-group-append">
-                              <button (click)="updateCartProductQuantity(productCart)" mdbBtn color="primary" size="sm"
-                                      class="m-0 px-2 py-1"
-                                      type="button"
-                                      mdbWavesEffect>
-                                <span> Save changes ?</span>
-                              </button>
-                            </div>
-                            <div *ngIf="showSaveChanges" class="input-group-append">
-                              <button (click)="ignore()" mdbBtn color="danger" size="sm"
-                                      class="m-0 px-2 py-1"
-                                      type="button"
-                                      mdbWavesEffect>
-                                <span> Ignore</span>
-                              </button>
-                            </div>
-                            <div *ngIf="showSpinner" class="input-group-append">
-                              <button mdbBtn color="info" size="sm"
-                                      class="m-0 px-2 py-1"
-                                      type="button"
-                                      mdbWavesEffect>
-                                   <span class="spinner-border spinner-border-sm" role="status"
-                                         aria-hidden="true"></span>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
+
                         <div class="d-flex justify-content-end">
                           <div>
                             <button (click)="helperService.openModal(deleteTemplate)" type="button" size="sm" mdbBtn
@@ -127,6 +80,92 @@
                                 </button>
                                 <button type="button" class="btn btn-light" (click)="helperService.hideModal()">No
                                 </button>
+                              </div>
+                            </ng-template>
+                            <button type="button" size="sm" mdbBtn color="light" rounded="true" data-toggle="modal"
+                                    data-target="#basicExample"
+                                    (click)="setSelectedItem(productCart); helperService.openModal(updateItemQty)"
+                                    mdbWavesEffect>
+                              <i class="fas text-primary fa-edit"></i> &nbsp; Update
+                            </button>
+                            <ng-template #updateItemQty>
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header text-center">
+                                    <h4 class="modal-title w-100 font-weight-bold">Update Item</h4>
+                                    <button type="button" (click)="helperService.hideModal()" class="close"
+                                            data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body w-100" *ngIf="selectedItem">
+                                    <div class="row ">
+                                      <div class="col-xl-5">
+                                        <div class="view zoom overlay z-depth-2 rounded">
+                                          <img class="img-fluid fadeInUp  w-100"
+                                               style="max-height: 250px; height: 250px"
+                                               [src]="productCart.image" alt="Sample">
+                                        </div>
+                                      </div>
+                                      <div class="col-xl-7">
+                                        <p>
+                                          Name: {{productCart.name}}
+                                        </p>
+                                        <p>
+                                          Quantity: {{productCart.quantity}}
+                                        </p>
+                                        <div class="md-form my-5 input-group">
+                                          <div class="input-group-prepend" id="button-addon3">
+                                            <button (click)="onSubtract(productCart)" mdbBtn color="info" size="sm"
+                                                    class="m-0 px-2 py-1" type="button"
+                                                    mdbWavesEffect>
+                                              <i class="fas fa-minus"></i>
+                                            </button>
+                                          </div>
+                                          <input type="number" name="quantity" [(ngModel)]="selectedItem.quantity"
+                                                 class="form-control text-center" id="quantity"
+                                                 placeholder="Quantity"
+                                                 aria-label="Quantity"
+                                                 aria-describedby="button-addon4">
+                                          <div class="input-group-append" id="button-addon4">
+                                            <button (click)="onAdd(productCart)" mdbBtn color="info" size="sm"
+                                                    class="m-0 px-2 py-1"
+                                                    type="button"
+                                                    mdbWavesEffect>
+                                              <i class="fas fa-plus"></i>
+                                            </button>
+                                          </div>
+                                          <div
+                                            *ngIf="showSpinner && selectedItem &&  selectedItem.id === productCart.id"
+                                            class="input-group-append">
+                                            <button mdbBtn color="info" size="sm"
+                                                    class="m-0 px-2 py-1"
+                                                    type="button"
+                                                    mdbWavesEffect>
+            <span class="spinner-border spinner-border-sm" role="status"
+                  aria-hidden="true"></span>
+                                            </button>
+                                          </div>
+                                        </div>
+                                        <p>
+                                          <strong>Note:</strong> &nbsp;<span class="text-muted">Maximum value for quantity is {{productCart.maxPush}}
+                                          items only</span>
+                                        </p>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer d-flex justify-content-xl-end" *ngIf="selectedItem">
+                                    <button (click)="updateCartProductQuantity(productCart)"
+                                            [disabled]="!selectedItem.quantity || selectedItem.quantity > productCart.maxPush"
+                                            mdbBtn color="default"
+                                            class="waves-light" mdbWavesEffect>Update State
+                                    </button>
+                                    <button type="button" (click)="helperService.hideModal()" mdbBtn color="light"
+                                            mdbWavesEffect>Close
+                                    </button>
+                                  </div>
+                                </div>
                               </div>
                             </ng-template>
                           </div>
@@ -215,6 +254,7 @@
     </mdb-card>
 
   </div>
+
 </div>
 <ngx-spinner
   bdColor="rgba(51,51,51,0.8)"
@@ -225,3 +265,7 @@
     {{state}}
   </p>
 </ngx-spinner>
+<ng-template #errorTemplate>
+  <app-show-error-dialog
+    [error]="helperService.error"></app-show-error-dialog>
+</ng-template>

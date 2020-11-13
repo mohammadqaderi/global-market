@@ -18,11 +18,6 @@ import {Router} from '@angular/router';
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
-
-  delivered = OrderStatus.DELIVERED;
-  shipped = OrderStatus.SHIPPED;
-  processed = OrderStatus.PROCESSED;
-
   displayedColumns: string[] =
     [
       'id',
@@ -43,6 +38,8 @@ export class OrdersComponent implements OnInit {
 
     if (!gdService.Invoices) {
       this.store.dispatch(new FetchUserInvoices()).subscribe(() => {
+      }, error => {
+        this.helperService.showErrorDialog(error, this.errorTemplate);
       });
     }
     if (!this.gdService.Orders) {
@@ -50,6 +47,8 @@ export class OrdersComponent implements OnInit {
       this.store.dispatch(new FetchUserOrders()).subscribe(() => {
         this.refreshOrders();
         this.helperService.hideSpinner();
+      }, error => {
+        this.helperService.showErrorDialog(error, this.errorTemplate);
       });
     } else {
       this.refreshOrders();

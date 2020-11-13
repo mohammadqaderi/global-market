@@ -6,7 +6,6 @@ import {GlobalDataService} from '../../shared/services/global-data.service';
 import {MatSidenav} from '@angular/material/sidenav';
 import {HelperService} from '../../shared/services/helper.service';
 import {Router} from '@angular/router';
-import {MDBModalRef, MDBModalService} from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-navbar',
@@ -28,7 +27,6 @@ export class NavbarComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     public router: Router,
-    private mdbModalService: MDBModalService,
     public helperService: HelperService,
     public gdService: GlobalDataService) {
   }

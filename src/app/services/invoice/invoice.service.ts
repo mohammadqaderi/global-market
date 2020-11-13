@@ -12,15 +12,9 @@ export class InvoiceService {
   constructor(private _http: HttpClient) {
   }
 
-  getAllInvoices(): Observable<InvoiceModel[]> {
-    return this._http.get<InvoiceModel[]>(`${ApiEndpoints.InvoiceEndpoints.rootInvoices}/all`);
-  }
 
   getUserInvoices(): Observable<InvoiceModel[]> {
     return this._http.get<InvoiceModel[]>(`${ApiEndpoints.InvoiceEndpoints.rootInvoices}/user`);
   }
 
-  getInvoiceById(id: number): Observable<InvoiceModel> {
-    return this._http.get<InvoiceModel>(`${ApiEndpoints.InvoiceEndpoints.rootInvoices}/${id}`);
-  }
 }
