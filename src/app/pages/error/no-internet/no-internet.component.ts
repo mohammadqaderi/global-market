@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HelperService} from '../../../shared/services/helper.service';
-import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 
 @Component({
   selector: 'app-no-internet',

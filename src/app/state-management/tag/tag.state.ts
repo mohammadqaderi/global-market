@@ -9,6 +9,8 @@ import {SubCategoryTagModel} from '../../models/Categories/sub-category-tag.mode
 import {patch} from '@ngxs/store/operators';
 import FetchProductsTags = TagActions.FetchProductsTags;
 import {ProductTagModel} from '../../models/Products/product-tag.model';
+import {ProductService} from '../../services/product/product.service';
+import {productsTagsInit} from '../../commons/helpers/functions/products-tags-init';
 
 
 @State<TagStateModel>({
@@ -20,7 +22,7 @@ import {ProductTagModel} from '../../models/Products/product-tag.model';
 })
 @Injectable()
 export class TagState {
-  constructor(private tagService: TagService) {
+  constructor(private tagService: TagService, private productService: ProductService) {
   }
 
   @Selector()
@@ -46,10 +48,11 @@ export class TagState {
 
   @Action(FetchProductsTags)
   fetchProductsTags(ctx: StateContext<TagStateModel>, action: FetchProductsTags) {
-    return this.tagService.getProductsTags().pipe(
+    return this.productService.getProductsTagsNames().pipe(
       tap((tags: ProductTagModel[]) => {
+        const uniqueTags = productsTagsInit(null, tags);
         ctx.setState(patch({
-          productsTags: tags
+          productsTags: uniqueTags
         }));
       })
     );

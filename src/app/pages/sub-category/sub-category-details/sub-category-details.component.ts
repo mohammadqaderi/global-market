@@ -1,4 +1,4 @@
-import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HelperService} from '../../../shared/services/helper.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Store} from '@ngxs/store';
@@ -7,13 +7,14 @@ import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {SubCategoryModel} from '../../../models/Categories/sub-category.model';
 import {ProductModel} from '../../../models/Products/product.model';
 import {ProductTagModel} from '../../../models/Products/product-tag.model';
+import {productsTagsInit} from '../../../commons/helpers/functions/products-tags-init';
 
 @Component({
   selector: 'app-sub-category-details',
   templateUrl: './sub-category-details.component.html',
   styleUrls: ['./sub-category-details.component.css']
 })
-export class SubCategoryDetailsComponent implements OnInit, DoCheck {
+export class SubCategoryDetailsComponent implements OnInit {
   showSpinner = false;
   selectedTag: number;
   isAllSelected = true;
@@ -62,7 +63,7 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
             if (subCategory) {
               this.subCategory = subCategory;
               this.loadProducts(subCategory);
-              this.productsTagsInit();
+              this.productsTags = productsTagsInit(this.subCategory);
             }
           }
           this.helperService.hideSpinner();
@@ -72,7 +73,7 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
           if (subCategoryModel) {
             this.subCategory = subCategoryModel;
             this.loadProducts(subCategoryModel);
-            this.productsTagsInit();
+            this.productsTags = productsTagsInit(this.subCategory);
             this.helperService.hideSpinner();
           }
         } else {
@@ -80,7 +81,7 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
           this.subCategoryService.getSubCategoryById(+subCategoryId).subscribe((subCategory: SubCategoryModel) => {
             this.subCategory = subCategory;
             this.loadProducts(subCategory);
-            this.productsTagsInit();
+            this.productsTags = productsTagsInit(this.subCategory);
             this.helperService.hideSpinner();
           });
         }
@@ -94,29 +95,9 @@ export class SubCategoryDetailsComponent implements OnInit, DoCheck {
     this.loadProducts(this.subCategory);
   }
 
-  productsTagsInit() {
-    this.productsTags = [];
-    for (let i = 0; i < this.subCategory.products.length; i++) {
-      for (let j = 0; j < this.subCategory.products[i].productTags.length; j++) {
-        this.productsTags = [...this.productsTags, this.subCategory.products[i].productTags[j]];
-      }
-    }
-    let uniqueArray: ProductTagModel[] = [];
-    for (let i = 0; i < this.productsTags.length; i++) {
-      const item = uniqueArray.find(item => item.name === this.productsTags[i].name);
-      if (!item) {
-        uniqueArray = [...uniqueArray, this.productsTags[i]];
-      }
-    }
-    this.productsTags = uniqueArray;
-  }
-
   loadProducts(subCategory: SubCategoryModel) {
     this.products = subCategory.products;
     this.showSpinner = false;
-  }
-
-  ngDoCheck(): void {
   }
 
 }

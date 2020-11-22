@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Store} from '@ngxs/store';
-import {AuthState} from '../../state-management/auth/auth.state';
 import {GlobalDataService} from '../../shared/services/global-data.service';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
+const helper = new JwtHelperService();
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,12 @@ export class UserAuthGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.store.selectSnapshot(AuthState.isAuthenticated)
-      && this.store.selectSnapshot(AuthState.User)) {
+    if (this.gdService.IsAuthenticated()
+      && this.gdService.User
+      && !helper.isTokenExpired(this.gdService.Token())) {
       return true;
     } else {
-      this.gdService.userLogout();
+      this.gdService.userLogout(state.url);
       return false;
     }
   }

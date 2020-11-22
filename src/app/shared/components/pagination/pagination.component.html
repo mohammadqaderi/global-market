@@ -1,0 +1,36 @@
+<nav aria-label="Page navigation example">
+  <ul class="pagination  justify-content-center pagination-lg">
+    <li class="page-item" *ngIf="hasPreviousPage">
+      <a (click)="loadPrevious()" class="page-link"
+         aria-label="Previous" mdbWavesEffect>
+        <span aria-hidden="true" style="font-size: 22px;">&laquo;</span>
+        <span class="sr-only" style="font-size: 22px;">Previous</span>
+      </a>
+    </li>
+    <li *ngIf="currentPage !== 1 && previousPage !== 1" class="page-item">
+      <a class="page-link" mdbWavesEffect (click)="loadFirst()">
+        1
+      </a></li>
+    <li *ngIf="hasPreviousPage" class="page-item ">
+      <a (click)="previousP()"
+         class="page-link" mdbWavesEffect>{{previousPage }}</a>
+    </li>
+    <li class="page-item ">
+      <a class="page-link bg-primary" mdbWavesEffect>{{currentPage }}</a>
+    </li>
+    <li *ngIf="hasNextPage" class="page-item"><a (click)="nextP()" mdbWavesEffect class="page-link">
+      {{nextPage}}
+    </a></li>
+    <li *ngIf="lastPage !== currentPage && nextPage !== lastPage" class="page-item">
+      <a class="page-link" mdbWavesEffect (click)="loadLast()">
+        {{lastPage}}
+      </a></li>
+    <li class="page-item" *ngIf="hasNextPage">
+      <a class="page-link" (click)="loadNext()"
+         aria-label="Next" mdbWavesEffect>
+        <span style="font-size: 22px;" aria-hidden="true">&raquo;</span>
+        <span style="font-size: 22px;" class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+</nav>

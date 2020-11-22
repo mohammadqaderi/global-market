@@ -1,56 +1,38 @@
 <div class="row m-3">
   <div class="col-xl-4">
     <mdb-card>
-      <mdb-card-header>
-        <h2 class="h2">General Filter</h2>
-      </mdb-card-header>
       <mdb-card-body>
-        <div class="row">
-          <div class="col-xl-12">
-            <h3>Sub Categories</h3>
-          </div>
-        </div>
         <div class="row">
           <div class="col-xl-6 " *ngFor="let sc of gdService.SubCategories">
             <a [ngClass]="{'bg-primary': scId === sc.id}"
-               (click)="onSubCategorySelect(sc); fetchBySubCategoryName(sc, 10)"
+               (click)="onSubCategorySelect(sc)"
                mat-button class="nav-link">
               {{sc.name}}
             </a>
           </div>
         </div>
         <hr class="my-2">
-        <div class="row">
-          <div class="col-xl-12">
-            <h3>Select a Tag</h3>
-          </div>
-        </div>
-        <ul class="nav grey lighten-3 ">
+        <ul class="nav grey lighten-3 " *ngIf="subCategory && productsTags">
           <li class="nav-item">
-            <a (click)="getAll()" mat-button [ngClass]="{'bg-danger': isAllSelected }"
+            <a (click)="onAllTagSelect()" mat-button [ngClass]="{'bg-danger': isAllSelected }"
                class="nav-link m-1">
               All
             </a>
           </li>
-          <li class="nav-item m-1" *ngFor="let tag of gdService.SubCategoriesTags">
-            <a mat-button (click)="fetchByTagName(tag)" [ngClass]="{'bg-danger': tag.id === selectedTag }"
+          <li class="nav-item m-1" *ngFor="let tag of productsTags">
+            <a mat-button (click)="onTagSelect(tag)" [ngClass]="{'bg-danger': tag.id === selectedTag }"
                class="nav-link">
               {{tag.name}}
             </a>
           </li>
         </ul>
         <mat-divider class="my-2 w-100" style="width: 100%"></mat-divider>
-        <h2>Custom Filter</h2>
-        <mat-divider class="my-1 w-100" style="width: 100%"></mat-divider>
-        <div class="row">
-          <div class="col-xl-12">
-            <h3>Price</h3>
-          </div>
-        </div>
+
         <div class="row">
           <div class="col-xl-12">
             <span>Min Range: {{productsCustomFilterDto.range1 ? productsCustomFilterDto.range1 : 0}}</span>
-            <mat-slider class="example-full-width" #range1 min="10" (valueChange)="setRange1(range1.value)"
+            <mat-slider class="example-full-width" #range1 min="10"
+                        (valueChange)="onMinRangeSelect(range1.value)"
                         [max]="productsCustomFilterDto.range2? productsCustomFilterDto.range2: 500"
                         tickInterval="auto"
                         step="3" color="warn" thumbLabel></mat-slider>
@@ -61,7 +43,7 @@
             <span>Max Range: {{productsCustomFilterDto.range2 ? productsCustomFilterDto.range2 : 0}}</span>
             <mat-slider class="example-full-width" #range2
                         [min]="productsCustomFilterDto.range1? productsCustomFilterDto.range1 : 10"
-                        (valueChange)="setRange2(range2.value)"
+                        (valueChange)="onMaxRangeSelect(range2.value)"
                         max="7000"
                         tickInterval="auto"
                         step="3" color="warn" thumbLabel></mat-slider>
@@ -73,7 +55,8 @@
             <mat-form-field style="width: 100%">
               <mat-label>Availability</mat-label>
               <mat-select name="stock" placeholder="Availability"
-                          [(ngModel)]="productsCustomFilterDto.stock">
+                          [(ngModel)]="productsCustomFilterDto.stock"
+                          (ngModelChange)="loadByAvailability()">
                 <mat-option>None</mat-option>
                 <mat-option *ngFor="let state of ['In Stock', 'Out of Stock']"
                             [value]="state">{{state}}</mat-option>
@@ -81,23 +64,22 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="row justify-content-center my-2">
-          <button (click)="loadCustomProducts()" mdbBtn color="secondary" type="button">
-            <span *ngIf="showFilter" class="spinner-border spinner-border-sm" role="status" aria-hidden="true">
-              <i
-                class="fas fa-filter"></i>
-            </span>
-            <span *ngIf="!showFilter">Filter &nbsp; <i
-              class="fas fa-filter"></i></span>
-          </button>
-        </div>
       </mdb-card-body>
     </mdb-card>
   </div>
   <div class="col-xl-8">
     <mdb-card>
       <mdb-card-body>
-        <mat-form-field appearance="fill" style="width: 100%">
+        <section *ngIf="products.getValue() && ( products.asObservable()| async).length === 0">
+          <!-- Grid row -->
+          <div class="row m-4 justify-content-center">
+            <div class="col-xl-12">
+              <h1 class="h1 text-center">No products to display!</h1>
+            </div>
+          </div>
+        </section>
+        <mat-form-field appearance="fill" style="width: 100%"
+                        *ngIf="products.getValue() && products.getValue().length > 0">
           <mat-label>Search for product</mat-label>
           <input type="text" matInput placeholder="Search for product" name="searchTerm" [(ngModel)]="searchTerm">
         </mat-form-field>
@@ -105,7 +87,8 @@
           <!-- Grid row -->
           <div class="row m-4">
             <!-- Grid column -->
-            <div class="col-xl-4 mb-4" *ngFor="let product of products | productFilter: searchTerm; let i = index">
+            <div class="col-xl-4 mb-4"
+                 *ngFor="let product of products.asObservable() | async | productFilter: searchTerm; let i = index">
               <div class="">
                 <div (click)="helperService.productDetails(product)" class="view zoom overlay z-depth-2 rounded">
                   <img class="img-fluid fadeInUp  w-100"
@@ -147,16 +130,19 @@
           </div>
         </section>
       </mdb-card-body>
-      <mdb-card-footer>
-        <div class="row justify-content-center">
-          <button (click)="loadMore()" mdbBtn color="primary" type="button">
-            <span *ngIf="showSpinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <span *ngIf="!showSpinner">Load More</span>
-          </button>
-          <button (click)="backToTop()" mdbBtn color="deep-purple" type="button">
-            Back to Top &nbsp; <i class="fas fa-arrow-up"></i>
-          </button>
-        </div>
+      <mdb-card-footer *ngIf="products.getValue() && products.getValue().length > 0">
+        <app-pagination [lastPage]="gdService.lastPage"
+                        [currentPage]="gdService.currentPage"
+                        [hasPreviousPage]="gdService.hasPreviousPage"
+                        [hasNextPage]="gdService.hasNextPage"
+                        [previousPage]="gdService.previousPage"
+                        [nextPage]="gdService.nextPage"
+                        (change)="onPageChange($event)"
+        ></app-pagination>
+        <button style="  transition: width 1s;" (click)="helperService.backToTop()"
+                class="btn btn-sm rounded btn-primary pull-right" type="button">
+          Back to Top &nbsp; <i class="fas fa-arrow-up"></i>
+        </button>
       </mdb-card-footer>
     </mdb-card>
   </div>

@@ -9,3 +9,18 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+.card .card-body h1{
+  font-weight: bolder;
+  text-align: center;
+  color: red;
+}
+.card .card-body h4{
+  line-height: 25px;
+  outline-width: 10px;
+  text-align: center;
+  margin-top: 40px;
+  font-size: 20px;
+}
+.card .card-body h4 a .btn {
+  margin-top: 25px;
+}

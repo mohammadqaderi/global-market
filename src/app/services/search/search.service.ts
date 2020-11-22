@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {ApiEndpoints} from '../../commons/api-endpoints';
 import {Observable} from 'rxjs';
+import {ISearch} from '../../commons/interfaces/search.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,8 @@ export class SearchService {
   constructor(private http: HttpClient) {
   }
 
-  searchByName(name: string, type: string, take: number): Observable<any> {
-    let params = new HttpParams();
-    params = params.append('take', take.toString());
-    return this.http.get<any>(`${ApiEndpoints.Search.searchByName}/${name}/${type}`, {
-      params
-    });
+  searchByName(searchPayload: ISearch): Observable<any> {
+    return this.http.post<any>(ApiEndpoints.Search.searchByName, searchPayload);
   }
 
 }

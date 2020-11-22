@@ -28,7 +28,7 @@
               <img #img *ngIf="!helperService.selectedImage" style="max-width: 300px; max-height: 200px;"
                    [src]="Profile.image"
                    (error)="img.src= '../../../../ass/img/theme/user.jpg'"
-                   class="avatar  ">
+                   class="avatar  rounded-circle  ">
               <img *ngIf="helperService.selectedImage" style="max-width: 170px; max-height: 150px;"
                    [src]="helperService.selectedImage"
                    class="avatar avatar-lg rounded-circle">
@@ -78,7 +78,7 @@
 
         </div>
 
-        <div class="card mt-2 card-cascade narrower">
+        <div class="card mt-2 card-cascade narrower" *ngIf="gdService.Orders">
 
           <!-- Card image -->
           <mat-toolbar color="warn">
@@ -88,21 +88,25 @@
           </mat-toolbar>
 
           <!-- Card content -->
-          <div class="card-body card-body-cascade text-center">
-            <div class="text-center">
-              <mat-list>
-                <mat-list-item> Order 1</mat-list-item>
-                <mat-list-item> Order 2</mat-list-item>
-                <mat-list-item> Order 3</mat-list-item>
-                <mat-list-item> Order 4</mat-list-item>
-                <mat-list-item> Order 5</mat-list-item>
-
-              </mat-list>
+          <div class="card-body card-body-cascade ">
+            <div class="card mt-2 card-cascade narrower"
+                 *ngFor="let order of gdService.Orders.slice(0,4); let i= index">
+              <div class="card-header">
+                <h2 style="cursor: pointer" (click)="helperService.navigateToOrder(order)">
+                  Order: {{i + 1}}
+                </h2>
+              </div>
+              <div class="card-body">
+                <p>
+                  Shipment Date:  {{order.shipmentDate | date: 'shortDate'}}
+                  -- {{order.shipmentDate | date: 'shortTime'}}
+                </p>
+              </div>
             </div>
           </div>
           <div class="card-footer">
             <div class="row justify-content-center">
-              <button class="text-center" type="button" mdbBtn color="info" mdbWavesEffect>
+              <button class="text-center" routerLink="/orders" type="button" mdbBtn color="info" mdbWavesEffect>
                 See all orders
               </button>
             </div>

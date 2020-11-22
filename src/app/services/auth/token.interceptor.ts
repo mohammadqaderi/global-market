@@ -6,10 +6,12 @@ import {
 } from '@angular/common/http';
 import {GlobalDataService} from '../../shared/services/global-data.service';
 
+
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
   constructor(private gdService: GlobalDataService) {
+
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
@@ -20,4 +22,6 @@ export class TokenInterceptor implements HttpInterceptor {
     });
     return next.handle(tokenReq);
   }
+
+
 }

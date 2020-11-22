@@ -3,7 +3,7 @@ import {GlobalDataService} from './shared/services/global-data.service';
 import {Actions, ofActionDispatched, Store} from '@ngxs/store';
 import {HelperService} from './shared/services/helper.service';
 import {Logout} from './state-management/auth/auth-actions';
-import {fromEvent} from 'rxjs';
+import {fromEvent, Subject} from 'rxjs';
 import {Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
 import {AuthService} from './services/auth/auth.service';
@@ -14,6 +14,8 @@ import {AuthService} from './services/auth/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  public accessToken = 'YOUR_ACCESS_TOKEN';
+  public message: Subject<any> = new Subject();
   constructor(public gdService: GlobalDataService,
               private cookieService: CookieService,
               private store: Store,

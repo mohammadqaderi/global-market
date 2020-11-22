@@ -2,18 +2,11 @@ import {ProductModel} from '../../models/Products/product.model';
 import {ProductsCustomFilterDto} from '../../commons/public-dto/products-custom-filter.dto';
 
 export interface ProductStateModel {
-  shopProducts: ProductModel[];
   latestProducts: ProductModel[];
   mostSalesProducts: ProductModel[];
 }
 
 export namespace ProductActions {
-  export class FetchShopProducts {
-    static readonly type = '[Product] Fetch Shop Products';
-
-    constructor(public take: number) {
-    }
-  }
 
   export class UpdateShopProducts {
     static readonly type = '[Product] Update Shop Products';

@@ -61,10 +61,6 @@ export class GlobalDataService {
     return this.store.selectSnapshot(SubCategoryState.SubCategories);
   }
 
-  get ShopProducts() {
-    return this.store.selectSnapshot(ProductState.ShopProducts);
-  }
-
 
   get LatestProducts() {
     return this.store.selectSnapshot(ProductState.LatestProducts);
@@ -78,6 +74,9 @@ export class GlobalDataService {
     return this.store.selectSnapshot(TagState.SubCategoriesTags);
   }
 
+  get ProductsTags() {
+    return this.store.selectSnapshot(TagState.ProductsTags);
+  }
 
   get Invoices() {
     return this.store.selectSnapshot(InvoiceState.Invoices);
@@ -119,7 +118,7 @@ export class GlobalDataService {
   }
 
 
-  userLogout() {
+  userLogout(url: string) {
     this.store.dispatch([
       new Logout(),
       new ClearProfileData(),
@@ -127,7 +126,28 @@ export class GlobalDataService {
       new ClearInvoicesFromStorage(),
       new ClearOrdersFromStorage(),
       new ClearPaymentsFromStorage()]).subscribe(() => {
-      this.router.navigate(['/auth/login']);
+      this.router.navigate(['/auth/login'], {
+        queryParams: {
+          returnUrl: url || "home"
+        }
+      });
     });
+  }
+
+  // pagination data
+  lastPage: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  nextPage: number;
+  previousPage: number;
+  currentPage: number;
+
+  setPaginationData(obj: any) {
+    this.nextPage = obj.nextPage;
+    this.currentPage = obj.currentPage;
+    this.hasPreviousPage = obj.hasPreviousPage;
+    this.lastPage = obj.lastPage;
+    this.previousPage = obj.previousPage;
+    this.hasNextPage = obj.hasNextPage;
   }
 }

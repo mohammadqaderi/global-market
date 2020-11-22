@@ -1,0 +1,1470 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>global-market-demo documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">global-market-demo documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li>CartState</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/state-management/cart/cart.state.ts</code>
+        </p>
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addProductToCart">addProductToCart</a>
+                            </li>
+                            <li>
+                                <a href="#afterCheckoutComplete">afterCheckoutComplete</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#Cart">Cart</a>
+                            </li>
+                            <li>
+                                <a href="#checkoutOnCart">checkoutOnCart</a>
+                            </li>
+                            <li>
+                                <a href="#checkoutOnSingleProduct">checkoutOnSingleProduct</a>
+                            </li>
+                            <li>
+                                <a href="#clearCartContent">clearCartContent</a>
+                            </li>
+                            <li>
+                                <a href="#clearCartFromStorage">clearCartFromStorage</a>
+                            </li>
+                            <li>
+                                <a href="#createUserCart">createUserCart</a>
+                            </li>
+                            <li>
+                                <a href="#fetchUserCart">fetchUserCart</a>
+                            </li>
+                            <li>
+                                <a href="#removeCartProduct">removeCartProduct</a>
+                            </li>
+                            <li>
+                                <a href="#removeProductsFromCart">removeProductsFromCart</a>
+                            </li>
+                            <li>
+                                <a href="#updateCartProductQuantity">updateCartProductQuantity</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(cartService: <a href="../injectables/CartService.html">CartService</a>, store: Store)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/state-management/cart/cart.state.ts:37</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>cartService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CartService.html" target="_self" >CartService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>store</td>
+                                                  
+                                                        <td>
+                                                                    <code>Store</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addProductToCart"></a>
+                    <span class="name">
+                        <b>
+                            addProductToCart
+                        </b>
+                        <a href="#addProductToCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addProductToCart(ctx: <a href="../injectables/CartState.html">StateContext<CartStateModel></a>, action: <a href="../injectables/CartState.html">UpdateCartState</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Action(UpdateCartState)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">src/app/state-management/cart/cart.state.ts:81</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ctx</td>
+                                    <td>
+                                                <code><a href="../injectables/CartState.html" target="_self" >StateContext&lt;CartStateModel&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>action</td>
+                                    <td>
+                                                <code><a href="../injectables/CartState.html" target="_self" >UpdateCartState</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="afterCheckoutComplete"></a>
+                    <span class="name">
+                        <b>
+                            afterCheckoutComplete
+                        </b>
+                        <a href="#afterCheckoutComplete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>afterCheckoutComplete(result: <a href="../interfaces/CheckoutReturnData.html">CheckoutReturnData</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">src/app/state-management/cart/cart.state.ts:127</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>result</td>
+                                    <td>
+                                                <code><a href="../interfaces/CheckoutReturnData.html" target="_self" >CheckoutReturnData</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Cart"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Static</span>
+                            Cart
+                        </b>
+                        <a href="#Cart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>Cart(state: <a href="../injectables/CartState.html">CartStateModel</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Selector()<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="42"
+                            class="link-to-prism">src/app/state-management/cart/cart.state.ts:42</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>state</td>
+                                    <td>
+                                                <code><a href="../injectables/CartState.html" target="_self" >CartStateModel</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkoutOnCart"></a>
+                    <span class="name">
+                        <b>
+                            checkoutOnCart
+                        </b>
+                        <a href="#checkoutOnCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkoutOnCart(ctx: <a href="../injectables/CartState.html">StateContext<CartStateModel></a>, action: <a href="../classes/CheckoutOnCart.html">CheckoutOnCart</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Action(CheckoutOnCart)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="110"
+                            class="link-to-prism">src/app/state-management/cart/cart.state.ts:110</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ctx</td>
+                                    <td>
+                                                <code><a href="../injectables/CartState.html" target="_self" >StateContext&lt;CartStateModel&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>action</td>
+                                    <td>
+                                                <code><a href="../classes/CheckoutOnCart.html" target="_self" >CheckoutOnCart</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkoutOnSingleProduct"></a>
+                    <span class="name">
+                        <b>
+                            checkoutOnSingleProduct
+                        </b>
+                        <a href="#checkoutOnSingleProduct"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkoutOnSingleProduct(ctx: <a href="../injectables/CartState.html">StateContext<CartStateModel></a>, action: <a href="../classes/CheckoutOnSingleProduct.html">CheckoutOnSingleProduct</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Action(CheckoutOnSingleProduct)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="136"
+                            class="link-to-prism">src/app/state-management/cart/cart.state.ts:136</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ctx</td>
+                                    <td>
+                                                <code><a href="../injectables/CartState.html" target="_self" >StateContext&lt;CartStateModel&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>action</td>
+                                    <td>
+                                                <code><a href="../classes/CheckoutOnSingleProduct.html" target="_self" >CheckoutOnSingleProduct</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearCartContent"></a>
+                    <span class="name">
+                        <b>
+                            clearCartContent
+                        </b>
+                        <a href="#clearCartContent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clearCartContent(ctx: <a href="../injectables/CartState.html">StateContext<CartStateModel></a>, action: <a href="../classes/ClearCartContent.html">ClearCartContent</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Action(ClearCartContent)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="70"
+                            class="link-to-prism">src/app/state-management/cart/cart.state.ts:70</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ctx</td>
+                                    <td>
+                                                <code><a href="../injectables/CartState.html" target="_self" >StateContext&lt;CartStateModel&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>action</td>
+                                    <td>
+                                                <code><a href="../classes/ClearCartContent.html" target="_self" >ClearCartContent</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearCartFromStorage"></a>
+                    <span class="name">
+                        <b>
+                            clearCartFromStorage
+                        </b>
+                        <a href="#clearCartFromStorage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clearCartFromStorage(ctx: <a href="../injectables/CartState.html">StateContext<CartStateModel></a>, action: <a href="../classes/ClearCartFromStorage.html">ClearCartFromStorage</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Action(ClearCartFromStorage)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="162"
+                            class="link-to-prism">src/app/state-management/cart/cart.state.ts:162</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ctx</td>
+                                    <td>
+                                                <code><a href="../injectables/CartState.html" target="_self" >StateContext&lt;CartStateModel&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>action</td>
+                                    <td>
+                                                <code><a href="../classes/ClearCartFromStorage.html" target="_self" >ClearCartFromStorage</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createUserCart"></a>
+                    <span class="name">
+                        <b>
+                            createUserCart
+                        </b>
+                        <a href="#createUserCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createUserCart(ctx: <a href="../injectables/CartState.html">StateContext<CartStateModel></a>, action: <a href="../classes/CreateUserCart.html">CreateUserCart</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Action(CreateUserCart)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="58"
+                            class="link-to-prism">src/app/state-management/cart/cart.state.ts:58</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ctx</td>
+                                    <td>
+                                                <code><a href="../injectables/CartState.html" target="_self" >StateContext&lt;CartStateModel&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>action</td>
+                                    <td>
+                                                <code><a href="../classes/CreateUserCart.html" target="_self" >CreateUserCart</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fetchUserCart"></a>
+                    <span class="name">
+                        <b>
+                            fetchUserCart
+                        </b>
+                        <a href="#fetchUserCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>fetchUserCart(ctx: <a href="../injectables/CartState.html">StateContext<CartStateModel></a>, action: <a href="../classes/FetchUserCart.html">FetchUserCart</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Action(FetchUserCart)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="47"
+                            class="link-to-prism">src/app/state-management/cart/cart.state.ts:47</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ctx</td>
+                                    <td>
+                                                <code><a href="../injectables/CartState.html" target="_self" >StateContext&lt;CartStateModel&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>action</td>
+                                    <td>
+                                                <code><a href="../classes/FetchUserCart.html" target="_self" >FetchUserCart</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeCartProduct"></a>
+                    <span class="name">
+                        <b>
+                            removeCartProduct
+                        </b>
+                        <a href="#removeCartProduct"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeCartProduct(ctx: <a href="../injectables/CartState.html">StateContext<CartStateModel></a>, action: <a href="../classes/RemoveCartProduct.html">RemoveCartProduct</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Action(RemoveCartProduct)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="99"
+                            class="link-to-prism">src/app/state-management/cart/cart.state.ts:99</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ctx</td>
+                                    <td>
+                                                <code><a href="../injectables/CartState.html" target="_self" >StateContext&lt;CartStateModel&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>action</td>
+                                    <td>
+                                                <code><a href="../classes/RemoveCartProduct.html" target="_self" >RemoveCartProduct</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeProductsFromCart"></a>
+                    <span class="name">
+                        <b>
+                            removeProductsFromCart
+                        </b>
+                        <a href="#removeProductsFromCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeProductsFromCart(ctx: <a href="../injectables/CartState.html">StateContext<CartStateModel></a>, action: <a href="../classes/RemoveProductsFromCart.html">RemoveProductsFromCart</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Action(RemoveProductsFromCart)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="151"
+                            class="link-to-prism">src/app/state-management/cart/cart.state.ts:151</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ctx</td>
+                                    <td>
+                                                <code><a href="../injectables/CartState.html" target="_self" >StateContext&lt;CartStateModel&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>action</td>
+                                    <td>
+                                                <code><a href="../classes/RemoveProductsFromCart.html" target="_self" >RemoveProductsFromCart</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateCartProductQuantity"></a>
+                    <span class="name">
+                        <b>
+                            updateCartProductQuantity
+                        </b>
+                        <a href="#updateCartProductQuantity"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateCartProductQuantity(ctx: <a href="../injectables/CartState.html">StateContext<CartStateModel></a>, action: <a href="../classes/UpdateCartProductQuantity.html">UpdateCartProductQuantity</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Action(UpdateCartProductQuantity)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="88"
+                            class="link-to-prism">src/app/state-management/cart/cart.state.ts:88</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ctx</td>
+                                    <td>
+                                                <code><a href="../injectables/CartState.html" target="_self" >StateContext&lt;CartStateModel&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>action</td>
+                                    <td>
+                                                <code><a href="../classes/UpdateCartProductQuantity.html" target="_self" >UpdateCartProductQuantity</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Action, Selector, State, StateContext, Store} from &#x27;@ngxs/store&#x27;;
+import {Injectable} from &#x27;@angular/core&#x27;;
+import {CartActions, CartStateModel} from &#x27;./cart.actions&#x27;;
+import {CartService} from &#x27;../../services/cart/cart.service&#x27;;
+import FetchUserCart &#x3D; CartActions.FetchUserCart;
+import {tap} from &#x27;rxjs/operators&#x27;;
+import {CartModel} from &#x27;../../models/Cart/cart.model&#x27;;
+import CreateUserCart &#x3D; CartActions.CreateUserCart;
+import ClearCartFromStorage &#x3D; CartActions.ClearCartFromStorage;
+import ClearCartContent &#x3D; CartActions.ClearCartContent;
+import CheckoutOnCart &#x3D; CartActions.CheckoutOnCart;
+import {CheckoutReturnData} from &#x27;../../commons/interfaces/checkout-return-data&#x27;;
+import CheckoutOnSingleProduct &#x3D; CartActions.CheckoutOnSingleProduct;
+import RemoveProductsFromCart &#x3D; CartActions.RemoveProductsFromCart;
+import {SetUserCart} from &#x27;../auth/auth-actions&#x27;;
+import {patch} from &#x27;@ngxs/store/operators&#x27;;
+import {InvoiceActions} from &#x27;../invoice/invoice.actions&#x27;;
+import PushInvoice &#x3D; InvoiceActions.PushInvoice;
+import {OrderActions} from &#x27;../order/order.actions&#x27;;
+import PushOrder &#x3D; OrderActions.PushOrder;
+import {PaymentActions} from &#x27;../payment/payment.actions&#x27;;
+import PushPayment &#x3D; PaymentActions.PushPayment;
+import {AuthState} from &#x27;../auth/auth.state&#x27;;
+import SetCustomerToken &#x3D; PaymentActions.SetCustomerToken;
+import UpdateCartProductQuantity &#x3D; CartActions.UpdateCartProductQuantity;
+import RemoveCartProduct &#x3D; CartActions.RemoveCartProduct;
+import UpdateCartState &#x3D; CartActions.UpdateCartState;
+
+
+@State&lt;CartStateModel&gt;({
+  name: &#x27;cart&#x27;,
+  defaults: {
+    cart: null
+  }
+})
+@Injectable()
+export class CartState {
+  constructor(private cartService: CartService, private store: Store) {
+  }
+
+  @Selector()
+  static Cart(state: CartStateModel) {
+    return state.cart;
+  }
+
+  @Action(FetchUserCart)
+  fetchUserCart(ctx: StateContext&lt;CartStateModel&gt;, action: FetchUserCart) {
+    return this.cartService.getUserCart().pipe(
+      tap((cart: CartModel) &#x3D;&gt; {
+        ctx.setState({
+          cart
+        });
+      })
+    );
+  }
+
+  @Action(CreateUserCart)
+  createUserCart(ctx: StateContext&lt;CartStateModel&gt;, action: CreateUserCart) {
+    return this.cartService.createUserCart().pipe(
+      tap((cart: CartModel) &#x3D;&gt; {
+        ctx.setState({
+          cart
+        });
+        this.store.dispatch(new SetUserCart(cart.id));
+      })
+    );
+  }
+
+  @Action(ClearCartContent)
+  clearCartContent(ctx: StateContext&lt;CartStateModel&gt;, action: ClearCartContent) {
+    return this.cartService.clearCart().pipe(
+      tap((cart: CartModel) &#x3D;&gt; {
+        ctx.setState({
+          cart
+        });
+      })
+    );
+  }
+
+  @Action(UpdateCartState)
+  addProductToCart(ctx: StateContext&lt;CartStateModel&gt;, action: UpdateCartState) {
+    ctx.setState(patch({
+      cart: action.cart
+    }));
+  }
+
+  @Action(UpdateCartProductQuantity)
+  updateCartProductQuantity(ctx: StateContext&lt;CartStateModel&gt;, action: UpdateCartProductQuantity) {
+    return this.cartService.updateCartProductQuantity(action.cartId, action.cartProductId, action.newQuantity).pipe(
+      tap((cart: CartModel) &#x3D;&gt; {
+        ctx.patchState({
+          cart
+        });
+      })
+    );
+  }
+
+  @Action(RemoveCartProduct)
+  removeCartProduct(ctx: StateContext&lt;CartStateModel&gt;, action: RemoveCartProduct) {
+    return this.cartService.removeCartProductFromCart(action.cartId, action.cartProductId).pipe(
+      tap((cart: CartModel) &#x3D;&gt; {
+        ctx.patchState({
+          cart
+        });
+      })
+    );
+  }
+
+  @Action(CheckoutOnCart)
+  checkoutOnCart(ctx: StateContext&lt;CartStateModel&gt;, action: CheckoutOnCart) {
+    return this.cartService.checkoutOnCart(action.payload).pipe(
+      tap((result: CheckoutReturnData) &#x3D;&gt; {
+        if (result) {
+          const {cart, customerId} &#x3D; result;
+          ctx.patchState({
+            cart
+          });
+          this.afterCheckoutComplete(result);
+          if (!this.store.selectSnapshot(AuthState.User).stripeId) {
+            this.store.dispatch(new SetCustomerToken(customerId));
+          }
+        }
+      })
+    );
+  }
+
+  afterCheckoutComplete(result: CheckoutReturnData) {
+    const {order, invoice, payment} &#x3D; result;
+    this.store.dispatch(new PushInvoice(invoice));
+    this.store.dispatch(new PushPayment(payment));
+    this.store.dispatch(new PushOrder(order));
+  }
+
+
+  @Action(CheckoutOnSingleProduct)
+  checkoutOnSingleProduct(ctx: StateContext&lt;CartStateModel&gt;, action: CheckoutOnSingleProduct) {
+    return this.cartService.checkoutOnSingleProduct(action.cartProductId, action.payload).pipe(
+      tap((result: CheckoutReturnData) &#x3D;&gt; {
+        if (result) {
+          const {cart} &#x3D; result;
+          ctx.patchState({
+            cart
+          });
+          this.afterCheckoutComplete(result);
+        }
+      })
+    );
+  }
+
+  @Action(RemoveProductsFromCart)
+  removeProductsFromCart(ctx: StateContext&lt;CartStateModel&gt;, action: RemoveProductsFromCart) {
+    return this.cartService.removeProductsFromCart(action.payload).pipe(
+      tap((cart: CartModel) &#x3D;&gt; {
+        ctx.patchState({
+          cart
+        });
+      })
+    );
+  }
+
+  @Action(ClearCartFromStorage)
+  clearCartFromStorage(ctx: StateContext&lt;CartStateModel&gt;, action: ClearCartFromStorage) {
+    ctx.setState({
+      cart: null
+    });
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'CartState.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

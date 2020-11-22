@@ -13,6 +13,7 @@ import {MdbModule} from './modules/mdb.module';
 import {LoginFirstComponent} from './components/login-first/login-first.component';
 import {AddToCartComponent} from './components/products/add-to-cart/add-to-cart.component';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
     AddContactsComponent,
     LoginFirstComponent,
     AddToCartComponent,
+    PaginationComponent,
   ],
   imports: [
     CommonModule,
@@ -51,7 +53,8 @@ import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
     NgbPaginationModule,
     AddContactsComponent,
     MdbModule,
-    RxReactiveFormsModule
+    RxReactiveFormsModule,
+    PaginationComponent
   ]
 })
 export class SharedModule {

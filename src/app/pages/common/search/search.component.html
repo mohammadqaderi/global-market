@@ -4,7 +4,6 @@
   color="#9344d4d"
   type="ball-spin-clockwise">
   <p style="font-size: 20px; color: white">
-    Searching...
   </p>
 </ngx-spinner>
 
@@ -114,7 +113,7 @@
 
 
 <!-- Products Search Result -->
-<div class="container-fluid " *ngIf="productsArray">
+<div class="container-fluid " *ngIf="products.getValue()">
   <div class="row m-4 justify-content-center">
     <div class="col-xl-12">
       <section class="my-2 mb-2">
@@ -128,14 +127,14 @@
           </h2>
         </div>
       </section>
-      <section *ngIf="productsArray.length === 0">
+      <section *ngIf="products.getValue() && products.getValue().length === 0">
         <div class="row justify-content-center bg-warning">
           <h3 class="text-center">There are no result for what you searched</h3>
         </div>
       </section>
       <section class="my-2 mb-2">
         <div class="row m-4">
-          <div class="col-md-3 mb-4" *ngFor="let product of productsArray; let i = index">
+          <div class="col-md-3 mb-4" *ngFor="let product of products.asObservable() | async; let i = index">
             <div class="">
               <div (click)="helperService.productDetails(product)" class="view zoom overlay z-depth-2 rounded">
                 <img class="img-fluid w-100"
@@ -155,7 +154,7 @@
                 <p>
                   <span>${{product.currentPrice}}</span>
                   <span class="ml-5">
-                    <span class="text-grey"><s>$36.99</s></span>
+                    <span class="text-grey"><s>${{product.previousPrice}}</s></span>
                   </span>
                 </p>
                 <button *ngIf="gdService.IsAuthenticated()" (click)="helperService.openModal(addToCartTemp)"
@@ -176,13 +175,23 @@
 </div>
 <!-- End Of Products Search Result -->
 
+<div class="container-fluid"  *ngIf="type === 'Products' && products.getValue() && products.getValue().length > 0">
+  <app-pagination [lastPage]="gdService.lastPage"
+                  [currentPage]="gdService.currentPage"
+                  [hasPreviousPage]="gdService.hasPreviousPage"
+                  [hasNextPage]="gdService.hasNextPage"
+                  [previousPage]="gdService.previousPage"
+                  [nextPage]="gdService.nextPage"
+                  (change)="onPageChange($event)"
+  ></app-pagination>
+</div>
 <div class="container-fluid" *ngIf="showLoadMore()">
   <div class="row justify-content-center">
-    <button (click)="loadMore()" mdbBtn color="primary" type="button">
+    <button *ngIf="type !== 'Products'" (click)="loadMore()" mdbBtn color="primary" type="button">
       <span *ngIf="showSpinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       <span *ngIf="!showSpinner">Load More</span>
     </button>
-    <button (click)="backToTop()" mdbBtn color="deep-purple" type="button">
+    <button (click)="helperService.backToTop()" mdbBtn color="deep-purple" type="button">
       Back to Top &nbsp; <i class="fas fa-arrow-up"></i>
     </button>
   </div>

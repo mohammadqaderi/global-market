@@ -2,14 +2,12 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {HelperService} from '../../../shared/services/helper.service';
-import {OrderStatus} from '../../../commons/enums/order-status.enum';
 import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {Store} from '@ngxs/store';
 import {InvoiceActions} from '../../../state-management/invoice/invoice.actions';
 import FetchUserInvoices = InvoiceActions.FetchUserInvoices;
 import {OrderActions} from '../../../state-management/order/order.actions';
 import FetchUserOrders = OrderActions.FetchUserOrders;
-import {OrderModel} from '../../../models/Orders/order.model';
 import {Router} from '@angular/router';
 
 @Component({
@@ -64,13 +62,7 @@ export class OrdersComponent implements OnInit {
     this.helperService.orderDataSource.sort = this.sort;
   }
 
-  navigateToOrder(order: OrderModel) {
-    this.router.navigate(['/orders', order.id], {
-      queryParams: {
-        status: order.status
-      }
-    });
-  }
+
 
   get Orders() {
     return this.gdService.Orders;

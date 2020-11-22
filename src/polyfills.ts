@@ -1,6 +1,8 @@
 /***************************************************************************************************
  * Load `$localize` onto the global scope - used if i18n tags appear in Angular templates.
  */
+(window as any).global = window;
+
 (window as any).process = {
   env: { DEBUG: undefined },
 };

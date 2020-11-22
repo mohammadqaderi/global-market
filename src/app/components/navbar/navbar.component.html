@@ -49,7 +49,7 @@
           <button (click)="drawer.close()" mat-menu-item routerLink="/invoices">
             Invoices
           </button>
-          <button (click)="drawer.close(); gdService.userLogout()" mat-menu-item>
+          <button (click)="drawer.close(); gdService.userLogout('home')" mat-menu-item>
             Logout <i class="fas fa-sign-out-alt"></i>
           </button>
         </mat-menu>
@@ -110,7 +110,7 @@ max-height: 100px">
           <a *ngIf="gdService.IsAuthenticated()" mat-button class="nav-link h5 text-white"
              routerLink="/cart">
             Cart <i *ngIf="gdService.Cart && gdService.Cart.cartProducts.length >=1"
-                    [matBadge]="gdService.Cart.cartProducts.length.toString()"
+                    [matBadge]="gdService.Cart.totalItems.toString()"
                     class="fas fa-cart-arrow-down" matBadgeOverlap="false"
                     matBadgePosition="above after" matBadgeSize="medium"
                     matBadgeColor="accent"></i>
@@ -130,7 +130,8 @@ max-height: 100px">
               Invoices
             </button>
           </mat-menu>
-          <a (click)="gdService.userLogout()" *ngIf="gdService.IsAuthenticated()" class="nav-link ml-2 h5 text-white"
+          <a (click)="gdService.userLogout('home')" *ngIf="gdService.IsAuthenticated()"
+             class="nav-link ml-2 h5 text-white"
              mat-button
              routerLinkActive="active"
           >

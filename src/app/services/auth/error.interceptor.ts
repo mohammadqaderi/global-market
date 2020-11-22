@@ -5,9 +5,9 @@ import {
   HttpEvent,
   HttpInterceptor, HttpErrorResponse
 } from '@angular/common/http';
-import {Observable, of, Subscription, throwError} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {Router} from '@angular/router';
-import {catchError, tap} from 'rxjs/operators';
+import {catchError} from 'rxjs/operators';
 import {GlobalDataService} from '../../shared/services/global-data.service';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => {
         const {error} = err;
         if ([401].indexOf(err.status) !== -1) {
-          this.gdService.userLogout()
+          this.gdService.userLogout(null);
           return throwError(error);
         }
         return throwError(error);

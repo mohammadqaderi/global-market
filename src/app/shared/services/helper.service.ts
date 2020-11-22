@@ -3,8 +3,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {FileUploader} from 'ng2-file-upload';
-import {ErrorMessages} from '../../commons/helpers/functions/error-messages';
 import {ProductModel} from '../../models/Products/product.model';
 import {Observable, Subscription} from 'rxjs';
 import {Router} from '@angular/router';
@@ -19,8 +17,6 @@ export class HelperService {
   modalRef: BsModalRef;
   selectedImage = null;
   startLoadingFlag = false;
-  isInvalidImageType = false;
-  imageErrorMessage = null;
   imageFormData = new FormData();
   error: {
     error: string,
@@ -40,6 +36,9 @@ export class HelperService {
   offlineEvent: Observable<Event>;
   subscriptions: Subscription[] = [];
 
+  backToTop() {
+    document.body.scrollTop = document.documentElement.scrollTop = 20;
+  }
 
   //
   showErrorDialog(error: any, template: any) {
@@ -108,9 +107,7 @@ export class HelperService {
   adjustData() {
     this.imageFormData.delete('image');
     this.selectedImage = null;
-    this.isInvalidImageType = false;
     this.startLoadingFlag = false;
-    this.imageErrorMessage = null;
   }
 
   // data sources
@@ -121,6 +118,13 @@ export class HelperService {
   openSnackbar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000
+    });
+  }
+  navigateToOrder(order: OrderModel) {
+    this.router.navigate(['/orders', order.id], {
+      queryParams: {
+        status: order.status
+      }
     });
   }
 

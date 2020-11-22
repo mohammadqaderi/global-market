@@ -20,8 +20,8 @@ export class ShowErrorDialogComponent implements OnInit {
       this.errorName = 'Forbidden Resource';
       this.errorMessage = 'This Resource cannot be access without permissions (Forbidden)';
     } else if ([401].indexOf(this.error.statusCode) !== -1) {
-      this.errorName = 'Unauthorized!!';
-      this.errorMessage = 'You\'re not authorized, please login to have the access';
+      this.errorName = 'Not Authenticated!!';
+      this.errorMessage = 'You\'re not authenticated, please login to have the access';
     } else if ([400, 404, 409].indexOf(this.error.statusCode) !== -1) {
       this.errorName = this.error.error;
       this.errorMessage = this.error.message;

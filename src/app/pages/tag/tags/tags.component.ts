@@ -4,8 +4,8 @@ import {Router} from '@angular/router';
 import {HelperService} from '../../../shared/services/helper.service';
 import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {TagActions} from '../../../state-management/tag/tag.actions';
-import FetchSubCategoriesTags = TagActions.FetchSubCategoriesTags;
-import {SubCategoryTagModel} from '../../../models/Categories/sub-category-tag.model';
+import FetchProductsTags = TagActions.FetchProductsTags;
+import {ProductTagModel} from '../../../models/Products/product-tag.model';
 
 @Component({
   selector: 'app-tags',
@@ -20,15 +20,15 @@ export class TagsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.gdService.SubCategoriesTags) {
+    if (!this.gdService.ProductsTags) {
       this.helperService.showSpinner();
-      this.store.dispatch(new FetchSubCategoriesTags()).subscribe(() => {
+      this.store.dispatch(new FetchProductsTags()).subscribe(() => {
         this.helperService.hideSpinner();
       });
     }
   }
 
-  fetchTagItems(tag: SubCategoryTagModel) {
+  fetchTagItems(tag: ProductTagModel) {
     this.router.navigate(['tag-items', tag.name]);
   }
 

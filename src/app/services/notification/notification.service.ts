@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {ApiEndpoints} from '../../commons/api-endpoints';
-import {Observable} from 'rxjs';
-import {NotificationPayloadDto} from '../../models/Notifications/classes/notification-payload.dto';
 
 @Injectable({
   providedIn: 'root'

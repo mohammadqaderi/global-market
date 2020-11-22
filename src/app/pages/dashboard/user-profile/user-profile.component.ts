@@ -1,18 +1,19 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngxs/store';
-import {Router} from '@angular/router';
 import {HelperService} from '../../../shared/services/helper.service';
 import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {ProfileActions} from '../../../state-management/profile/profile.actions';
 import FetchUserProfile = ProfileActions.FetchUserProfile;
-import {AuthService} from '../../../services/auth/auth.service';
 import {FileUploader} from 'ng2-file-upload';
 import {ErrorMessages} from '../../../commons/helpers/functions/error-messages';
 import {Contact} from '../../../commons/classes/contact';
 import EditProfile = ProfileActions.EditProfile;
 import ChangeProfileImage = ProfileActions.ChangeProfileImage;
 import SetProfileImage = ProfileActions.SetProfileImage;
+import {OrderActions} from '../../../state-management/order/order.actions';
+import FetchUserOrders = OrderActions.FetchUserOrders;
+import {ApiEndpoints} from '../../../commons/api-endpoints';
 
 @Component({
   selector: 'app-user-profile',
@@ -32,9 +33,7 @@ export class UserProfileComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private store: Store,
               public helperService: HelperService,
-              private router: Router,
-              private authService: AuthService,
-              private gdService: GlobalDataService) {
+              public gdService: GlobalDataService) {
   }
 
   get Controls() {
@@ -98,6 +97,11 @@ export class UserProfileComponent implements OnInit {
     this.updateProfileForm.valueChanges.subscribe(() => {
       this.formChanged = true;
     });
+    if (!this.gdService.Orders) {
+      this.store.dispatch(new FetchUserOrders()).subscribe(() => {
+
+      });
+    }
   }
 
   addContact(contact: Contact) {

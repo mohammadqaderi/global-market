@@ -4,7 +4,7 @@ import {CustomValidators} from 'ngx-custom-validators';
 import {EmailPattern} from '../../../commons/constants';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HelperService} from '../../../shared/services/helper.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {GlobalDataService} from '../../../shared/services/global-data.service';
 import {Store} from '@ngxs/store';
 import {AuthService} from '../../../services/auth/auth.service';
@@ -36,10 +36,27 @@ export class LoginComponent implements OnInit {
               private store: Store,
               private gdService: GlobalDataService,
               private router: Router,
+              private route: ActivatedRoute,
               public helperService: HelperService) {
     if (gdService.IsAuthenticated()) {
-      router.navigate(['/dashboard']);
+      router.navigate(['/home']);
     }
+  }
+
+  submitLogin() {
+    this.helperService.showSpinner();
+    this.store.dispatch(new Login(this.emailLoginDto.value)).subscribe(() => {
+      this.helperService.openSnackbar(`Welcome ${this.gdService.Username}`, 'Close');
+      this.store.dispatch(new FetchUserCart());
+      this.store.dispatch(new FetchUserOrders());
+      this.store.dispatch(new FetchUserPayments());
+      this.store.dispatch(new FetchUserInvoices());
+      const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+      this.router.navigate([`/${returnUrl}`]);
+      this.helperService.hideSpinner();
+    }, error => {
+      this.helperService.showErrorDialog(error, this.errorTemplate);
+    });
   }
 
   ngOnInit(): void {
@@ -66,23 +83,8 @@ export class LoginComponent implements OnInit {
 
   get ForgotRequestEmail() {
     return this.emailRequestForm.get('email');
-
   }
 
-  submitLogin() {
-    this.helperService.showSpinner();
-    this.store.dispatch(new Login(this.emailLoginDto.value)).subscribe(() => {
-      this.helperService.openSnackbar(`Welcome ${this.gdService.Username}`, 'Close');
-      this.store.dispatch(new FetchUserCart());
-      this.store.dispatch(new FetchUserOrders());
-      this.store.dispatch(new FetchUserPayments());
-      this.store.dispatch(new FetchUserInvoices());
-      this.router.navigate(['/home']);
-      this.helperService.hideSpinner();
-    }, error => {
-      this.helperService.showErrorDialog(error, this.errorTemplate);
-    });
-  }
 
   sendEmailForgotPassword() {
     this.helperService.showSpinner();

@@ -1,34 +1,30 @@
-<div class="container-fluid" *ngIf="subCategories">
+<div class="container-fluid" *ngIf="products">
   <div class="row-4">
     <div class="card">
-      <div class="card-header">
-        <h2> You've searched for: {{searchedTag}}
-        </h2>
-      </div>
       <div class="card-body">
-        <div class="row" *ngIf="subCategories.length === 0">
+        <div class="row" *ngIf="products.length === 0">
           <h3>
             No items associated with the selected tag
           </h3>
         </div>
         <div class="row">
-          <div class="col-md-3 mb-4" *ngFor="let subCategory of subCategories; let i = index">
+          <div class="col-md-3 mb-4" *ngFor="let product of products; let i = index">
             <div class="">
-              <div (click)="navigateToSubCategory(subCategory)" class="view zoom overlay z-depth-2 rounded">
+              <div (click)="helperService.productDetails(product)" class="view zoom overlay z-depth-2 rounded">
                 <img class="img-fluid w-100"
                      style="max-height: 250px; height: 250px"
-                     [src]="subCategory.products[0].images[0]" alt="Sample">
+                     [src]="product.images[0]" alt="Sample">
                 <a>
                   <div class="mask">
                     <img class="img-fluid w-100"
                          style="max-height: 250px; height: 250px"
-                         [src]="subCategory.products[0].images[0]">
+                         [src]="product.images[0]">
                     <div class="mask rgba-black-slight"></div>
                   </div>
                 </a>
               </div>
               <div class="text-center pt-4">
-                <h4>{{subCategory.name}}</h4>
+                <h4>{{product.name}}</h4>
               </div>
             </div>
           </div>

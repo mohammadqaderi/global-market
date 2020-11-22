@@ -2,24 +2,22 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {HelperService} from '../../../shared/services/helper.service';
 import {Store} from '@ngxs/store';
 import {GlobalDataService} from '../../../shared/services/global-data.service';
-import {ProductActions} from '../../../state-management/product/product.actions';
 import {SubCategoryActions} from '../../../state-management/sub-category/sub-category.actions';
 import FetchAllSubCategories = SubCategoryActions.FetchAllSubCategories;
-import FetchShopProducts = ProductActions.FetchShopProducts;
 import {MatPaginator} from '@angular/material/paginator';
 import {SubCategoryModel} from '../../../models/Categories/sub-category.model';
 import {ProductModel} from '../../../models/Products/product.model';
-import FetchCustomProducts = ProductActions.FetchCustomProducts;
 import {ProductsCustomFilterDto} from '../../../commons/public-dto/products-custom-filter.dto';
 import {SubCategoryTagModel} from '../../../models/Categories/sub-category-tag.model';
 import {TagActions} from '../../../state-management/tag/tag.actions';
 import FetchSubCategoriesTags = TagActions.FetchSubCategoriesTags;
-import FetchSubCategoriesByTagName = SubCategoryActions.FetchSubCategoriesByTagName;
+import {ProductService} from '../../../services/product/product.service';
+import {BehaviorSubject} from 'rxjs';
+import {ProductTagModel} from '../../../models/Products/product-tag.model';
+import {productsTagsInit} from '../../../commons/helpers/functions/products-tags-init';
 
 export enum LoadType {
-  TAG = 'TAG',
-  SHOP_PRODUCTS = 'SHOP_PRODUCTS',
-  SUB_CATEGORY = 'SUBCATEGORY',
+  SHOP = 'SHOP',
   CUSTOM = 'CUSTOM'
 }
 
@@ -29,13 +27,13 @@ export enum LoadType {
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit {
+  productsTags: ProductTagModel[];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   subCategory: SubCategoryModel;
   showSpinner = false;
   showFilter = false;
-  products: ProductModel[] = [];
+  products: BehaviorSubject<ProductModel[]> = new BehaviorSubject<ProductModel[]>(null);
   subCategoryTag: SubCategoryTagModel;
-  startSlice = 5;
   selectedTag: number;
   isAllSelected = true;
   scId: number;
@@ -43,36 +41,82 @@ export class ShopComponent implements OnInit {
   productsCustomFilterDto: ProductsCustomFilterDto = {
     range1: null,
     range2: null,
-    take: null,
-    skip: null,
+    limit: 10,
+    page: 1,
+    subCategoryId: null,
+    tag: null,
     stock: null
   };
 
-  constructor(public helperService: HelperService,
-              public store: Store,
-              public gdService: GlobalDataService) {
+  onPageChange(page: any) {
+    this.loadProducts(page);
+  }
 
+  fetchingType = LoadType.SHOP;
+
+
+  loadByAvailability() {
+    this.initializeCustom();
   }
 
   onSubCategorySelect(subCategory: SubCategoryModel) {
     this.scId = subCategory.id;
-    localStorage.setItem('loadType', LoadType.SUB_CATEGORY);
+    this.clearSelectedTag();
+    this.subCategory = Object.assign({}, subCategory);
+    this.productsTags = productsTagsInit(this.subCategory);
+    this.productsCustomFilterDto.subCategoryId = subCategory.id;
+    this.initializeCustom();
   }
 
-  setRange1(value: number) {
-    this.productsCustomFilterDto.range1 = value;
+  onTagSelect(tag: ProductTagModel) {
+    this.selectedTag = tag.id;
+    this.isAllSelected = null;
+    this.productsCustomFilterDto.tag = tag.name;
+    this.initializeCustom();
+
   }
 
-  setRange2(value: number) {
-    this.productsCustomFilterDto.range2 = value;
+  clearSelectedTag() {
+    this.selectedTag = null;
+    this.productsCustomFilterDto.tag = null;
+    this.isAllSelected = true;
+
   }
+
+  onAllTagSelect() {
+    this.clearSelectedTag();
+    this.initializeCustom();
+  }
+
+  initializeCustom() {
+    this.fetchingType = LoadType.CUSTOM;
+    this.gdService.currentPage = this.productsCustomFilterDto.page;
+    this.loadProducts(this.gdService.currentPage);
+  }
+
+  onMinRangeSelect(minRange: number) {
+    this.productsCustomFilterDto.range1 = minRange;
+    this.initializeCustom();
+  }
+
+  onMaxRangeSelect(maxRange: number) {
+    this.productsCustomFilterDto.range2 = maxRange;
+    this.initializeCustom();
+  }
+
+  constructor(public helperService: HelperService,
+              public store: Store,
+              private productService: ProductService,
+              public gdService: GlobalDataService) {
+
+  }
+
 
   ngOnInit(): void {
-    if (!this.gdService.ShopProducts) {
+    if (!this.gdService.SubCategoriesTags) {
       this.helperService.showSpinner();
-      this.store.dispatch(new FetchShopProducts(10)).subscribe(() => {
+      this.store.dispatch(new FetchSubCategoriesTags()).subscribe(() => {
         this.helperService.hideSpinner();
-        this.refreshProducts();
       });
     }
     if (!this.gdService.SubCategories) {
@@ -81,117 +125,30 @@ export class ShopComponent implements OnInit {
         this.helperService.hideSpinner();
       });
     }
-    if (!this.gdService.SubCategoriesTags) {
-      this.helperService.showSpinner();
-      this.store.dispatch(new FetchSubCategoriesTags()).subscribe(() => {
+    this.helperService.showSpinner();
+    this.loadProducts(1);
+  }
+
+
+  loadProducts(page: number) {
+    if (this.fetchingType === LoadType.SHOP) {
+      this.productService.getShopProducts(10, page).subscribe((result) => {
+        this.products.next(result.products);
+        this.gdService.setPaginationData(result);
+        this.helperService.hideSpinner();
+      });
+    } else {
+      this.productsCustomFilterDto.page = page;
+      this.productService.getCustomProducts(this.productsCustomFilterDto).subscribe((result) => {
+        this.products.next(result.products);
+        this.gdService.setPaginationData(result);
         this.helperService.hideSpinner();
       });
     }
-    localStorage.setItem('loadType', LoadType.SHOP_PRODUCTS);
-    this.refreshProducts();
-  }
 
-  refreshProducts() {
-    this.products = this.gdService.ShopProducts;
-  }
-
-  backToTop() {
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
-  }
-
-  fetchByTagName(subCategoryTag: SubCategoryTagModel) {
-    localStorage.setItem('loadType', LoadType.TAG);
-    this.selectedTag = subCategoryTag.id;
-    this.subCategoryTag = subCategoryTag;
-    this.isAllSelected = null;
-    this.helperService.showSpinner();
-    this.store.dispatch(new FetchSubCategoriesByTagName(subCategoryTag.name, this.startSlice)).subscribe(() => {
-      this.refreshProducts();
-      this.helperService.hideSpinner();
-    });
-  }
-
-  getAll() {
-    this.selectedTag = null;
-    this.isAllSelected = true;
-    localStorage.setItem('loadType', LoadType.SHOP_PRODUCTS);
-    this.helperService.showSpinner();
-    this.store.dispatch(new FetchShopProducts(10)).subscribe(() => {
-      this.helperService.hideSpinner();
-      this.refreshProducts();
-    });
   }
 
 
-  loadCustomProducts() {
-    this.setTakeLength(10);
-    localStorage.setItem('loadType', LoadType.CUSTOM);
-    this.showFilter = true;
-    this.store.dispatch(new FetchCustomProducts(this.productsCustomFilterDto)).subscribe(() => {
-      this.refreshProducts();
-      this.showFilter = false;
-    });
-  }
-
-
-  fetchBySubCategoryName(subCategory: SubCategoryModel, slice: number) {
-    this.subCategory = Object.assign({}, subCategory);
-    this.products = [];
-    this.products = [].concat(subCategory.products.slice(0, slice));
-    this.showSpinner = false;
-  }
-
-  loadMore() {
-    const type = localStorage.getItem('loadType');
-    this.showSpinner = true;
-    switch (type) {
-      case LoadType.SHOP_PRODUCTS: {
-        this.resetSlice(5);
-        this.store.dispatch(new FetchShopProducts(this.products.length + 10)).subscribe(() => {
-          this.refreshProducts();
-          this.showSpinner = false;
-        });
-        break;
-      }
-      case LoadType.CUSTOM: {
-        this.productsCustomFilterDto.take = this.products.length + 10;
-        this.resetSlice(5);
-        this.setSkipLength(this.products.length);
-        this.store.dispatch(new FetchCustomProducts(this.productsCustomFilterDto)).subscribe(() => {
-          this.refreshProducts();
-          this.showSpinner = false;
-        });
-        break;
-      }
-      case LoadType.TAG: {
-        this.startSlice = this.startSlice + 5;
-        this.store.dispatch(new FetchSubCategoriesByTagName(this.subCategoryTag.name, this.startSlice)).subscribe(() => {
-          this.refreshProducts();
-          this.showSpinner = false;
-        });
-        break;
-      }
-      case LoadType.SUB_CATEGORY: {
-        this.resetSlice(5);
-        setTimeout(() => {
-          this.fetchBySubCategoryName(this.subCategory, this.products.length + 5);
-        }, 1000);
-        break;
-      }
-    }
-  }
-
-  resetSlice(length: number) {
-    this.startSlice = length;
-  }
-
-  setSkipLength(length: number) {
-    this.productsCustomFilterDto.skip = length;
-  }
-
-  setTakeLength(length: number) {
-    this.productsCustomFilterDto.take = length;
-  }
 
 
 }
