@@ -47,10 +47,12 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-lock"></i></span>
                 </div>
+
                 <input formControlName="password"
                        [class.is-invalid]="Password.invalid && Password.touched" class="form-control"
                        placeholder="Password" type="password"
                        name="password">
+
               </div>
               <div *ngIf="(Password.invalid && Password.touched) || Password.dirty">
                 <small *ngIf="Password.errors?.required"
@@ -65,11 +67,10 @@
             </div>
             <div class="text-center">
               <button [disabled]="registrationForm.invalid"
-                type="submit" class="btn btn-primary mt-4">Register
+                      type="submit" class="btn btn-primary mt-4">Register
               </button>
             </div>
           </form>
-          <!-- Default form login -->
         </mdb-card-body>
       </mdb-card>
     </div>

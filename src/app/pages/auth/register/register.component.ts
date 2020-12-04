@@ -15,7 +15,6 @@ import {Router} from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
   registrationForm: FormGroup;
   @ViewChild('errorTemplate', {static: true}) errorTemplate: TemplateRef<any>;
   errorMessages = new ErrorMessages();
@@ -76,5 +75,4 @@ export class RegisterComponent implements OnInit {
       this.helperService.showErrorDialog(error, this.errorTemplate);
     });
   }
-
 }

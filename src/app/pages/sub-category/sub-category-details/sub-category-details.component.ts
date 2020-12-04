@@ -65,17 +65,17 @@ export class SubCategoryDetailsComponent implements OnInit {
               this.loadProducts(subCategory);
               this.productsTags = productsTagsInit(this.subCategory);
             }
+          } else if (this.gdService.SubCategories) {
+            this.helperService.showSpinner();
+            const subCategoryModel = this.gdService.SubCategories.find(s => s.id === +subCategoryId);
+            if (subCategoryModel) {
+              this.subCategory = subCategoryModel;
+              this.loadProducts(subCategoryModel);
+              this.productsTags = productsTagsInit(this.subCategory);
+              this.helperService.hideSpinner();
+            }
           }
           this.helperService.hideSpinner();
-        } else if (this.gdService.SubCategories) {
-          this.helperService.showSpinner();
-          const subCategoryModel = this.gdService.SubCategories.find(s => s.id === +subCategoryId);
-          if (subCategoryModel) {
-            this.subCategory = subCategoryModel;
-            this.loadProducts(subCategoryModel);
-            this.productsTags = productsTagsInit(this.subCategory);
-            this.helperService.hideSpinner();
-          }
         } else {
           this.helperService.showSpinner();
           this.subCategoryService.getSubCategoryById(+subCategoryId).subscribe((subCategory: SubCategoryModel) => {

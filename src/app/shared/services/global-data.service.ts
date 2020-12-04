@@ -108,10 +108,8 @@ export class GlobalDataService {
   }
 
   navigateToSubCategory(subCategory: SubCategoryModel) {
-    const category = this.Categories.find(c => c.id === subCategory.categoryId);
-    this.router.navigate([`/sub-categories/${category.id}`, subCategory.id], {
+    this.router.navigate([`/sub-categories/${subCategory.categoryId}`, subCategory.id], {
       queryParams: {
-        Department: category.name,
         subCategory: subCategory.name
       }
     });
@@ -128,7 +126,7 @@ export class GlobalDataService {
       new ClearPaymentsFromStorage()]).subscribe(() => {
       this.router.navigate(['/auth/login'], {
         queryParams: {
-          returnUrl: url || "home"
+          returnUrl: url || 'home'
         }
       });
     });

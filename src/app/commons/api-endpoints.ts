@@ -1,3 +1,4 @@
+// http://localhost:3000
 const prefixRoute = 'https://global-store-api.herokuapp.com';
 export const ApiEndpoints = {
   AuthEndpoints: {
@@ -57,7 +58,8 @@ export const ApiEndpoints = {
     sendNotification: `${prefixRoute}/notifications/send-notification`
   },
   Search: {
-    searchByName: `${prefixRoute}/search`
+    searchByName: `${prefixRoute}/search`,
+    itemsNamesSearch: `${prefixRoute}/search/items-names`
   },
   Contact: {
     messageUri: `${prefixRoute}/email/contact`

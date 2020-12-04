@@ -1,0 +1,18 @@
+@media only screen and (max-width: 375px) {
+  .search {
+      max-width: 70px;
+  }
+  .searchType {
+    max-width: 30px;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .search {
+    width: 150px;
+  }
+
+  .searchType {
+    width: 100px;
+  }
+}

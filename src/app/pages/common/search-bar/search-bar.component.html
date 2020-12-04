@@ -1,40 +1,31 @@
-<div class="input-group">
-  <div class="input-group-prepend">
-    <div class="btn-group" mdbDropdown>
-      <button *ngIf="!(isHandset$ | async)" type="button" mdbBtn outline="true"
-              [size]="!(isHandset$ | async) ? 'md': 'sm'"
-              class="z-depth-0 rgba-white-strong"
-              mdbWavesEffect><strong>{{selectedOptionSearch}}</strong>
-      </button>
-      <button type="button" mdbDropdownToggle mdbBtn outline="true"
-              class="dropdown-toggle dropdown-toggle-split z-depth-0 p-2 blue lighten-1"
-              mdbWavesEffect></button>
-      <div class="dropdown-menu">
-        <a (click)="setOptionSearch('Categories')" class="dropdown-item text-dark">Categories</a>
-        <a (click)="setOptionSearch('Sub Categories')" class="dropdown-item text-dark">Sub Categories</a>
-        <a (click)="setOptionSearch('Products')" class="dropdown-item text-dark">Products</a>
-      </div>
-    </div>
-  </div>
-  <input #searchField name="search" (keyup.enter)="submitSearch()"
-         [(ngModel)]="search" type="text"
-         [placeholder]="!(isHandset$ | async) ? 'What is in your mind': 'Search...'"
-         class="form-control " matAutocompletePosition="below" [defaultValue]="search"
-         aria-label="Text input with dropdown button" [matAutocomplete]="auto">
-  <mat-autocomplete #auto="matAutocomplete">
-    <mat-option (click)="search = option; submitSearch()"
-                *ngFor="let option of selectedList | generalFilter: search"
-                [value]="option">
-      {{option}}
-    </mat-option>
-  </mat-autocomplete>
-  <div class="input-group-append">
-    <div class="btn-group" mdbDropdown>
-      <button (click)="submitSearch()" type="button" mdbBtn  outline="true"
-              [size]="!(isHandset$ | async) ? 'md': 'sm'"
-              class="z-depth-0 light-blue lighten-2"
-              mdbWavesEffect><i class="fas fa-search"></i>
-      </button>
-    </div>
-  </div>
+<div fxLayout="row">
+  <mat-form-field [ngClass]="{'w-35': isHandset$ | async, 'w-75': !(isHandset$ | async)}">
+    <mat-select [formControl]="matSelectCtrl" placeholder="Search">
+      <mat-option>
+        <ngx-mat-select-search #matSelectSearchComponent noEntriesFoundLabel="No results found"
+                               ariaLabel="What is in your mind?"
+                               placeholderLabel="What is in your mind?" [formControl]="itemsFilteringCtrl"
+                               [searching]="searching"
+                               (keyup.enter)="submitSearch(matSelectSearchComponent.value)"></ngx-mat-select-search>
+      </mat-option>
+      <mat-option *ngFor="let item of items | async" [value]="item">
+        <div (click)="submitSearch(item.name)">{{item.name}}</div>
+      </mat-option>
+    </mat-select>
+
+  </mat-form-field>
+  <mat-form-field class="w-25 ml-2" *ngIf="!(isHandset$ | async)">
+    <mat-select [(ngModel)]="selectedOptionSearch">
+      <mat-option *ngFor="let searchType of ['Categories', 'Sub Categories', 'Products']" [value]="searchType">
+        <span (click)="setOptionSearch(searchType)">{{searchType}}</span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class=" ml-1 w-25" *ngIf="isHandset$ | async">
+    <mat-select [(ngModel)]="selectedOptionSearch" name="selectedOptionSearch">
+      <mat-option *ngFor="let searchType of ['Categories', 'Sub Categories', 'Products']" [value]="searchType">
+        <span (click)="setOptionSearch(searchType)">{{searchType}}</span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>

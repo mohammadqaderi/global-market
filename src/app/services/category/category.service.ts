@@ -16,6 +16,10 @@ export class CategoryService {
     return this._http.get<CategoryModel[]>(ApiEndpoints.CategoryEndpoints.rootCategories);
   }
 
+  getCategoryById(id: number): Observable<CategoryModel> {
+    return this._http.get<CategoryModel>
+    (`${ApiEndpoints.CategoryEndpoints.rootCategories}/${id}`);
+  }
 
   searchByMatchingName(searchValue: string): Observable<CategoryModel[]> {
     return this._http.get<CategoryModel[]>

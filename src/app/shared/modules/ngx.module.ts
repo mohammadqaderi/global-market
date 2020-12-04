@@ -10,6 +10,7 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 import {ToastrModule} from 'ngx-toastr';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {NgxImageZoomModule} from 'ngx-image-zoom';
+import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 
 const ngxComponents = [
   CarouselModule.forRoot(),
@@ -19,7 +20,8 @@ const ngxComponents = [
   AccordionModule.forRoot(),
   PaginationModule.forRoot(),
   BsDropdownModule.forRoot(),
-  NgxImageZoomModule
+  NgxImageZoomModule,
+  NgxMatSelectSearchModule
 ];
 
 @NgModule({

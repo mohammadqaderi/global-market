@@ -6,6 +6,7 @@ import {AuthLayoutRoutes} from './auth-layout.routing';
 import {LoginComponent} from '../../pages/auth/login/login.component';
 import {RegisterComponent} from '../../pages/auth/register/register.component';
 import {ResetPasswordComponent} from '../../pages/auth/reset-password/reset-password.component';
+import {PasswordStrengthMeterModule} from 'angular-password-strength-meter';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {ResetPasswordComponent} from '../../pages/auth/reset-password/reset-pass
   imports: [
     CommonModule,
     RouterModule.forChild(AuthLayoutRoutes),
-    SharedModule
+    SharedModule,
+    PasswordStrengthMeterModule
   ]
 })
 export class AuthModule {

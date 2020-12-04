@@ -13,7 +13,8 @@ import {MdbModule} from './modules/mdb.module';
 import {LoginFirstComponent} from './components/login-first/login-first.component';
 import {AddToCartComponent} from './components/products/add-to-cart/add-to-cart.component';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import { PaginationComponent } from './components/pagination/pagination.component';
+import {PaginationComponent} from './components/pagination/pagination.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     NgbDropdownModule,
     NgbPaginationModule,
     MdbModule,
+    FlexLayoutModule,
     RxReactiveFormsModule.forRoot()
   ],
   exports: [
@@ -51,10 +53,11 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     CustomFormsModule,
     NgbDropdownModule,
     NgbPaginationModule,
+    FlexLayoutModule,
     AddContactsComponent,
     MdbModule,
     RxReactiveFormsModule,
-    PaginationComponent
+    PaginationComponent,
   ]
 })
 export class SharedModule {
