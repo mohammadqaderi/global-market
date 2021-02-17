@@ -30,7 +30,7 @@ export class CheckoutComponent implements OnInit {
     this.billingForm = this.fb.group({
       fullName: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, Validators.pattern(EmailPattern),
-        CustomValidators.email,]),
+        CustomValidators.email]),
       city: new FormControl(null, Validators.required),
       country: new FormControl(null, Validators.required),
       address1: new FormControl(null, Validators.required),
